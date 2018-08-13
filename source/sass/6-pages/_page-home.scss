@@ -1,9 +1,14 @@
+#header{
+    background: url("../img/bg.jpg") no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
 .login-form, .register-form{
     width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background: white;
     input{
         margin: 10px 0px;
         text-align: center;
@@ -11,7 +16,8 @@
     .login-buttons{
         width: 100%;
         display: flex;
-        justify-content: center;
+        margin-top: 10px;
+        align-items: center;
         input{
             margin: 10px 10px;
         }
@@ -20,6 +26,15 @@
 
 .register-form{
     display: none;
+    .login-buttons{
+        justify-content: flex-end;
+    }
+}
+
+.login-form{
+    .login-buttons{
+        justify-content: space-between;
+    }
 }
 
 .login-register{
@@ -28,10 +43,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: white;
     height: 100vh;
     span.login-logo{
         font-size: 40px;
+        color: white;
     }
     .form-container{
         width: 100%;

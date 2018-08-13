@@ -3,21 +3,11 @@ html{
     box-sizing: border-box;
 }
   
-  
-
-  // WAT IS THIS?!
-  // We inherit box-sizing: border-box; from our <html> selector
-*,
-*:before,
-*:after{
-    box-sizing: inherit;
-}
-  
 
 
 body{
     //delete the background to apply your own style
-    background: white;
+    background: $dark-blue;
     font-size: 14px;
     line-height: 1.6;
     font-size: 14px;
@@ -30,7 +20,7 @@ body{
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
-    background: white;
+    background: none;
     display: flex;
     justify-content: center;
     height: 100%;
