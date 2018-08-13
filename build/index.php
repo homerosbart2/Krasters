@@ -5,6 +5,10 @@
     <title>Krasters</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/js/pnotify.custom.min.js" type="text/javascript"></script>
+    <link href="assets/css/pnotify.custom.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="assets/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />    
     <link rel="stylesheet" href="assets/css/main.min.css" />
 </head>
 
@@ -16,25 +20,27 @@
                     <b>KRAS</b>TERS
                 </span>
                 <div class="form-container">
-                    <form id="login-form" class="login-form" action='index.php' method='post'>
-                    <input type='hidden' name='add' value='G'>
-                    <input type='text'  name='login-username' placeholder='username' required>
-                    <input type='password'  name='login-password' placeholder='default' required>
-                    <span class="login-buttons">
-                        <input class='btn-login' type='submit' name='submit' value='Iniciar' class='btn3'>
-                        <a class='btn-register' onclick='updateFormContainer();'>Registrar</a> 
-                    </span>
+                   
+                    <form id="login-form" class="login-form">
+                        <input type='hidden' name='add' value='G'>
+                        <input type='text'  id='login-username' name='' placeholder='Ingrese el usuario' required>
+                        <input type='password'  id='login-password' name='' placeholder='Ingrese la contraseña' required>
+                        <span class="login-buttons">
+                            <a href="#" type='submit' id='btn_login' name='submit' value='Iniciar' class='btn3 btn-login iniciar_sesion'> LOGIN </a>
+                            <a class='btn-register' onclick='updateFormContainer();'> Registrar</a> 
+                        </span>
                     </form>
 
-                    <form id="register-form" class="register-form" action='index.php' method='post'>
-                    <input type='hidden' name='add' value='G'>
-                    <input type='text'  name='login-username' placeholder='username' required>
-                    <input type='password'  name='login-password' placeholder='default' required>
-                    <input type='password'  name='login-password-confirmation' placeholder='default' required>
-                    <span class="login-buttons">
-                        <input class='btn-login' type='submit' name='submit' value='Aceptar' class='btn3'>
-                        <a class='btn-register' onclick='updateFormContainer();'>Cancelar</a> 
-                    </span>
+                    <form id="register-form" class="register-form">
+                        <input type='hidden'name='add' value='G'>
+                        <input type='text' id='registro_nombre' name='' placeholder='Ingrese el nombre' required>
+                        <input type='text' id='registro_username' name='' placeholder='Ingrese el usuario' required>
+                        <input type='password' id='registro_password1' name='' placeholder='Ingrese la contraseña' required>
+                        <input type='password'  id='registro_password2' name='' placeholder='Repita la contraseña' required>
+                        <span class="login-buttons">
+                            <a href="#" type='submit' id='btn_registrar' name='submit' value='Iniciar' class='btn3 btn-login iniciar_sesion'> REGISTRAR </a>
+                            <a class='btn-register' onclick='updateFormContainer();'>Cancelar</a> 
+                        </span>
                     </form>
                 </div>
             </div>
@@ -46,3 +52,145 @@
 </body>
 
 </html>
+
+<style>
+
+a:hover {
+    color: #0074D9;
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.btn-login {
+    display: block;
+    width: 35%;
+    height: 20%;
+    border-style: solid;
+    border-color: black;
+    background: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+</style>
+
+<script>
+
+function renderAdminUser(){
+    //Luego de 1 segundo se redirige
+    $(location).attr('href', 'vistaAdmin');
+  }
+
+function renderUser(){
+  //Luego de 1 segundo se redirige
+  $(locarion).attr('href','/vistaUser')
+} 
+
+var iniciarSesion = function(){
+  username = document.getElementById("login-username").value;
+  password = document.getElementById("login-password").value;
+  if(username != "" && password != ""){
+    $.ajax({
+        url: 'session/validar_login.php?username=' + username + '&password=' + password,
+        type: 'POST',
+        success: function(r){
+          if(r != 0){
+            new PNotify({
+              title: 'Login',
+              text: 'Bienvenido ' + username + ".",
+              type: 'success',
+              styling: 'bootstrap3'
+            });
+            //setTimeout("renderUser()",1000);        
+          }else{
+            new PNotify({
+              title: 'Login',
+              text: 'Usuario inválido.',
+              type: 'error',
+              styling: 'bootstrap3'
+            });           
+          }
+        }
+    });
+  }else{
+    new PNotify({
+      title: 'Login',
+      text: 'Complete todos los campos porfavor.',
+      type: 'warning',
+      styling: 'bootstrap3'
+    });       
+  }    
+}
+
+var crearUsuario = function(){
+  nombre = document.getElementById("registro_nombre").value;
+  username = document.getElementById("registro_username").value;
+  password1 = document.getElementById("registro_password1").value;
+  password2 = document.getElementById("registro_password2").value;
+  if(password1 == password2 && password1 != "" && password2 != ""){
+    if(username != "" && nombre != ""){
+        $.ajax({
+            url: 'usuario/nuevo_usuario.php?name=' + nombre + '&username=' + username + '&password=' + password1,
+            type: 'POST',
+            success: function(r){
+                alert(r);
+                if(r != -1){
+                    new PNotify({
+                    title: 'Nuevo usuario',
+                    text: 'Bienvenido ' + username + ".",
+                    type: 'success',
+                    styling: 'bootstrap3'
+                    });
+                    if(r == 0) setTimeout("renderUser()",1000);    
+                    else setTimeout("renderAdminUser()",1000);      
+                }else{
+                    new PNotify({
+                    title: 'Nuevo usuario',
+                    text: 'El usuario ' + username + " ya se encuentra en el sistema.",
+                    type: 'error',
+                    styling: 'bootstrap3'
+                    });           
+                }
+            }
+        });
+    }else{
+        new PNotify({
+        title: 'Nuevo usuario',
+        text: 'Complete ambos campos porfavor.',
+        type: 'warning',
+        styling: 'bootstrap3'
+        });       
+    }         
+  }else{
+    new PNotify({
+        title: 'Nuevo usuario',
+        text: 'Ambas contraseñas deben coincidir.',
+        type: 'warning',
+        styling: 'bootstrap3'
+    });       
+  }
+}
+
+$(document).ready(function() {
+  $('#btn_login').on('click',function(){
+    iniciarSesion();
+  });
+
+  $('#btn_registrar').on('click',function(){
+    crearUsuario();
+  });
+  
+});
+</script>
