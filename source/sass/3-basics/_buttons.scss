@@ -1,28 +1,67 @@
-.button,
-button,
-input[type="submit"],
-input[type="reset"],
-input[type="button"]{
+%btn{   
     display: inline-block;
-    padding: 10px 10px;
+    padding: 5px 10px;
     color: black;
     text-align: center;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    height: 22px;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
     background-color: white;
     border-radius: 4px;
+    border: 1px solid;
+    font-weight: 550;
     cursor: pointer;
-    box-sizing: border-box;
     transition: all 0.2s ease;
     &:hover,
     &:active,
     &:focus{
         outline: 0;
+    }
+}
+
+.btn-register{
+    @extend %btn;
+    color: white;
+    background: $light-pink;
+    border-color: $light-pink;
+    &:hover,
+    &:active,
+    &:focus{
         transform: scale(1.01);
-        transform: translateY(3px);
+        transform: translateY(-2px);
+        color: white;
+        box-shadow:  0 7px 25px 0 rgba(0,0,0,0.24);
+    }
+}
+
+.register-form{
+    .btn-cancel{
+        @extend %btn;
+        margin-right: auto;
+        color: white;
+        background: none;
+        border: none;
+        &:hover,
+        &:active,
+        &:focus{
+            color: white;
+        }
+    }
+}
+
+
+.btn-login{
+    @extend %btn;
+    color: $white;
+    background: $dark-blue;
+    border-color: $white;
+    &:hover,
+    &:active,
+    &:focus{
+        background: white;
+        color: $dark-blue;
     }
 }
   

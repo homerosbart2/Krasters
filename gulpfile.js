@@ -21,7 +21,7 @@ var styleSrc = 'source/sass/**/*.scss',
     htmlSrc = 'source/',
     htmlDest = 'build/',
     vendorSrc = 'source/js/vendors/',
-    actionsSrc = 'source/js/actions/',
+    actionSrc = 'source/js/actions/',
     vendorDest = 'build/assets/js/',
     scriptSrc = 'source/js/*.js',
     backEndSrc = 'source/php/**/*.php',
@@ -98,7 +98,7 @@ gulp.task('watch', function(){
     gulp.watch(styleSrc,['sass']);
     gulp.watch(scriptSrc,['scripts']);
     gulp.watch(vendorSrc,['vendors']);
-    gulp.watch(actionsSrc,['actions']);
+    gulp.watch(actionSrc,['actions']);
     gulp.watch(backEndSrc,['php']);
 });
 
