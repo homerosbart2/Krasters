@@ -55,7 +55,7 @@
 .btn-login{
     @extend %btn;
     color: $white;
-    background: $dark-blue;
+    background: none;
     border-color: $white;
     &:hover,
     &:active,

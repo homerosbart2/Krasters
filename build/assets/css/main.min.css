@@ -197,7 +197,7 @@ body {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  background: white;
+  background: none;
   display: flex;
   justify-content: center;
   height: 100%; }
@@ -244,7 +244,7 @@ section {
 
 .btn-login {
   color: #fff;
-  background: #25455E;
+  background: none;
   border-color: #fff; }
   .btn-login:hover, .btn-login:active, .btn-login:focus {
     background: white;
@@ -252,8 +252,8 @@ section {
 
 input[type=text], input[type=password] {
   height: 30px;
-  background: #25455E;
   border: 1px solid white;
+  background: none;
   border-radius: 4px;
   color: white; }
   input[type=text]:focus, input[type=password]:focus {
@@ -269,8 +269,8 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   border: 1px solid white;
-  -webkit-text-fill-color: white;
-  box-shadow: 0 0 0px 1000px #25455E inset;
+  -webkit-text-fill-color: black;
+  box-shadow: 0 0 0px 1000px #faffbd inset !important;
   transition: background-color 5000s ease-in-out 0s; }
 
 ::placeholder {
@@ -328,12 +328,16 @@ html {
   width: 100%;
   left: 0; }
 
+#header {
+  background: url("../img/bg.jpg") no-repeat;
+  background-size: cover;
+  height: 100vh; }
+
 .login-form, .register-form {
   width: 100%;
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  background: #25455E; }
+  flex-direction: column; }
   .login-form input, .register-form input {
     margin: 10px 0px;
     text-align: center; }
@@ -359,7 +363,6 @@ html {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #25455E;
   height: 100vh; }
   .login-register span.login-logo {
     font-size: 40px;
