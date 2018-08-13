@@ -90,12 +90,12 @@ a:link {
 
 function renderAdminUser(){
     //Luego de 1 segundo se redirige
-    $(location).attr('href', 'vistaAdmin');
+    $(location).attr('href', 'php/admin/adminShop.php');
   }
 
 function renderUser(){
   //Luego de 1 segundo se redirige
-  $(locarion).attr('href','/vistaUser')
+  $(locarion).attr('href','php/shop/home.php')
 } 
 
 var iniciarSesion = function(){
@@ -103,7 +103,7 @@ var iniciarSesion = function(){
   password = document.getElementById("login-password").value;
   if(username != "" && password != ""){
     $.ajax({
-        url: 'session/validar_login.php?username=' + username + '&password=' + password,
+        url: 'php/session/validar_login.php?username=' + username + '&password=' + password,
         type: 'POST',
         success: function(r){
           if(r != 0){
@@ -142,7 +142,7 @@ var crearUsuario = function(){
   if(password1 == password2 && password1 != "" && password2 != ""){
     if(username != "" && nombre != ""){
         $.ajax({
-            url: 'usuario/nuevo_usuario.php?name=' + nombre + '&username=' + username + '&password=' + password1,
+            url: 'php/usuario/nuevo_usuario.php?name=' + nombre + '&username=' + username + '&password=' + password1,
             type: 'POST',
             success: function(r){
                 alert(r);
