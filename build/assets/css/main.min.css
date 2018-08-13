@@ -248,7 +248,7 @@ section {
   border-color: #fff; }
   .btn-login:hover, .btn-login:active, .btn-login:focus {
     background: white;
-    color: #25455E; }
+    color: black; }
 
 input[type=text], input[type=password] {
   height: 30px;
