@@ -1,9 +1,11 @@
-input[type=text],input[type=password]{
+input[type=text],input[type=password], textarea, select{
     height: 30px;
+    margin: 10px 0px;
     border: 1px solid white;
     background: none;
-    border-radius: 4px;
+    border-radius: 3px;
     color: white;
+    text-align: center;
     &:focus{
         outline: none !important;
         border:1px solid white;
@@ -44,4 +46,36 @@ input[type=file] {
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
+}
+
+.admin-shop-form{
+    label{
+        @extend %btn;
+        color: black;
+        border-color: $white;
+        background: $white;
+        border-radius: 0px;
+        display: inline-block;
+        cursor: pointer;
+        &:hover,
+        &:active,
+        &:focus{
+            color: black;
+            background: $white;
+        }
+    }
+    .input-container{
+        margin-bottom: 8px;
+    }
+}
+
+.input-container{
+    border-bottom: 3px solid black;
+}
+
+.form-row{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
 }

@@ -44,6 +44,9 @@
                     </form>
                 </div>
             </div>
+            <div class="copyright-footer">
+            <small>Copyright &copy; <span class="creator-name">Diego Alay</span> & <span class="creator-name">Henry Campos</span></small>
+            </div>
         </div>
     </section>
     <script src="./assets/js/vendors.js"></script>
