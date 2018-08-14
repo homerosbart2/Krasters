@@ -1,0 +1,41 @@
+#header-admin{
+    .wrapper{
+        .shop-admin{
+            display:flex;
+            justify-content: center;
+            background: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+        }
+        
+    }
+}
+
+.admin-shop-form{
+    display: flex;
+    flex-direction: column;
+    #file-name{
+        color: $black;
+    }
+    textarea{
+        height: 70px;
+    }
+    select, #producto_precio{
+        width: 47%;
+    }
+    select{
+        height: 34px;
+    }
+    input, textarea, select{
+        border-color: $black;
+        color: $black;
+        text-align: center;
+        transition: all 0.2s ease;
+        &:active,
+        &:focus{
+            border-color: $black;
+        }
+    }
+    
+}
