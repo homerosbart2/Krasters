@@ -26,7 +26,7 @@
                         <input type='text'  id='login-username' name='' placeholder='Ingrese el usuario' required>
                         <input type='password'  id='login-password' name='' placeholder='Ingrese la contraseña' required>
                         <span class="login-buttons">
-                            <a href="#" type='submit' id='btn_login' name='submit' value='Iniciar' class='btn3 btn-login iniciar_sesion'> LOGIN </a>
+                            <a href="#" type='submit' id='btn_login' name='submit' value='Iniciar' class='btn-login iniciar_sesion'> LOGIN </a>
                             <a class='btn-register' onclick='updateFormContainer();'> Registrar</a> 
                         </span>
                     </form>
@@ -38,8 +38,9 @@
                         <input type='password' id='registro_password1' name='' placeholder='Ingrese la contraseña' required>
                         <input type='password'  id='registro_password2' name='' placeholder='Repita la contraseña' required>
                         <span class="login-buttons">
-                            <a href="#" type='submit' id='btn_registrar' name='submit' value='Iniciar' class='btn3 btn-login iniciar_sesion'> REGISTRAR </a>
-                            <a class='btn-register' onclick='updateFormContainer();'>Cancelar</a> 
+                            <a class='btn-cancel' onclick='updateFormContainer();'>Cancelar</a>
+                            <a href="#" type='submit' id='btn_registrar' name='submit' value='Iniciar' class='btn-login iniciar_sesion'> REGISTRAR </a>
+                             
                         </span>
                     </form>
                 </div>
@@ -52,39 +53,6 @@
 </body>
 
 </html>
-
-<style>
-
-a:hover {
-    color: #0074D9;
-    text-decoration: none;
-}
-
-a:visited {
-    text-decoration: none;
-}
-
-a:link {
-    text-decoration: none;
-}
-
-.btn-login {
-    display: block;
-    width: 35%;
-    height: 20%;
-    border-style: solid;
-    border-color: black;
-    background: white;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    color: black;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-right: 10px;
-}
-
-</style>
 
 <script>
 
