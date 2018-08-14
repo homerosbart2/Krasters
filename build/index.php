@@ -57,12 +57,12 @@
 
 function renderAdminUser(){
     //Luego de 1 segundo se redirige
-    $(location).attr('href', 'php/admin/adminShop.php');
+    $(location).attr('href', 'assets/php/admin/adminShop.php');
   }
 
 function renderUser(){
   //Luego de 1 segundo se redirige
-  $(locarion).attr('href','php/shop/home.php')
+  $(location).attr('href','assets/php/shop/home.php')
 } 
 
 var iniciarSesion = function(){
@@ -70,17 +70,18 @@ var iniciarSesion = function(){
   password = document.getElementById("login-password").value;
   if(username != "" && password != ""){
     $.ajax({
-        url: 'php/session/validar_login.php?username=' + username + '&password=' + password,
+        url: 'assets/php/session/validar_login.php?username=' + username + '&password=' + password,
         type: 'POST',
         success: function(r){
-          if(r != 0){
+          if(r != -1){
             new PNotify({
               title: 'Login',
               text: 'Bienvenido ' + username + ".",
               type: 'success',
               styling: 'bootstrap3'
             });
-            //setTimeout("renderUser()",1000);        
+            if(r == 0) setTimeout("renderAdminUser()",1000); //SUPERADMIN ROLE        
+            else setTimeout("renderUser()",1000); //ADMIN ROLE
           }else{
             new PNotify({
               title: 'Login',
@@ -109,7 +110,7 @@ var crearUsuario = function(){
   if(password1 == password2 && password1 != "" && password2 != ""){
     if(username != "" && nombre != ""){
         $.ajax({
-            url: 'php/usuario/nuevo_usuario.php?name=' + nombre + '&username=' + username + '&password=' + password1,
+            url: 'assets/php/usuario/nuevo_usuario.php?name=' + nombre + '&username=' + username + '&password=' + password1,
             type: 'POST',
             success: function(r){
                 alert(r);
@@ -120,8 +121,8 @@ var crearUsuario = function(){
                     type: 'success',
                     styling: 'bootstrap3'
                     });
-                    if(r == 0) setTimeout("renderUser()",1000);    
-                    else setTimeout("renderAdminUser()",1000);      
+                    if(r == 0) setTimeout("renderAdminUser()",1000);    
+                    else setTimeout("renderUser()",1000);      
                 }else{
                     new PNotify({
                     title: 'Nuevo usuario',
