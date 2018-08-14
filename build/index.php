@@ -13,14 +13,13 @@
 </head>
 
 <body>
-    <section id="header">
+    <section id="header-login">
         <div class="wrapper">
             <div class="login-register">
                 <span class="login-logo">
                     <b>KRAS</b>TERS
                 </span>
                 <div class="form-container">
-                   
                     <form id="login-form" class="login-form">
                         <input type='hidden' name='add' value='G'>
                         <input type='text'  id='login-username' name='' placeholder='Ingrese el usuario' required>

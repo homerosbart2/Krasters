@@ -185,7 +185,7 @@ html {
   box-sizing: border-box; }
 
 body {
-  background: #25455E;
+  background: white;
   font-size: 14px;
   line-height: 1.6;
   font-size: 14px;
@@ -281,6 +281,15 @@ input:-webkit-autofill {
   /* Microsoft Edge */
   color: #999999; }
 
+/* Inputs for files */
+input[type=file] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1; }
+
 a {
   color: #0074D9;
   text-decoration: none;
@@ -323,7 +332,7 @@ html {
   width: 100%;
   left: 0; }
 
-#header {
+#header-login {
   background: url("../img/bg.jpg") no-repeat;
   background-size: cover;
   height: 100vh; }
