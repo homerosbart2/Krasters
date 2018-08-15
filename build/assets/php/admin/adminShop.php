@@ -17,11 +17,31 @@
     <section id="header-admin">
         <div class="wrapper">
             <div class="shop-admin">
-                <span class="title">
-                    <b>AGREGAR</b> PRODUCTO
-                </span>
                 <div class="form-container">
-                    <form id="admin-shop-form" class="admin-shop-form">
+
+                    <h1>ADMINISITRACIÓN DE <span class="company-name"><b>KRAS</b>TERS</span></h1>
+
+                    <form action="" class="button-bar">
+                        <input type="radio" name="gender" id="add-new-section" value="male">
+                        <label for="add-new-section" class="btn-menu" >
+                            Agregar nuevo
+                        </label>
+                        <input type="radio" name="gender" id="add-existence-section" value="female"> 
+                        <label for="add-existence-section" class="btn-menu">
+                            Agregar existencia
+                        </label>
+                        <input type="radio" name="gender" id="edit-section" value="other"> 
+                        <label for="edit-section" class="btn-menu">
+                        <i class="fas fa-edit"></i> Editar
+                        </label>
+                        
+                    </form>
+
+                    <span class="separation l"></span>
+
+                    <span id="form-title" class="form-title"></span>
+                    <span id="form-description" class="description"></span>
+                    <form id="admin-shop-form-add" class="admin-shop-form">
                     <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
                     <span class='form-row'>
                         <select name="color-select" id="color-select">
@@ -30,15 +50,32 @@
                             <option value="negro">Negro</option>
                             <option value="blanco">Blanco</option>
                         </select>
-                        <input type='text' id='producto_precio' name='' placeholder='Precio' required>
+                        <span class="input-icon">
+                            <input type='text' id='producto_precio' name='' placeholder='Precio' required>
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
                     </span>
-                    <textarea rows="4" cols="50" name="comment" form="usrform" placeholder='Ingresa una descripción'></textarea>
+                    <span class='form-row'>
+                        <span class="input-icon">
+                            <input type='text' id='producto_talla' name='' placeholder='Talla' required>
+                            <i class="fas fa-shoe-prints"></i>
+                        </span>
+                        <span class="input-icon">
+                            <input type='text' id='producto_cantidad' name='' placeholder='Cantidad' required>
+                            <i class="fas fa-layer-group"></i>
+                        </span>
+                    </span>
+                    <textarea id="producto_descripcion" rows="4" cols="50" name="comment" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
                     <input type="file" name="file" id="file" class="inputfile" />
                     <span class="input-container"><label for="file"><i class="fas fa-file-image"></i></label><span id="file-name"></span></span>
                     <span class="form-row">
                         <span></span>
-                        <a class="btn-register"><i class="fas fa-plus"></i></a>
+                        <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
                     </span>
+                    </form>
+                    <form id="admin-shop-form-existence" class="admin-shop-form">
+                    </form>
+                    <form id="admin-shop-form-edit" class="admin-shop-form">
                     </form>
                 </div>
             </div>
@@ -52,11 +89,45 @@
 </html>
 
 <script>
+    $(document).ready(function(){
+        $("#admin-shop-form-add").hide();
+    });
+
     $('#file').click(function() {
         $('#file').change(function() {
             var filename = document.getElementById("file").files[0].name;
             console.log(filename);
             $('#file-name').html(' ' + filename + ' <i class="fas fa-check"></i>');
         });
+    });
+
+    $("#add-new-section").click(function(){
+        if($("#add-new-section").is(":checked")){
+            $("#admin-shop-form-add").show();
+            $("#admin-shop-form-existence").hide();
+            $("#admin-shop-form-edit").hide();
+            $("#form-title").html("<b>AGREGAR</b> PRODUCTO");
+            $("#form-description").html('<i class="fas fa-exclamation-circle"></i> Agrega nuevos productos a <span class="company-name"><b>KRAS</b>TERS</span> y llena la tienda.');
+        }
+    });
+
+    $("#add-existence-section").click(function(){
+        if($("#add-existence-section").is(":checked")){
+            $("#admin-shop-form-add").hide();
+            $("#admin-shop-form-existence").show();
+            $("#admin-shop-form-edit").hide();
+            $("#form-title").html("<b>AGREGAR</b> EXISTENCIA");
+            $("#form-description").html('<i class="fas fa-exclamation-circle"></i> Agrega existencia a los productos ya incluidos en <span class="company-name"><b>KRAS</b>TERS</span>.');
+        }
+    });
+
+    $("#edit-section").click(function(){
+        if($("#edit-section").is(":checked")){
+            $("#admin-shop-form-add").hide();
+            $("#admin-shop-form-existence").hide();
+            $("#admin-shop-form-edit").show();
+            $("#form-title").html("<b>EDITAR</b> PRODUCTO");
+            $("#form-description").html('<i class="fas fa-exclamation-circle"></i> Edita el precio, descripción y nombre de un producto de <span class="company-name"><b>KRAS</b>TERS</span>.');
+        }
     });
 </script>

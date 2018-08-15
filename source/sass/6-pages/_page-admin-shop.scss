@@ -7,6 +7,16 @@
             flex-direction: column;
             align-items: center;
             padding-top: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+            .form-container{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                max-width: 400px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
         }
         
     }
@@ -15,19 +25,31 @@
 .admin-shop-form{
     display: flex;
     flex-direction: column;
+    transition: all 0.2s ease;
     #file-name{
         color: $black;
     }
     textarea{
         height: 70px;
     }
-    select, #producto_precio{
-        width: 47%;
+    .form-row{
+        select, .input-icon{
+            width: 47%;
+        }
     }
     select{
         height: 34px;
+        color: white;
+        background: black;
+        border-color: black;
+        text-align-last:center;
+        &:hover,
+        &:focus{
+            color: black;
+            background: white;
+        }
     }
-    input, textarea, select{
+    input, textarea{
         border-color: $black;
         color: $black;
         text-align: center;
