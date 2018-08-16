@@ -36,20 +36,20 @@
     }
 }
 
-.register-form{
-    .btn-cancel{
-        @extend %btn;
-        margin-right: auto;
+
+.btn-cancel{
+    @extend %btn;
+    margin-right: auto;
+    color: $light-pink;
+    background: none;
+    border: none;
+    &:hover,
+    &:active,
+    &:focus{
         color: $light-pink;
-        background: none;
-        border: none;
-        &:hover,
-        &:active,
-        &:focus{
-            color: $light-pink;
-        }
     }
 }
+
 
 
 .btn-login{
