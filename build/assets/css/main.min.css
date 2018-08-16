@@ -206,13 +206,14 @@ body {
 section {
   display: -webkit-box; }
 
-.btn-register, .register-form .btn-cancel, .btn-login, .admin-shop-form label {
+.btn-register, .register-form .btn-cancel, .btn-login, .btn-menu, .admin-shop-form label {
   display: inline-block;
   padding: 5px 10px;
   color: black;
   text-align: center;
   font-size: 13px;
   height: 22px;
+  line-height: 22px;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
@@ -221,7 +222,7 @@ section {
   border: 1px solid;
   cursor: pointer;
   transition: all 0.2s ease; }
-  .btn-register:hover, .register-form .btn-cancel:hover, .btn-login:hover, .admin-shop-form label:hover, .btn-register:active, .register-form .btn-cancel:active, .btn-login:active, .admin-shop-form label:active, .btn-register:focus, .register-form .btn-cancel:focus, .btn-login:focus, .admin-shop-form label:focus {
+  .btn-register:hover, .register-form .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .admin-shop-form label:hover, .btn-register:active, .register-form .btn-cancel:active, .btn-login:active, .btn-menu:active, .admin-shop-form label:active, .btn-register:focus, .register-form .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .admin-shop-form label:focus {
     outline: 0; }
 
 .btn-register {
@@ -251,6 +252,14 @@ section {
     color: black;
     text-decoration: none !important; }
 
+.btn-menu {
+  color: #6C5B7D;
+  border-color: #6C5B7D; }
+  .btn-menu:hover, .btn-menu:active, .btn-menu:focus {
+    background: #6C5B7D;
+    border-color: #6C5B7D;
+    color: white; }
+
 input[type=text], input[type=password], textarea, select {
   height: 30px;
   margin: 10px 0px;
@@ -258,7 +267,8 @@ input[type=text], input[type=password], textarea, select {
   background: none;
   border-radius: 3px;
   color: white;
-  text-align: center; }
+  text-align: center;
+  transition: all 0.2s ease; }
   input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus {
     outline: none !important;
     border: 1px solid white;
@@ -314,7 +324,22 @@ input[type=file] {
   display: flex;
   justify-content: space-between;
   padding-left: 5px;
-  padding-right: 5px; }
+  padding-right: 7px; }
+
+.input-icon {
+  position: relative; }
+  .input-icon input[type=text], .input-icon select {
+    width: 100%; }
+    .input-icon input[type=text] + i, .input-icon select + i {
+      transition: all 0.2s ease; }
+  .input-icon i {
+    position: absolute;
+    left: 1px;
+    top: 12px;
+    padding: 8px 8px;
+    background: white;
+    width: 15px;
+    text-align: center; }
 
 a {
   color: #0074D9;
@@ -341,8 +366,29 @@ body {
 html {
   font-family: 'Roboto', sans-serif; }
 
-.title {
-  font-size: 23px; }
+.form-title {
+  font-size: 21px; }
+
+.company-name {
+  color: #F2657F; }
+
+.separation.s, .separation.m, .separation.l, .separation.xl, .separation.xxl {
+  width: 100%; }
+
+.separation.s {
+  height: 6px; }
+
+.separation.m {
+  height: 12px; }
+
+.separation.l {
+  height: 24px; }
+
+.separation.xl {
+  height: 48px; }
+
+.separation.xxl {
+  height: 96px; }
 
 .copyright-footer {
   display: flex;
@@ -366,6 +412,18 @@ html {
   top: 0;
   width: 100%;
   left: 0; }
+
+.button-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; }
+  .button-bar input {
+    display: none; }
+    .button-bar input:checked + label {
+      background: #6C5B7D;
+      border-color: #6C5B7D;
+      color: white; }
 
 #header-login {
   background: url("../img/bg.jpg") no-repeat;
@@ -415,23 +473,48 @@ html {
   background: none;
   flex-direction: column;
   align-items: center;
-  padding-top: 10px; }
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px; }
+  #header-admin .wrapper .shop-admin .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin-left: 20px;
+    margin-right: 20px; }
 
 .admin-shop-form {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  transition: all 0.2s ease; }
   .admin-shop-form #file-name {
     color: #111; }
   .admin-shop-form textarea {
     height: 70px; }
-  .admin-shop-form select, .admin-shop-form #producto_precio {
+  .admin-shop-form .form-row .input-icon {
     width: 47%; }
   .admin-shop-form select {
-    height: 34px; }
-  .admin-shop-form input, .admin-shop-form textarea, .admin-shop-form select {
+    height: 34px;
+    color: white;
+    background: black;
+    border-color: black;
+    text-align-last: center;
+    font-weight: 100; }
+    .admin-shop-form select + i {
+      color: white;
+      background: black; }
+    .admin-shop-form select:hover, .admin-shop-form select:focus {
+      color: black;
+      background: white; }
+    .admin-shop-form select:hover + i,
+    .admin-shop-form select:focus + i {
+      color: black;
+      background: white; }
+  .admin-shop-form input, .admin-shop-form textarea {
     border-color: #111;
     color: #111;
     text-align: center;
     transition: all 0.2s ease; }
-    .admin-shop-form input:active, .admin-shop-form input:focus, .admin-shop-form textarea:active, .admin-shop-form textarea:focus, .admin-shop-form select:active, .admin-shop-form select:focus {
+    .admin-shop-form input:active, .admin-shop-form input:focus, .admin-shop-form textarea:active, .admin-shop-form textarea:focus {
       border-color: #111; }
