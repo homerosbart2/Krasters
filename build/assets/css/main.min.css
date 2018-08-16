@@ -372,6 +372,9 @@ html {
 .company-name {
   color: #F2657F; }
 
+.nav-logo {
+  font-size: 24px; }
+
 .separation.s, .separation.m, .separation.l, .separation.xl, .separation.xxl {
   width: 100%; }
 
@@ -389,6 +392,49 @@ html {
 
 .separation.xxl {
   height: 96px; }
+
+nav {
+  width: 100%; }
+
+.main-nav {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0;
+  background: #25455E;
+  box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.24); }
+  .main-nav li {
+    list-style: none;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center; }
+  .main-nav a {
+    text-decoration: none;
+    color: white;
+    padding: 6px 15px;
+    display: flex;
+    transition: all 0.2s ease; }
+  .main-nav .options-division {
+    display: flex;
+    flex-wrap: nowrap; }
+    .main-nav .options-division .option-icon {
+      display: flex;
+      align-items: center;
+      margin-right: 3px; }
+  .main-nav .nav-option:hover {
+    background: white;
+    color: #25455E; }
+  .main-nav .nav-user {
+    font-size: 18px;
+    cursor: default;
+    border-right: 2px solid white;
+    padding-right: 30px; }
+  .main-nav .nav-logo:hover {
+    color: #F2657F;
+    transform: translateX(5px); }
 
 .copyright-footer {
   display: flex;

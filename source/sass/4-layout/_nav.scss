@@ -1,0 +1,56 @@
+nav{
+    width: 100%;
+}
+
+
+.main-nav{
+    position: fixed;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0;
+    background: $dark-blue;
+    box-shadow:  0 7px 25px 0 rgba(0,0,0,0.24); 
+    li{
+        list-style: none;
+        margin: 0 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    a{
+        text-decoration: none;
+        color: white;
+        padding: 6px 15px;
+        display: flex;
+        transition: all 0.2s ease;
+    }
+    .options-division{
+        display: flex;
+        flex-wrap: nowrap;
+        .option-icon{
+            display: flex;
+            align-items: center;
+            margin-right: 3px;
+        }
+    }
+    .nav-option{
+        &:hover{
+            background: white;
+            color: $dark-blue;
+        }
+    }
+    .nav-user{
+        font-size: 18px;
+        cursor: default;
+        border-right: 2px solid white;
+        padding-right: 30px;
+    }
+    .nav-logo{
+        &:hover{
+            color: $light-pink;
+            transform: translateX(5px);
+        }
+    }
+}
