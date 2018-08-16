@@ -1,0 +1,14 @@
+.button-bar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    input{
+        display: none;
+        &:checked + label{
+            background: $purple;
+            border-color: $purple;
+            color: white;
+        }
+    }
+}
