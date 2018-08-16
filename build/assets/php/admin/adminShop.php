@@ -40,16 +40,20 @@
                     <span class="separation l"></span>
 
                     <span id="form-title" class="form-title"></span>
-                    <span id="form-description" class="description"></span>
+                    <span id="form-description" class="description"><i class="fas fa-exclamation-circle"></i> Administra <span class="company-name"><b>KRAS</b>TERS</span> seleccionando una sección.</span>
                     <form id="admin-shop-form-add" class="admin-shop-form">
                     <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
                     <span class='form-row'>
+                        <span class="input-icon">
                         <select name="color-select" id="color-select">
+                            <option value="0" disabled selected>Color</option>
                             <option value="rojo">Rojo</option>
                             <option value="azul">Azul</option>
                             <option value="negro">Negro</option>
                             <option value="blanco">Blanco</option>
                         </select>
+                        <i class="fas fa-fill-drip"></i>
+                        </span>
                         <span class="input-icon">
                             <input type='text' id='producto_precio' name='' placeholder='Precio' required>
                             <i class="fas fa-dollar-sign"></i>
@@ -74,8 +78,56 @@
                     </span>
                     </form>
                     <form id="admin-shop-form-existence" class="admin-shop-form">
+                        <select name="color-select" id="color-select">
+                            <option value="0" disabled selected>Seleccione producto</option>
+                            <option value="p1">Producto 1</option>
+                            <option value="p2">Producto 2</option>
+                            <option value="p3">Producto 3</option>
+                        </select>
+                        <span class="form-row">
+                            <span class="input-icon">
+                                <input type='text' id='producto_talla' name='' placeholder='Talla' required>
+                                <i class="fas fa-shoe-prints"></i>
+                            </span>
+                            <span class="input-icon">
+                                <input type='text' id='producto_cantidad' name='' placeholder='Cantidad' required>
+                                <i class="fas fa-layer-group"></i>
+                            </span>
+                        </span>
+                        <span class='form-row'>
+                            <span class="input-icon">
+                            <select name="color-select" id="color-select">
+                                <option value="0" disabled selected>Color</option>
+                                <option value="rojo">Rojo</option>
+                                <option value="azul">Azul</option>
+                                <option value="negro">Negro</option>
+                                <option value="blanco">Blanco</option>
+                            </select>
+                            <i class="fas fa-fill-drip"></i>
+                            </span>
+                        </span>
+                        <span class="form-row">
+                            <span></span>
+                            <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                        </span>
                     </form>
                     <form id="admin-shop-form-edit" class="admin-shop-form">
+                        <select name="color-select" id="color-select">
+                            <option value="0" disabled selected>Seleccione producto</option>
+                            <option value="p1">Producto 1</option>
+                            <option value="p2">Producto 2</option>
+                            <option value="p3">Producto 3</option>
+                        </select>
+                        <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
+                        <span class="input-icon">
+                            <input type='text' id='producto_precio' name='' placeholder='Precio' required>
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
+                        <textarea id="producto_descripcion" rows="4" cols="50" name="comment" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
+                        <span class="form-row">
+                            <span></span>
+                            <a class="btn-register"><i class="fas fa-save"></i> Guardar</a>
+                        </span>
                     </form>
                 </div>
             </div>
@@ -91,6 +143,8 @@
 <script>
     $(document).ready(function(){
         $("#admin-shop-form-add").hide();
+        $("#admin-shop-form-existence").hide();
+        $("#admin-shop-form-edit").hide();
     });
 
     $('#file').click(function() {
@@ -102,7 +156,7 @@
     });
 
     $("#add-new-section").click(function(){
-        if($("#add-new-section").is(":checked")){
+        if($(this).is(":checked")){
             $("#admin-shop-form-add").show();
             $("#admin-shop-form-existence").hide();
             $("#admin-shop-form-edit").hide();
@@ -112,7 +166,7 @@
     });
 
     $("#add-existence-section").click(function(){
-        if($("#add-existence-section").is(":checked")){
+        if($(this).is(":checked")){
             $("#admin-shop-form-add").hide();
             $("#admin-shop-form-existence").show();
             $("#admin-shop-form-edit").hide();
@@ -122,7 +176,7 @@
     });
 
     $("#edit-section").click(function(){
-        if($("#edit-section").is(":checked")){
+        if($(this).is(":checked")){
             $("#admin-shop-form-add").hide();
             $("#admin-shop-form-existence").hide();
             $("#admin-shop-form-edit").show();

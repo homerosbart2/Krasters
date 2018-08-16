@@ -328,8 +328,10 @@ input[type=file] {
 
 .input-icon {
   position: relative; }
-  .input-icon input[type=text] {
+  .input-icon input[type=text], .input-icon select {
     width: 100%; }
+    .input-icon input[type=text] + i, .input-icon select + i {
+      transition: all 0.2s ease; }
   .input-icon i {
     position: absolute;
     left: 1px;
@@ -490,15 +492,23 @@ html {
     color: #111; }
   .admin-shop-form textarea {
     height: 70px; }
-  .admin-shop-form .form-row select, .admin-shop-form .form-row .input-icon {
+  .admin-shop-form .form-row .input-icon {
     width: 47%; }
   .admin-shop-form select {
     height: 34px;
     color: white;
     background: black;
     border-color: black;
-    text-align-last: center; }
+    text-align-last: center;
+    font-weight: 100; }
+    .admin-shop-form select + i {
+      color: white;
+      background: black; }
     .admin-shop-form select:hover, .admin-shop-form select:focus {
+      color: black;
+      background: white; }
+    .admin-shop-form select:hover + i,
+    .admin-shop-form select:focus + i {
       color: black;
       background: white; }
   .admin-shop-form input, .admin-shop-form textarea {

@@ -33,7 +33,7 @@
         height: 70px;
     }
     .form-row{
-        select, .input-icon{
+        .input-icon{
             width: 47%;
         }
     }
@@ -43,8 +43,18 @@
         background: black;
         border-color: black;
         text-align-last:center;
+        font-weight: 100;
+        & + i{
+            color: white;
+            background: black;
+        }
         &:hover,
         &:focus{
+            color: black;
+            background: white;
+        }
+        &:hover + i,
+        &:focus + i{
             color: black;
             background: white;
         }
