@@ -17,7 +17,7 @@
                     <li><a href="" class="nav-logo"><b>KRAS</b>TERS</a></li>
                 </span>
                 <span class="options-division">
-                    <li><a href="" class="nav-user"><b>usuario</b>: user</a></li>
+                    <li class="nav-user"><a href=""><b>usuario</b>: user</a></li>
                     <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 1</nav></a></li>
                     <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 2</nav></a></li>
                     <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 3</nav></a></li>

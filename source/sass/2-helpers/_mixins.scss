@@ -1,0 +1,10 @@
+@mixin sectionPadding{
+  padding: 60px 0;
+}
+  
+
+@mixin media-max($width) {
+    @media only screen and (max-width: $width) {
+        @content;
+    }
+}
