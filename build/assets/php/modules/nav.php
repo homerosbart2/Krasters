@@ -1,8 +1,5 @@
 <html>
   <head>
-     <title>
-        QUINIELA
-     </title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../../js/jquery.min.js" type="text/javascript"></script>
@@ -21,9 +18,9 @@
                 </span>
                 <span class="options-division">
                     <li><a href="" class="nav-user"><b>usuario</b>: user</a></li>
-                    <li><a href="" class="nav-option">option 1</a></li>
-                    <li><a href="" class="nav-option">option 2</a></li>
-                    <li><a href="" class="nav-option">option 3</a></li>
+                    <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 1</nav></a></li>
+                    <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 2</nav></a></li>
+                    <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 3</nav></a></li>
                 </span>
             </ul>
         </nav>
@@ -31,12 +28,3 @@
      
   </body>
 </html>
-
-<script>
-$(document).ready(function(){
-    $("#dropdown-toggle").click(function(){
-        $("#mobile-dropdown-menu").toggle();
-    })
-})
-
-</script>
