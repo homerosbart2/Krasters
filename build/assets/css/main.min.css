@@ -206,7 +206,7 @@ body {
 section {
   display: -webkit-box; }
 
-.btn-register, .register-form .btn-cancel, .btn-login, .btn-menu, .admin-shop-form label {
+.btn-register, .btn-cancel, .btn-login, .btn-menu, .admin-shop-form label {
   display: inline-block;
   padding: 5px 10px;
   color: black;
@@ -222,7 +222,7 @@ section {
   border: 1px solid;
   cursor: pointer;
   transition: all 0.2s ease; }
-  .btn-register:hover, .register-form .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .admin-shop-form label:hover, .btn-register:active, .register-form .btn-cancel:active, .btn-login:active, .btn-menu:active, .admin-shop-form label:active, .btn-register:focus, .register-form .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .admin-shop-form label:focus {
+  .btn-register:hover, .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .admin-shop-form label:hover, .btn-register:active, .btn-cancel:active, .btn-login:active, .btn-menu:active, .admin-shop-form label:active, .btn-register:focus, .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .admin-shop-form label:focus {
     outline: 0; }
 
 .btn-register {
@@ -235,12 +235,12 @@ section {
     color: white !important;
     box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.24); }
 
-.register-form .btn-cancel {
+.btn-cancel {
   margin-right: auto;
   color: #F2657F;
   background: none;
   border: none; }
-  .register-form .btn-cancel:hover, .register-form .btn-cancel:active, .register-form .btn-cancel:focus {
+  .btn-cancel:hover, .btn-cancel:active, .btn-cancel:focus {
     color: #F2657F; }
 
 .btn-login {
@@ -322,6 +322,7 @@ input[type=file] {
 
 .form-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding-left: 5px;
   padding-right: 7px; }
@@ -334,7 +335,7 @@ input[type=file] {
       transition: all 0.2s ease; }
   .input-icon i {
     position: absolute;
-    left: 1px;
+    left: 2px;
     top: 12px;
     padding: 8px 8px;
     background: white;
@@ -367,7 +368,7 @@ html {
   font-family: 'Roboto', sans-serif; }
 
 .form-title {
-  font-size: 21px; }
+  font-size: 18px; }
 
 .company-name {
   color: #F2657F; }
@@ -404,7 +405,7 @@ nav {
   justify-content: space-between;
   padding: 0 0;
   background: #25455E;
-  box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.24); }
+  box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.15); }
   .main-nav li {
     list-style: none;
     margin: 0 10px;
@@ -424,6 +425,16 @@ nav {
       display: flex;
       align-items: center;
       margin-right: 3px; }
+    @media only screen and (max-width: 700px) {
+      .main-nav .options-division li {
+        margin: 0 5px; }
+      .main-nav .options-division .option-label {
+        display: none; }
+      .main-nav .options-division .option-icon {
+        font-size: 20px; } }
+    @media only screen and (max-width: 550px) {
+      .main-nav .options-division .nav-user {
+        display: none; } }
   .main-nav .nav-option:hover {
     background: white;
     color: #25455E; }
@@ -431,10 +442,21 @@ nav {
     font-size: 18px;
     cursor: default;
     border-right: 2px solid white;
-    padding-right: 30px; }
+    padding-right: 10px; }
   .main-nav .nav-logo:hover {
     color: #F2657F;
     transform: translateX(5px); }
+  @media only screen and (max-width: 350px) {
+    .main-nav .logo-division {
+      display: none; }
+    .main-nav .options-division {
+      width: 100%;
+      justify-content: space-around;
+      padding-top: 10px;
+      padding-bottom: 10px; } }
+
+#header {
+  height: 50px; }
 
 .copyright-footer {
   display: flex;
@@ -526,7 +548,7 @@ nav {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 400px;
+    max-width: 550px;
     margin-left: 20px;
     margin-right: 20px; }
 
