@@ -1,4 +1,4 @@
-input[type=text],input[type=password], textarea, select{
+input[type=text],input[type=password], input[type=number], textarea, select, .btn.dropdown-toggle{
     height: 30px;
     margin: 10px 0px;
     border: 1px solid white;
@@ -84,7 +84,7 @@ input[type=file] {
 
 .input-icon{
     position: relative;
-    input[type=text], select{
+    input[type=text], input[type=number], select{
         width: 100%;
         & + i{
             transition: all 0.2s ease;
@@ -98,6 +98,7 @@ input[type=file] {
         background: white;
         width: 15px;
         text-align: center;
+        z-index: 100;
     }
 }
 

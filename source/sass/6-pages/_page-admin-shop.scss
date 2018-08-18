@@ -37,7 +37,7 @@
             width: 47%;
         }
     }
-    select{
+    select, .btn.dropdown-toggle{
         height: 34px;
         color: white;
         background: black;
@@ -59,6 +59,25 @@
             background: white;
         }
     }
+
+    .btn-group.bootstrap-select + i{
+        transition: all 0.2s ease;
+        color: white;
+        background: black;
+    }
+
+    .btn-group.bootstrap-select:hover + i,
+    .btn-group.bootstrap-select:focus + i,
+    .btn-group.bootstrap-select:active + i{
+        color: black;
+        background: white;
+    }
+
+    .btn-group.bootstrap-select.open + i{
+        color: black;
+        background: white;
+    }
+
     input, textarea{
         border-color: $black;
         color: $black;
