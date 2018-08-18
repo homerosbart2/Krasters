@@ -61,9 +61,11 @@ nav{
     }
     .nav-user{
         font-size: 18px;
-        cursor: default;
         border-right: 2px solid white;
         padding-right: 10px;
+        a{
+            cursor: default;
+        }
     }
     .nav-logo{
         &:hover{
