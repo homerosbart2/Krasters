@@ -1,11 +1,6 @@
 <html>
 <head>
-    <title>Krasters</title>
-    <script src="../../js/jquery.min.js" type="text/javascript"></script>
-    <script src="../../js/pnotify.custom.min.js" type="text/javascript"></script>
-    <link href="../../css/pnotify.custom.min.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="../../css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />    
-    <link rel="stylesheet" href="../../css/main.min.css" />    
+    <title>Krasters</title>   
 </head>
 <?php
     include '../modules/nav.php';
