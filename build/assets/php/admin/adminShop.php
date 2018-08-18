@@ -2,7 +2,15 @@
 <html lang="en">
 
 <head>
-    <title>Administración</title>
+    <title>Administración</title>    
+    <!-- 
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"  media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../css/bootstrap-select.css"  media="all" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"  type="text/javascript"></script> 
+    <script src="../../js/bootstrap-select.js" type="text/javascript"></script> 
+    -->
+
 </head>
 
 <?php
@@ -14,7 +22,6 @@
         <div class="wrapper">
             <div class="shop-admin">
                 <div class="form-container">
-
                     <h1>ADMINISITRACIÓN DE <span class="company-name"><b>KRAS</b>TERS</span></h1>
 
                     <form action="" class="button-bar">
@@ -45,36 +52,51 @@
                     <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
                     <span class='form-row'>
                         <span class="input-icon">
-                        <select name="color-select" id="color-select">
-                            <option value="0" disabled selected>Color</option>
-                            <option value="rojo">Rojo</option>
-                            <option value="azul">Azul</option>
-                            <option value="negro">Negro</option>
-                            <option value="blanco">Blanco</option>
+                        <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" name="producto-color-select" id="color-select">
+                            <?php
+                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                $query = "SELECT C.color_nombre,C.color_codigo FROM Colores as C order by C.color_nombre";
+                                $result = pg_query($link, $query);
+                                echo "<option value=default selected=selected disabled>Seleccione color</option>";
+                                while ($row = pg_fetch_assoc($result)){
+                                    $codigo=$row["color_nombre"];
+                                    $nombre=$row["color_nombre"];
+                                    echo "<option value='".$codigo."'>".$nombre."</option>";         
+                                }
+                                pg_close($link);
+                            ?>
                         </select>
                         <i class="fas fa-fill-drip"></i>
                         </span>
                         <span class="input-icon">
-                            <input type='text' id='producto_precio' name='' placeholder='Precio' required>
+                            <input type='number' min="1" id='producto_precio' name='' placeholder='Precio' required>
                             <i class="fas fa-dollar-sign"></i>
                         </span>
                     </span>
                     <span class='form-row'>
                         <span class="input-icon">
-                            <input type='text' id='producto_talla' name='' placeholder='Talla' required>
+                            <input type='number' min="25" id='producto_talla' name='' placeholder='Talla' required>
                             <i class="fas fa-shoe-prints"></i>
                         </span>
                         <span class="input-icon">
-                            <input type='text' id='producto_cantidad' name='' placeholder='Cantidad' required>
+                            <input type='number' min="1" id='producto_cantidad' name='' placeholder='Cantidad' required>
                             <i class="fas fa-layer-group"></i>
                         </span>
                     </span>
                     <span class="input-icon">
-                        <select name="marca-select" id="marca-select">
-                            <option value="0" disabled selected>Marca</option>
-                            <option value="nike">Nike</option>
-                            <option value="adidas">Adidas</option>
-                            <option value="everlast">Everlast</option>
+                        <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" name="marca-select" id="marca-select">
+                            <?php
+                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                $query = "SELECT M.marca_nombre FROM Marcas as M order by M.marca_nombre";
+                                $result = pg_query($link, $query);
+                                echo "<option value=default selected=selected disabled>Seleccione marca</option>";
+                                while ($row = pg_fetch_assoc($result)){
+                                    $codigo=$row["marca_nombre"];
+                                    $nombre=$row["marca_nombre"];
+                                    echo "<option value='".$codigo."'>".$nombre."</option>";         
+                                }
+                                pg_close($link);
+                            ?>  
                         </select>
                         <i class="fas fa-adjust"></i>
                     </span>
@@ -84,23 +106,33 @@
                     <span class="input-container"><label for="product-image"><i class="fas fa-file-image"></i></label><span id="file-name"></span></span>
                     <span class="form-row">
                         <span></span>
-                        <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                        <a class="btn-register" id="btn_agregar_producto"><i class="fas fa-plus"></i> Agregar</a>
                     </span>
                     </form>
                     <form id="admin-shop-form-existence" class="admin-shop-form">
-                        <select name="color-select" id="color-select">
-                            <option value="0" disabled selected>Producto</option>
-                            <option value="p1">Producto 1</option>
-                            <option value="p2">Producto 2</option>
-                            <option value="p3">Producto 3</option>
+                    <select class="selectpicker" data-live-search="true" name="product-select" id="product-select1">
+                            <?php
+                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                $query = "SELECT P.producto_nombre,P.producto_id,C.color_nombre,C.color_codigo,M.marca_nombre FROM Productos as P, Colores as C, Marcas as M WHERE (P.color_nombre = C.color_nombre) AND (P.marca_nombre = M.marca_nombre) order by P.producto_nombre";
+                                $result = pg_query($link, $query);
+                                echo "<option value=default selected=selected disabled>Seleccione producto</option>";
+                                while ($row = pg_fetch_assoc($result)){
+                                    $codigo=$row["producto_id"];
+                                    $nombre=$row["producto_nombre"];
+                                    $marca=$row["marca_nombre"];
+                                    $color=$row["color_nombre"];
+                                    echo "<option value='".$codigo."'>".$nombre.' - '.$color.' [ '.$marca."] </option>";         
+                                }
+                                pg_close($link);
+                            ?>  
                         </select>
                         <span class="form-row">
                             <span class="input-icon">
-                                <input type='text' id='producto_talla' name='' placeholder='Talla' required>
+                                <input type='text' id='producto_talla' name='' placeholder='Talla' disabled>
                                 <i class="fas fa-shoe-prints"></i>
                             </span>
                             <span class="input-icon">
-                                <input type='text' id='producto_cantidad' name='' placeholder='Cantidad' required>
+                                <input type='text' id='producto_cantidad' name='' placeholder='Cantidad' disabled>
                                 <i class="fas fa-layer-group"></i>
                             </span>
                         </span>
@@ -118,15 +150,25 @@
                         </span>
                         <span class="form-row">
                             <span></span>
-                            <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                            <a class="btn-register" id="btn_agregar_existencia_producto"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
                     </form>
                     <form id="admin-shop-form-edit" class="admin-shop-form">
-                        <select name="color-select" id="color-select">
-                            <option value="0" disabled selected>Producto</option>
-                            <option value="p1">Producto 1</option>
-                            <option value="p2">Producto 2</option>
-                            <option value="p3">Producto 3</option>
+                        <select class="selectpicker" data-live-search="true" name="product-select" id="product-select2">
+                            <?php
+                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                $query = "SELECT P.producto_nombre,P.producto_id,C.color_nombre,C.color_codigo,M.marca_nombre FROM Productos as P, Colores as C, Marcas as M WHERE (P.color_nombre = C.color_nombre) AND (P.marca_nombre = M.marca_nombre) order by P.producto_nombre";
+                                $result = pg_query($link, $query);
+                                echo "<option value=default selected=selected disabled>Seleccione producto</option>";
+                                while ($row = pg_fetch_assoc($result)){
+                                    $codigo=$row["producto_id"];
+                                    $nombre=$row["producto_nombre"];
+                                    $marca=$row["marca_nombre"];
+                                    $color=$row["color_nombre"];
+                                    echo "<option value='".$codigo."'>".$nombre.' - '.$color.' [ '.$marca."] </option>";         
+                                }
+                                pg_close($link);
+                            ?>  
                         </select>
                         <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
                         <span class="input-icon">
@@ -135,8 +177,8 @@
                         </span>
                         <textarea id="producto_descripcion" rows="4" cols="50" name="comment" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
                         <span class="form-row">
-                            <a class="btn-cancel"><i class="fas fa-trash-alt"></i> Eliminar</a>
-                            <a class="btn-register"><i class="fas fa-save"></i> Guardar</a>
+                            <a class="btn-cancel" id="btn_eliminar_producto"><i class="fas fa-trash-alt"></i> Eliminar</a>
+                            <a class="btn-register" id="btn_editar_producto"><i class="fas fa-save"></i> Guardar</a>
                         </span>
                     </form>
 
@@ -146,7 +188,7 @@
                         <span class="input-container"><label for="brand-image"><i class="fas fa-file-image"></i></label><span id="brand-image-name"></span></span>
                         <span class="form-row">
                             <span></span>
-                            <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                            <a class="btn-register" id="btn_agregar_marca"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
 
                         <span class="separation xl"></span>
@@ -164,7 +206,7 @@
                         </span>
                         <span class="form-row">
                             <span></span>
-                            <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                            <a class="btn-register" id="btn_agregar_color"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
                     </form>
                 </div>
@@ -244,5 +286,80 @@
             $("#form-title").html("<b>AGREGAR</b> MARCA");
             $("#form-description").html('<i class="fas fa-exclamation-circle"></i> Agrega las marcas registradas de los productos de <span class="company-name"><b>KRAS</b>TERS</span>.');
         }
+    });
+
+    $(document).ready(function(){
+        //Agregar nuevo producto
+        $('#btn_agregar_producto').on('click', function(){
+            nombre = document.getElementById("producto_nombre").value;
+            descripcion = document.getElementById("producto_descripcion").value;
+            precio = parseFloat(document.getElementById("producto_precio").value);
+            talla = parseInt(document.getElementById("producto_talla").value);
+            cantidad = parseInt(document.getElementById("producto_cantidad").value);
+            color = $("#color-select").val();
+            marca = $("#marca-select").val();
+            if((precio > 0)&&(cantidad > 0)&&(talla > 0)&&(color != null)&&(marca != null)&&(nombre != "")){
+                $.ajax({
+                    url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca,
+                    type: "POST",
+                    success: function(r){
+                        //en r viene el id
+                        if(r > 0){
+                            //primer select
+                            select = document.getElementById('product-select1');
+                            select.options[select.options.length] = new Option(r, nombre);
+                            //segundo select
+                            select = document.getElementById('product-select2'); 
+                            select.options[select.options.length] = new Option(r, nombre);   
+                            new PNotify({
+                                title: 'Nuevo producto',
+                                text: 'Producto ingresado exitosamente.',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });                           
+                        }else{
+                            new PNotify({
+                                title: 'Nuevo producto',
+                                text: 'Error al insertar producto, verifique sus datos.',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        }                        
+                    }
+                });
+            }else{
+                new PNotify({
+                    title: 'Nuevo producto',
+                    text: 'Complete todos campos porfavor.',
+                    type: 'warning',
+                    styling: 'bootstrap3'
+                });
+            }                       
+        });
+
+        //Agregar existencia producto
+        $('#btn_agregar_existencia_producto').on('click', function(){
+                  
+        });
+
+        //Editar producto
+        $('#btn_editar_producto').on('click', function(){
+            
+        });
+
+        //Editar producto
+        $('#btn_eliminar_producto').on('click', function(){
+            
+        });        
+
+        //Agregar nueva marca
+        $('#btn_agregar_marca').on('click', function(){
+            
+        });  
+
+        //agregar nuevo color
+        $('#btn_agregar_color').on('click', function(){
+            
+        });                                
     });
 </script>
