@@ -1,7 +1,6 @@
-.button-bar{
+%button-bar{
     width: 100%;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     input{
         display: none;
@@ -11,4 +10,14 @@
             color: white;
         }
     }
+}
+
+.button-bar{
+    @extend %button-bar;
+    justify-content: space-between;
+}
+
+.button-bar-around{
+    @extend %button-bar;
+    justify-content: space-around;
 }
