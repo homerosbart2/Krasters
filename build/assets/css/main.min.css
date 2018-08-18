@@ -342,6 +342,48 @@ input[type=file] {
     width: 15px;
     text-align: center; }
 
+.switch {
+  display: flex;
+  align-items: center; }
+  .switch label {
+    width: 20px;
+    height: 5px;
+    margin-right: 9px;
+    margin-top: 8px;
+    position: relative; }
+    .switch label input {
+      display: none; }
+      .switch label input:checked + .slider:before {
+        transform: translateX(7px); }
+      .switch label input:hover + .slider:before {
+        background: #111; }
+      .switch label input:hover + .slider {
+        box-shadow: 0 0 0 1.2px #111; }
+    .switch label .slider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      border-radius: 30px;
+      box-shadow: 0 0 0 1.2px black;
+      border: 2px solid transparent;
+      overflow: hidden;
+      transition: all 0.2s ease; }
+      .switch label .slider:before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: black;
+        border-radius: 30px;
+        transform: translateX(-43px);
+        transition: all 0.4s ease; }
+
+.form-alert {
+  margin-bottom: 9px;
+  margin-top: 12px; }
+
 a {
   color: #0074D9;
   text-decoration: none;
@@ -440,9 +482,10 @@ nav {
     color: #25455E; }
   .main-nav .nav-user {
     font-size: 18px;
-    cursor: default;
     border-right: 2px solid white;
     padding-right: 10px; }
+    .main-nav .nav-user a {
+      cursor: default; }
   .main-nav .nav-logo:hover {
     color: #F2657F;
     transform: translateX(5px); }
@@ -481,17 +524,22 @@ nav {
   width: 100%;
   left: 0; }
 
-.button-bar {
+.button-bar, .button-bar-around {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap; }
-  .button-bar input {
+  .button-bar input, .button-bar-around input {
     display: none; }
-    .button-bar input:checked + label {
+    .button-bar input:checked + label, .button-bar-around input:checked + label {
       background: #6C5B7D;
       border-color: #6C5B7D;
       color: white; }
+
+.button-bar {
+  justify-content: space-between; }
+
+.button-bar-around {
+  justify-content: space-around; }
 
 #header-login {
   background: url("../img/bg.jpg") no-repeat;
