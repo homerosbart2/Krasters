@@ -260,7 +260,7 @@ section {
     border-color: #6C5B7D;
     color: white; }
 
-input[type=text], input[type=password], textarea, select {
+input[type=text], input[type=password], input[type=number], textarea, select, .btn.dropdown-toggle {
   height: 30px;
   margin: 10px 0px;
   border: 1px solid white;
@@ -269,7 +269,7 @@ input[type=text], input[type=password], textarea, select {
   color: white;
   text-align: center;
   transition: all 0.2s ease; }
-  input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus {
+  input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, textarea:focus, select:focus, .btn.dropdown-toggle:focus {
     outline: none !important;
     border: 1px solid white;
     box-shadow: none; }
@@ -329,9 +329,9 @@ input[type=file] {
 
 .input-icon {
   position: relative; }
-  .input-icon input[type=text], .input-icon select {
+  .input-icon input[type=text], .input-icon input[type=number], .input-icon select {
     width: 100%; }
-    .input-icon input[type=text] + i, .input-icon select + i {
+    .input-icon input[type=text] + i, .input-icon input[type=number] + i, .input-icon select + i {
       transition: all 0.2s ease; }
   .input-icon i {
     position: absolute;
@@ -340,7 +340,8 @@ input[type=file] {
     padding: 8px 8px;
     background: white;
     width: 15px;
-    text-align: center; }
+    text-align: center;
+    z-index: 100; }
 
 .switch {
   display: flex;
@@ -610,23 +611,36 @@ nav {
     height: 70px; }
   .admin-shop-form .form-row .input-icon {
     width: 47%; }
-  .admin-shop-form select {
+  .admin-shop-form select, .admin-shop-form .btn.dropdown-toggle {
     height: 34px;
     color: white;
     background: black;
     border-color: black;
     text-align-last: center;
     font-weight: 100; }
-    .admin-shop-form select + i {
+    .admin-shop-form select + i, .admin-shop-form .btn.dropdown-toggle + i {
       color: white;
       background: black; }
-    .admin-shop-form select:hover, .admin-shop-form select:focus {
+    .admin-shop-form select:hover, .admin-shop-form select:focus, .admin-shop-form .btn.dropdown-toggle:hover, .admin-shop-form .btn.dropdown-toggle:focus {
       color: black;
       background: white; }
     .admin-shop-form select:hover + i,
-    .admin-shop-form select:focus + i {
+    .admin-shop-form select:focus + i, .admin-shop-form .btn.dropdown-toggle:hover + i,
+    .admin-shop-form .btn.dropdown-toggle:focus + i {
       color: black;
       background: white; }
+  .admin-shop-form .btn-group.bootstrap-select + i {
+    transition: all 0.2s ease;
+    color: white;
+    background: black; }
+  .admin-shop-form .btn-group.bootstrap-select:hover + i,
+  .admin-shop-form .btn-group.bootstrap-select:focus + i,
+  .admin-shop-form .btn-group.bootstrap-select:active + i {
+    color: black;
+    background: white; }
+  .admin-shop-form .btn-group.bootstrap-select.open + i {
+    color: black;
+    background: white; }
   .admin-shop-form input, .admin-shop-form textarea {
     border-color: #111;
     color: #111;
