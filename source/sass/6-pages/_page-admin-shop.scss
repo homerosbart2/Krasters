@@ -66,14 +66,15 @@
         background: black;
     }
 
-    .btn-group.bootstrap-select:hover + i,
-    .btn-group.bootstrap-select:focus + i,
-    .btn-group.bootstrap-select:active + i{
+    .btn-group.bootstrap-select:hover + i{
         color: black;
         background: white;
     }
 
-    .btn-group.bootstrap-select.open + i{
+    .btn-group.bootstrap-select.open + i,
+    .btn-group.bootstrap-select.open:hover + i,
+    .btn-group.bootstrap-select.open:focus + i,
+    .btn-group.bootstrap-select.open:active + i{
         color: black;
         background: white;
     }
