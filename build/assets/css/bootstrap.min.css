@@ -3018,9 +3018,6 @@ tbody.collapse.in{
     outline:0;
     background: #F2657F;
 }
-.dropdown-menu>.disabled>a,.dropdown-menu>.disabled>a:focus,.dropdown-menu>.disabled>a:hover{
-    color:#777
-}
 .dropdown-menu>.disabled>a:focus,.dropdown-menu>.disabled>a:hover{
     text-decoration:none;
     cursor:not-allowed;
