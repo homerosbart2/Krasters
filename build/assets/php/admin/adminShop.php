@@ -3,14 +3,11 @@
 
 <head>
     <title>Administración</title>    
-    <!-- 
     <link rel="stylesheet" href="../../css/bootstrap.min.css"  media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../../css/bootstrap-select.css"  media="all" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../../js/bootstrap.min.js"  type="text/javascript"></script> 
     <script src="../../js/bootstrap-select.js" type="text/javascript"></script> 
-    -->
-
 </head>
 
 <?php
@@ -49,42 +46,42 @@
                     <span id="form-title" class="form-title"></span>
                     <span id="form-description" class="description"><i class="fas fa-exclamation-circle"></i> Administra <span class="company-name"><b>KRAS</b>TERS</span> seleccionando una sección.</span>
                     <form id="admin-shop-form-add" class="admin-shop-form">
-                    <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
+                    <input type='text' id='producto_nombre' placeholder='Nombre' required>
                     <span class='form-row'>
                         <span class="input-icon">
-                        <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" name="producto-color-select" id="color-select">
-                            <?php
-                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-                                $query = "SELECT C.color_nombre,C.color_codigo FROM Colores as C order by C.color_nombre";
-                                $result = pg_query($link, $query);
-                                echo "<option value=default selected=selected disabled>Seleccione color</option>";
-                                while ($row = pg_fetch_assoc($result)){
-                                    $codigo=$row["color_nombre"];
-                                    $nombre=$row["color_nombre"];
-                                    echo "<option value='".$codigo."'>".$nombre."</option>";         
-                                }
-                                pg_close($link);
-                            ?>
-                        </select>
-                        <i class="fas fa-fill-drip"></i>
+                            <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="color-select">
+                                <?php
+                                    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                    $query = "SELECT C.color_nombre,C.color_codigo FROM Colores as C order by C.color_nombre";
+                                    $result = pg_query($link, $query);
+                                    echo "<option value=default selected=selected disabled>Seleccione color</option>";
+                                    while ($row = pg_fetch_assoc($result)){
+                                        $codigo=$row["color_nombre"];
+                                        $nombre=$row["color_nombre"];
+                                        echo "<option value='".$codigo."'>".$nombre."</option>";         
+                                    }
+                                    pg_close($link);
+                                ?>
+                            </select>
+                            <i class="fas fa-paint-roller"></i>
                         </span>
                         <span class="input-icon">
-                            <input type='number' min="1" id='producto_precio' name='' placeholder='Precio' required>
+                            <input type='number' min="1" id='producto_precio' placeholder='Precio' required>
                             <i class="fas fa-dollar-sign"></i>
                         </span>
                     </span>
                     <span class='form-row'>
                         <span class="input-icon">
-                            <input type='number' min="25" id='producto_talla' name='' placeholder='Talla' required>
+                            <input type='number' min="25" id='producto_talla' placeholder='Talla' required>
                             <i class="fas fa-shoe-prints"></i>
                         </span>
                         <span class="input-icon">
-                            <input type='number' min="1" id='producto_cantidad' name='' placeholder='Cantidad' required>
+                            <input type='number' min="1" id='producto_cantidad' placeholder='Cantidad' required>
                             <i class="fas fa-layer-group"></i>
                         </span>
                     </span>
                     <span class="input-icon">
-                        <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" name="marca-select" id="marca-select">
+                        <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="marca-select">
                             <?php
                                 $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
                                 $query = "SELECT M.marca_nombre FROM Marcas as M order by M.marca_nombre";
@@ -101,51 +98,64 @@
                         <i class="fas fa-adjust"></i>
                     </span>
                     
-                    <textarea id="producto_descripcion" rows="4" cols="50" name="comment" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
-                    <input type="file" name="product-image" id="product-image" class="inputfile" />
+                    <textarea id="producto_descripcion" rows="4" cols="50" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
+                    <input type="file" id="product-image" class="inputfile" />
                     <span class="input-container"><label for="product-image"><i class="fas fa-file-image"></i></label><span id="file-name"></span></span>
                     <span class="form-row">
                         <span></span>
                         <a class="btn-register" id="btn_agregar_producto"><i class="fas fa-plus"></i> Agregar</a>
                     </span>
                     </form>
+
+
                     <form id="admin-shop-form-existence" class="admin-shop-form">
-                    <select class="selectpicker" data-live-search="true" name="product-select" id="product-select1">
-                            <?php
-                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-                                $query = "SELECT P.producto_nombre,P.producto_id,C.color_nombre,C.color_codigo,M.marca_nombre FROM Productos as P, Colores as C, Marcas as M WHERE (P.color_nombre = C.color_nombre) AND (P.marca_nombre = M.marca_nombre) order by P.producto_nombre";
-                                $result = pg_query($link, $query);
-                                echo "<option value=default selected=selected disabled>Seleccione producto</option>";
-                                while ($row = pg_fetch_assoc($result)){
-                                    $codigo=$row["producto_id"];
-                                    $nombre=$row["producto_nombre"];
-                                    $marca=$row["marca_nombre"];
-                                    $color=$row["color_nombre"];
-                                    echo "<option value='".$codigo."'>".$nombre.' - '.$color.' [ '.$marca."] </option>";         
-                                }
-                                pg_close($link);
-                            ?>  
-                        </select>
-                        <span class="form-row">
+                        <span class="input-icon">
+                            <select class="selectpicker" data-live-search="true" id="product-select1">
+                                <?php
+                                    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                    $query = "SELECT P.producto_nombre,P.producto_id,C.color_nombre,C.color_codigo,M.marca_nombre FROM Productos as P, Colores as C, Marcas as M WHERE (P.color_nombre = C.color_nombre) AND (P.marca_nombre = M.marca_nombre) order by P.producto_nombre";
+                                    $result = pg_query($link, $query);
+                                    echo "<option value=default selected=selected disabled>Seleccione producto</option>";
+                                    while ($row = pg_fetch_assoc($result)){
+                                        $codigo=$row["producto_id"];
+                                        $nombre=$row["producto_nombre"];
+                                        $marca=$row["marca_nombre"];
+                                        $color=$row["color_nombre"];
+                                        echo "<option value='".$codigo."'>".$nombre.' - '.$color.' [ '.$marca."] </option>";         
+                                    }
+                                    pg_close($link);
+                                ?>  
+                            </select>
+                        </span>
+                        
+                        <span class='form-row'>
                             <span class="input-icon">
-                                <input type='text' id='producto_talla' name='' placeholder='Talla' disabled>
+                                <input type='number' min="25" id='producto_talla' placeholder='Talla' required>
                                 <i class="fas fa-shoe-prints"></i>
                             </span>
                             <span class="input-icon">
-                                <input type='text' id='producto_cantidad' name='' placeholder='Cantidad' disabled>
+                                <input type='number' min="1" id='producto_cantidad' placeholder='Cantidad' required>
                                 <i class="fas fa-layer-group"></i>
                             </span>
                         </span>
+                        
                         <span class='form-row'>
                             <span class="input-icon">
-                            <select name="color-select" id="color-select">
-                                <option value="0" disabled selected>Color</option>
-                                <option value="rojo">Rojo</option>
-                                <option value="azul">Azul</option>
-                                <option value="negro">Negro</option>
-                                <option value="blanco">Blanco</option>
-                            </select>
-                            <i class="fas fa-fill-drip"></i>
+                                <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="color-select2">
+                                    <?php
+                                        $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                        $query = "SELECT C.color_nombre,C.color_codigo FROM Colores as C order by C.color_nombre";
+                                        $result = pg_query($link, $query);
+                                        echo "<option value=default selected=selected disabled>Seleccione color</option>";
+                                        while ($row = pg_fetch_assoc($result)){
+                                            $codigo=$row["color_nombre"];
+                                            $nombre=$row["color_nombre"];
+                                            echo "<option value='".$codigo."'>".$nombre."</option>";         
+                                        }
+                                        pg_close($link);
+                                    ?>
+                                </select>
+                                <i class="fas fa-paint-roller"></i>
                             </span>
                         </span>
                         <span class="form-row">
@@ -153,29 +163,33 @@
                             <a class="btn-register" id="btn_agregar_existencia_producto"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
                     </form>
+
                     <form id="admin-shop-form-edit" class="admin-shop-form">
-                        <select class="selectpicker" data-live-search="true" name="product-select" id="product-select2">
-                            <?php
-                                $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-                                $query = "SELECT P.producto_nombre,P.producto_id,C.color_nombre,C.color_codigo,M.marca_nombre FROM Productos as P, Colores as C, Marcas as M WHERE (P.color_nombre = C.color_nombre) AND (P.marca_nombre = M.marca_nombre) order by P.producto_nombre";
-                                $result = pg_query($link, $query);
-                                echo "<option value=default selected=selected disabled>Seleccione producto</option>";
-                                while ($row = pg_fetch_assoc($result)){
-                                    $codigo=$row["producto_id"];
-                                    $nombre=$row["producto_nombre"];
-                                    $marca=$row["marca_nombre"];
-                                    $color=$row["color_nombre"];
-                                    echo "<option value='".$codigo."'>".$nombre.' - '.$color.' [ '.$marca."] </option>";         
-                                }
-                                pg_close($link);
-                            ?>  
-                        </select>
-                        <input type='text' id='producto_nombre' name='' placeholder='Nombre' required>
                         <span class="input-icon">
-                            <input type='text' id='producto_precio' name='' placeholder='Precio' required>
+                            <select class="selectpicker" data-live-search="true" id="product-select2">
+                                <?php
+                                    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                    $query = "SELECT P.producto_nombre,P.producto_id,C.color_nombre,C.color_codigo,M.marca_nombre FROM Productos as P, Colores as C, Marcas as M WHERE (P.color_nombre = C.color_nombre) AND (P.marca_nombre = M.marca_nombre) order by P.producto_nombre";
+                                    $result = pg_query($link, $query);
+                                    echo "<option value=default selected=selected disabled>Seleccione producto</option>";
+                                    while ($row = pg_fetch_assoc($result)){
+                                        $codigo=$row["producto_id"];
+                                        $nombre=$row["producto_nombre"];
+                                        $marca=$row["marca_nombre"];
+                                        $color=$row["color_nombre"];
+                                        echo "<option value='".$codigo."'>".$nombre.' - '.$color.' [ '.$marca."] </option>";         
+                                    }
+                                    pg_close($link);
+                                ?>  
+                            </select>
+                        </span>
+                        
+                        <input type='text' id='producto_nombre' placeholder='Nombre' required>
+                        <span class="input-icon">
+                            <input type='number' min="1" id='producto_precio_editar' placeholder='Precio' required>
                             <i class="fas fa-dollar-sign"></i>
                         </span>
-                        <textarea id="producto_descripcion" rows="4" cols="50" name="comment" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
+                        <textarea id="producto_descripcion" rows="4" cols="50" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
                         <span class="form-row">
                             <a class="btn-cancel" id="btn_eliminar_producto"><i class="fas fa-trash-alt"></i> Eliminar</a>
                             <a class="btn-register" id="btn_editar_producto"><i class="fas fa-save"></i> Guardar</a>
@@ -183,8 +197,8 @@
                     </form>
 
                     <form id="admin-shop-form-brand-color" class="admin-shop-form">
-                        <input type='text' id='marca_nombre' name='' placeholder='Nombre' required>
-                        <input type="file" name="brand-image" id="brand-image" class="inputfile" />
+                        <input type='text' id='marca_nombre' placeholder='Nombre' required>
+                        <input type="file" id="brand-image" class="inputfile" />
                         <span class="input-container"><label for="brand-image"><i class="fas fa-file-image"></i></label><span id="brand-image-name"></span></span>
                         <span class="form-row">
                             <span></span>
@@ -196,10 +210,10 @@
                         <span id="form-description" class="description"><i class="fas fa-exclamation-circle"></i> Agrega nuevos colores para los productos de <span class="company-name"><b>KRAS</b>TERS</span>.</span>
                         <span class="form-row">
                             <span class="input-icon">
-                                <input type='text' id='color_nombre' name='' placeholder='Nombre' required>
+                                <input type='text' id='color_nombre' placeholder='Nombre' required>
                             </span>
                             <span class="input-icon">
-                            <input type='text' id='color_codigo' name='' placeholder='Codigo RGB #FFFFFF' required>
+                            <input type='text' id='color_codigo' placeholder='Codigo RGB #FFFFFF' required>
                                 <i class="fas fa-fill-drip"></i>
                             </span>
                             

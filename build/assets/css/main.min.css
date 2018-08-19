@@ -633,12 +633,13 @@ nav {
     transition: all 0.2s ease;
     color: white;
     background: black; }
-  .admin-shop-form .btn-group.bootstrap-select:hover + i,
-  .admin-shop-form .btn-group.bootstrap-select:focus + i,
-  .admin-shop-form .btn-group.bootstrap-select:active + i {
+  .admin-shop-form .btn-group.bootstrap-select:hover + i {
     color: black;
     background: white; }
-  .admin-shop-form .btn-group.bootstrap-select.open + i {
+  .admin-shop-form .btn-group.bootstrap-select.open + i,
+  .admin-shop-form .btn-group.bootstrap-select.open:hover + i,
+  .admin-shop-form .btn-group.bootstrap-select.open:focus + i,
+  .admin-shop-form .btn-group.bootstrap-select.open:active + i {
     color: black;
     background: white; }
   .admin-shop-form input, .admin-shop-form textarea {
