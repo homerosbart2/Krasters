@@ -8,15 +8,7 @@
 ?>
 </html>
 <body>
-    <div class="row col-md-12 col-sm-12 col-xs-12" style="margin:0; padding:0;">
-        <div class="col-md-2 col-sm-2 col-xs-2" style="margin:0; padding:0; background-color: white; height:100%;"> 
-            <!-- NO SE SI LO VAS A CAMBIAR PERO ASI ME GUSTA QUE SE VEA -->
-            <!-- EN EL DIV SE METEN LOS PRODUCTOS -->
-        </div>
-        <div class="col-md-10 col-sm-10 col-xs-10" style="margin:0; padding:0; background-color: white; height:100%;">      
-            <div id="productos"> 
-            </div>
-        </div>      
+    <div id="productos" class="products-container"> 
     </div>
 </body>
 
@@ -35,14 +27,23 @@ function load_productos(){
         success: function(r){
             obj = JSON.parse(r);
             rows = "";
-            for(var i = 1; i < obj.length; i++){
-                rows += "<div class='listado-productos' style='border:solid 2px;'>";
-                ruta = '../../img/productos/default.png';
-                rows += "<td>" + '<img src="' + ruta + '" class="producto_preview" width=100 heigth=100>' + "</td>";
-                rows += "nombre: " + obj[i - 1].producto_nombre;
-                rows += "descripcion: " + obj[i - 1].descripcion;
-                rows += "precio: " + obj[i - 1].precio;
-                rows += "<a class='btn-register agregar-carrito' id='" + obj[i - 1].producto_id + "'><i class='fa fa-shopping-cart'></i> Agregar</a>";
+            for(var i = 1; i <= obj.length; i++){
+                ruta = '../../img/productos/default.jpg';
+                rows += "<div class='product-card'>";
+                rows += "<img src='"+ruta+"'>";
+                rows += "<span class='information'>";
+                rows += "<span class='name'>" + obj[i - 1].producto_nombre + "</span>";
+                rows += "<span class='description'>" + obj[i - 1].descripcion + "</span>";
+                rows += "<span class='price'>Q " + obj[i - 1].precio + "</span>";
+                rows += "<span class='separation m'></span>";
+                rows += "<a class='btn-login agregar-carrito' id='" + obj[i - 1].producto_id + "'><i class='fa fa-shopping-cart'></i> Agregar</a>";
+                rows += "</span>";
+                rows += "<span class='brand-container'>";
+                rows += "<a class='btn-cancel' id='see-" + obj[i - 1].producto_id + "'>Ver más</a>";
+                rows += "<span class='brand'>";
+                rows += "<b>KRAS</b>TERS";
+                rows += "</span>";
+                rows += "</span>";
                 rows += "</div>";
             }
             $("#productos").html(rows);
