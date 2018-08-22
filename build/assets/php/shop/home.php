@@ -86,9 +86,17 @@ function expandProductCard(card_id){
     }else{
         $('#' + actualCardId).removeClass('expanded');
         $('.mask').removeClass('active');
-        $('#' + card_id).find('.btn-cancel').html('Ver más');
+        $('#' + actualCardId).find('.btn-cancel').html('Ver más');
         actualCardId = '';
     }
-    
 }
+
+$('.mask').click(function(){
+    if(actualCardId != ''){
+        $('#' + actualCardId).removeClass('expanded');
+        $('.mask').removeClass('active');
+        $('#' + actualCardId).find('.btn-cancel').html('Ver más');
+        actualCardId = '';
+    }
+});
 </script>
