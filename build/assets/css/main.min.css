@@ -555,11 +555,56 @@ nav {
   width: 22%;
   padding-bottom: 22%;
   overflow: hidden;
-  transition: all 0.2s ease; }
+  margin-bottom: 10px;
+  margin-top: 10px;
+  transition: margin-left 0.4s ease; }
+  .product-card.expanded {
+    transition: margin-left 0s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    margin-top: 0;
+    margin-bottom: 0; }
+    @media screen and (orientation: portrait) {
+      .product-card.expanded {
+        width: 100vw;
+        padding-bottom: 100vw;
+        margin-left: -50vw;
+        margin-top: -50vw; } }
+    @media screen and (orientation: landscape) {
+      .product-card.expanded {
+        width: 100vh;
+        padding-bottom: 100vh;
+        margin-left: -50vh;
+        margin-top: -50vh; } }
+    .product-card.expanded .information {
+      align-items: flex-start;
+      padding-left: 10%;
+      padding-right: 10%; }
+      .product-card.expanded .information .name {
+        opacity: 0;
+        background: none;
+        justify-content: flex-start; }
+      .product-card.expanded .information .form-row {
+        justify-content: space-between; }
+      .product-card.expanded .information .input-icon {
+        display: flex;
+        opacity: 0; }
+    .product-card.expanded .brand-container {
+      opacity: 0; }
+      .product-card.expanded .brand-container .btn-cancel {
+        font-size: 24px; }
+    .product-card.expanded:hover .information .name, .product-card.expanded:active .information .name, .product-card.expanded:focus .information .name {
+      opacity: 1; }
+    .product-card.expanded:hover .information .input-icon, .product-card.expanded:active .information .input-icon, .product-card.expanded:focus .information .input-icon {
+      opacity: 1; }
+    .product-card.expanded:hover .brand-container, .product-card.expanded:active .brand-container, .product-card.expanded:focus .brand-container {
+      opacity: 1; }
   @media only screen and (max-width: 1000px) {
     .product-card {
-      width: 31%;
-      padding-bottom: 31%;
+      width: 32%;
+      padding-bottom: 32%;
       margin-bottom: 20px; } }
   @media only screen and (max-width: 720px) {
     .product-card {
@@ -586,9 +631,29 @@ nav {
       width: 100px;
       opacity: 0;
       transition: all 0.2s ease; }
+    .product-card .information .form-row {
+      width: 100%;
+      justify-content: center; }
+      .product-card .information .form-row .input-icon {
+        width: 48%; }
+    .product-card .information input[type=number], .product-card .information select {
+      height: 33.5px;
+      background: none;
+      margin-top: 0; }
+    .product-card .information input[type=number] {
+      width: 100%; }
+    .product-card .information select {
+      text-align-last: center; }
+    .product-card .information .input-icon {
+      display: none; }
+      .product-card .information .input-icon i {
+        color: white;
+        background: none;
+        top: 1px; }
     .product-card .information a {
       opacity: 0;
-      transition: all 0.2s ease; }
+      transition: 0.2s ease;
+      transform: scale(0); }
     .product-card .information .name {
       text-transform: uppercase;
       font-weight: 600;
@@ -613,13 +678,14 @@ nav {
     right: 10%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     opacity: 0;
     color: #fff;
     transition: all 0.2s ease; }
     .product-card .brand-container .btn-cancel {
       margin: 0 0;
-      padding: 0 0; }
+      padding: 0 0;
+      transition: 0.2s ease; }
   .product-card img {
     position: absolute;
     top: 0;
@@ -637,6 +703,8 @@ nav {
     background: none; }
   .product-card:hover .information .description, .product-card:hover .information .price, .product-card:hover .information a, .product-card:active .information .description, .product-card:active .information .price, .product-card:active .information a, .product-card:focus .information .description, .product-card:focus .information .price, .product-card:focus .information a {
     opacity: 1; }
+  .product-card:hover .information a, .product-card:active .information a, .product-card:focus .information a {
+    transform: scale(1); }
 
 #header-login {
   background: url("../img/bg.jpg") no-repeat;
@@ -745,3 +813,17 @@ nav {
     transition: all 0.2s ease; }
     .admin-shop-form input:active, .admin-shop-form input:focus, .admin-shop-form textarea:active, .admin-shop-form textarea:focus {
       border-color: #111; }
+
+.mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: white;
+  z-index: 0;
+  transition: 0.2s ease;
+  transition: background 0.4s ease; }
+  .mask.active {
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 4; }
