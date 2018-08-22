@@ -18,9 +18,9 @@
                 </span>
                 <span class="options-division">
                     <li class="nav-user"><a href=""><b>usuario</b>: user</a></li>
-                    <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 1</nav></a></li>
-                    <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 2</nav></a></li>
-                    <li><a href="" class="nav-option"><span class="option-icon"><i class="far fa-circle"></i></span><nav class="option-label">option 3</nav></a></li>
+                    <li><a href="" class="nav-option"><span class="option-icon"><i class="fas fa-shopping-bag"></i></span><nav class="option-label">Tienda</nav></a></li>
+                    <li><a href="" class="nav-option"><span class="option-icon"><i class='fa fa-shopping-cart'></i></span><nav class="option-label">Carrito</nav></a></li>
+                    <li><a href="" class="nav-option"><span class="option-icon"><i class="fas fa-sign-out-alt"></i></span><nav class="option-label">Salir</nav></a></li>
                 </span>
             </ul>
         </nav>

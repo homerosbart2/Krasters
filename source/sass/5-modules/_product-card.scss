@@ -9,25 +9,25 @@
 .product-card{
     position: relative;
     width: 22%;
-    padding-top: 22%;
+    padding-bottom: 22%;
     overflow: hidden;
     transition: all 0.2s ease;
 
     @include media-max(1000px){
         width: 31%;
-        padding-top: 31%;
+        padding-bottom: 31%;
         margin-bottom: 20px;
      }
 
      @include media-max(720px){
         width: 45%;
-        padding-top: 45%;
+        padding-bottom: 45%;
         margin-bottom: 20px;
      }
 
     @include media-max(460px){
        width: 90%;
-       padding-top: 90%;
+       padding-bottom: 90%;
        margin-bottom: 20px;
     }
 
@@ -125,6 +125,7 @@
             .description, .price, a{
                 opacity: 1;
             }
+            
         }
     }
 }
