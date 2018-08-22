@@ -11,11 +11,77 @@
     width: 22%;
     padding-bottom: 22%;
     overflow: hidden;
-    transition: all 0.2s ease;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    transition: margin-left 0.4s ease;
+    &.expanded{
+        transition: margin-left 0s ease;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        @media screen and (orientation:portrait) {
+            width: 100vw;
+            padding-bottom: 100vw;
+            margin-left:-50vw;
+            margin-top:-50vw;
+        }
+        @media screen and (orientation:landscape) {
+            width: 100vh;
+            padding-bottom: 100vh;
+            margin-left:-50vh;
+            margin-top:-50vh;
+        }
+        z-index: 5;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        .information{
+            align-items: flex-start;
+            padding-left: 10%;
+            padding-right: 10%;
+            .name{
+                opacity: 0;
+                background: none;
+                justify-content: flex-start;
+            }
+            .form-row{
+                justify-content: space-between;
+            }
+            .input-icon{
+                display: flex;
+                opacity: 0;
+            }
+        }
+
+        .brand-container{
+            opacity: 0;
+
+            .btn-cancel{
+                font-size: 24px;
+            }
+        }
+
+        &:hover,
+        &:active,
+        &:focus{
+            .information{
+                .name{
+                    opacity: 1;
+                }
+                .input-icon{
+                    opacity: 1;
+                }
+            }
+
+            .brand-container{
+                opacity: 1;
+            }
+        }
+    }
 
     @include media-max(1000px){
-        width: 31%;
-        padding-bottom: 31%;
+        width: 32%;
+        padding-bottom: 32%;
         margin-bottom: 20px;
      }
 
@@ -49,9 +115,41 @@
             transition: all 0.2s ease;
         }
 
+        .form-row{
+            width: 100%;
+            justify-content: center;
+            .input-icon{
+                width: 48%;
+            }
+        }
+
+        input[type=number], select{
+            height: 33.5px;
+            background: none;
+            margin-top: 0;
+        }
+
+        input[type=number]{
+            width: 100%;
+        }
+
+        select{
+            text-align-last:center;
+        }
+
+        .input-icon{
+            display: none;
+            i{
+                color: white;
+                background: none;
+                top: 1px;
+            }
+        }
+
         a{
             opacity: 0;
-            transition: all 0.2s ease;
+            transition: 0.2s ease;
+            transform: scale(0);
         }
 
         .name{
@@ -85,14 +183,14 @@
         right: 10%;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         opacity: 0;
         color: $white;
         transition: all 0.2s ease;
-
         .btn-cancel{
             margin: 0 0;
             padding: 0 0;
+            transition: 0.2s ease;
         }
     }
 
@@ -125,7 +223,9 @@
             .description, .price, a{
                 opacity: 1;
             }
-            
+            a{
+                transform: scale(1);
+            }
         }
     }
 }
