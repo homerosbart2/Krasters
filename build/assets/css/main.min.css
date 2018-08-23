@@ -596,15 +596,11 @@ nav {
       .product-card.expanded .information .input-icon {
         display: flex;
         opacity: 0; }
-    .product-card.expanded .brand-container {
-      opacity: 0; }
-      .product-card.expanded .brand-container .btn-cancel {
-        font-size: 24px; }
+    .product-card.expanded .brand-container .btn-cancel {
+      font-size: 24px; }
     .product-card.expanded:hover .information .name, .product-card.expanded:active .information .name, .product-card.expanded:focus .information .name {
       opacity: 1; }
     .product-card.expanded:hover .information .input-icon, .product-card.expanded:active .information .input-icon, .product-card.expanded:focus .information .input-icon {
-      opacity: 1; }
-    .product-card.expanded:hover .brand-container, .product-card.expanded:active .brand-container, .product-card.expanded:focus .brand-container {
       opacity: 1; }
   @media only screen and (max-width: 1000px) {
     .product-card {
@@ -630,7 +626,7 @@ nav {
     justify-content: center;
     top: 0;
     left: 0;
-    bottom: 15%;
+    bottom: 20%;
     right: 0; }
     .product-card .information .btn-register {
       width: 100px;
@@ -677,13 +673,13 @@ nav {
       transition: all 0.2s ease; }
   .product-card .brand-container {
     position: absolute;
-    top: 85%;
-    bottom: 0;
+    top: 80%;
+    bottom: 5%;
     left: 10%;
     right: 10%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     opacity: 0;
     color: #fff;
     transition: all 0.2s ease; }
@@ -691,7 +687,10 @@ nav {
       margin: 0 0;
       padding: 0 0;
       transition: 0.2s ease; }
-  .product-card img {
+    .product-card .brand-container .brand img {
+      max-height: 50px;
+      height: 100%; }
+  .product-card .image {
     position: absolute;
     top: 0;
     left: 0;
@@ -699,7 +698,7 @@ nav {
     bottom: 0;
     width: 100%;
     transition: all 0.2s ease; }
-  .product-card:hover img, .product-card:active img, .product-card:focus img {
+  .product-card:hover .image, .product-card:active .image, .product-card:focus .image {
     filter: blur(4px) brightness(40%);
     transform: scale(1.04); }
   .product-card:hover .brand-container, .product-card:active .brand-container, .product-card:focus .brand-container {
