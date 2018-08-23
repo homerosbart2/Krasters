@@ -54,8 +54,6 @@
         }
 
         .brand-container{
-            opacity: 0;
-
             .btn-cancel{
                 font-size: 24px;
             }
@@ -71,10 +69,6 @@
                 .input-icon{
                     opacity: 1;
                 }
-            }
-
-            .brand-container{
-                opacity: 1;
             }
         }
     }
@@ -106,7 +100,7 @@
         justify-content: center;
         top: 0;
         left: 0;
-        bottom: 15%;
+        bottom: 20%;
         right: 0;
         
         .btn-register{
@@ -177,13 +171,13 @@
 
     .brand-container{
         position: absolute;
-        top:85%;
-        bottom: 0;
+        top:80%;
+        bottom: 5%;
         left: 10%;
         right: 10%;
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
         opacity: 0;
         color: $white;
         transition: all 0.2s ease;
@@ -192,9 +186,15 @@
             padding: 0 0;
             transition: 0.2s ease;
         }
+        .brand{
+            img{
+                max-height: 50px;
+                height: 100%;
+            }
+        }
     }
 
-    img{
+    .image{
         position: absolute;
         top: 0;
         left: 0;
@@ -207,7 +207,7 @@
     &:hover,
     &:active,
     &:focus{
-        img{
+        .image{
             filter: blur(4px) brightness(40%);
             transform: scale(1.04);
         }

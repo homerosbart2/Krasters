@@ -33,7 +33,7 @@ function load_productos(){
             for(var i = 1; i <= obj.length; i++){
                 ruta = '../../img/productos/default.jpg';
                 rows += "<div id='product-card-" + obj[i - 1].producto_id +"' class='product-card'>";
-                rows += "<img src='"+ruta+"'>";
+                rows += "<img class='image' src='"+ruta+"'>";
                 rows += "<span class='information'>";
                 rows += "<span class='name'>" + obj[i - 1].producto_nombre + "</span>";
                 rows += "<span class='description'>" + obj[i - 1].descripcion + "</span>";
@@ -55,7 +55,7 @@ function load_productos(){
                 rows += "<span class='brand-container'>";
                 rows += "<a class='btn-cancel' id='see-" + obj[i - 1].producto_id + "' onClick=\"expandProductCard('product-card-" + obj[i - 1].producto_id +"');\">Ver más</a>";
                 rows += "<span class='brand'>";
-                rows += "<b>KRAS</b>TERS";
+                rows += "<img src ='../../img/brands/adidas-white.png'>";
                 rows += "</span>";
                 rows += "</span>";
                 rows += "</div>";
