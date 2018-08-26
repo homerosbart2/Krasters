@@ -77,6 +77,7 @@ $(document).ready(function(){
 
 var actualCardId = '';
 
+//Función que se encarga de cambiar la case de las tarjetas para que se expandan.
 function expandProductCard(card_id){
     if(actualCardId != card_id){
         actualCardId = card_id;
@@ -91,6 +92,7 @@ function expandProductCard(card_id){
     }
 }
 
+//Función para salir de una vista expandida al hacer click afuera de la imagen.
 $('.mask').click(function(){
     if(actualCardId != ''){
         $('#' + actualCardId).removeClass('expanded');

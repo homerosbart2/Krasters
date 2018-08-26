@@ -637,7 +637,8 @@ nav {
       justify-content: center; }
       .product-card .information .form-row .input-icon {
         width: 48%; }
-    .product-card .information input[type=number], .product-card .information select {
+    .product-card .information input[type=number],
+    .product-card .information select {
       height: 33.5px;
       background: none;
       margin-top: 0; }
@@ -705,7 +706,13 @@ nav {
     opacity: 1; }
   .product-card:hover .information .name, .product-card:active .information .name, .product-card:focus .information .name {
     background: none; }
-  .product-card:hover .information .description, .product-card:hover .information .price, .product-card:hover .information a, .product-card:active .information .description, .product-card:active .information .price, .product-card:active .information a, .product-card:focus .information .description, .product-card:focus .information .price, .product-card:focus .information a {
+  .product-card:hover .information .description,
+  .product-card:hover .information .price,
+  .product-card:hover .information a, .product-card:active .information .description,
+  .product-card:active .information .price,
+  .product-card:active .information a, .product-card:focus .information .description,
+  .product-card:focus .information .price,
+  .product-card:focus .information a {
     opacity: 1; }
   .product-card:hover .information a, .product-card:active .information a, .product-card:focus .information a {
     transform: scale(1); }
