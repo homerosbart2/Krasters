@@ -45,7 +45,7 @@ function load_productos(){
                 rows += "<i class='fas fa-shoe-prints'></i>";
                 rows += "</span>";
                 rows += "<span class='input-icon'>";
-                rows += "<select>";
+                rows += "<select class='select-color'>";
                 rows += "<option value='amarillo'>Amarillo</option>";
                 rows += "</select>";
                 rows += "</span>";

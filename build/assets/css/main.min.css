@@ -1,5 +1,5 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize * */
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -424,6 +424,16 @@ html {
 .nav-logo {
   font-size: 24px; }
 
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  display: flex;
+  width: 100%;
+  font-family: 'Roboto Condensed', sans-serif; }
+
+.justify {
+  text-align: justify; }
+
 .separation.s, .separation.m, .separation.l, .separation.xl, .separation.xxl {
   width: 100%; }
 
@@ -487,6 +497,9 @@ nav {
   .main-nav .nav-option:hover {
     background: white;
     color: #25455E; }
+    .main-nav .nav-option:hover .counter {
+      color: white;
+      background: #25455E; }
   .main-nav .nav-user {
     font-size: 18px;
     border-right: 2px solid white;
@@ -507,6 +520,14 @@ nav {
 
 #header {
   height: 50px; }
+
+.counter {
+  background: #F2657F;
+  border-radius: 100px;
+  padding: 0 7px;
+  margin-left: 3px;
+  color: white;
+  transition: 0.2s ease; }
 
 .copyright-footer {
   display: flex;
@@ -716,6 +737,106 @@ nav {
     opacity: 1; }
   .product-card:hover .information a, .product-card:active .information a, .product-card:focus .information a {
     transform: scale(1); }
+
+.summary {
+  display: flex;
+  justify-content: center; }
+
+.summaries-container {
+  max-width: 700px;
+  width: 100vw;
+  margin: 20px 25px; }
+
+.product-summary {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background: #383838;
+  margin-bottom: 10px; }
+  .product-summary .image {
+    position: absolute;
+    width: 150%;
+    margin-left: -25%;
+    filter: blur(4px) brightness(40%); }
+  .product-summary .btn-delete {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    color: white; }
+    .product-summary .btn-delete i {
+      transition: 0.2s ease; }
+    .product-summary .btn-delete:hover i {
+      transform: rotate(90deg); }
+  .product-summary .information {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    top: 10px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 95%;
+    height: 130px;
+    padding-left: 2.5%;
+    color: white; }
+    .product-summary .information .info-row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+    .product-summary .information .details-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center; }
+      .product-summary .information .details-container img {
+        height: 56.4px;
+        padding-left: 10px; }
+    .product-summary .information .details {
+      width: 33px;
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+    .product-summary .information .money-quantity {
+      display: flex;
+      align-items: center;
+      font-size: 14px; }
+      .product-summary .information .money-quantity .quantity {
+        margin-right: 12px; }
+      .product-summary .information .money-quantity .money {
+        margin-left: 12px; }
+    .product-summary .information .name {
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 20px; }
+    .product-summary .information .color {
+      width: 28px;
+      height: 30px;
+      border: 2px solid white; }
+    .product-summary .information .size {
+      font-size: 14px; }
+    .product-summary .information .price {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      font-size: 20px; }
+
+.total {
+  border-top: 4px solid black;
+  padding: 10px 0;
+  padding-bottom: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  font-size: 22px; }
+
+.proceed {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end; }
 
 #header-login {
   background: url("../img/bg.jpg") no-repeat;

@@ -58,6 +58,10 @@ nav{
         &:hover{
             background: white;
             color: $dark-blue;
+            .counter{
+                color: white;
+                background: $dark-blue;
+            }
         }
     }
     .nav-user{
@@ -92,4 +96,13 @@ nav{
 
 #header{
     height: 50px;
+}
+
+.counter{
+    background: $light-pink;
+    border-radius: 100px;
+    padding: 0 7px;
+    margin-left: 3px;
+    color: white;
+    transition: 0.2s ease;
 }
