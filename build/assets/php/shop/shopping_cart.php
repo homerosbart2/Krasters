@@ -1,14 +1,48 @@
 <html>
 <head>
-    <title>Krasters</title>   
+    <title>Krasters</title>  
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"  media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../css/bootstrap-select.css"  media="all" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"  type="text/javascript"></script> 
+    <script src="../../js/bootstrap-select.js" type="text/javascript"></script>    
 </head>
 <?php
     include '../modules/nav.php';
 ?>
 <body>
+    <span class="mask"></span>
     <section class="summary">
         <div class="summaries-container"> 
-            
+            <span class="container-1">
+            </span>
+            <span class='total'><b>TOTAL:</b> <span class='value'>Q 2,300.00</span></span>
+            <span class='proceed'>
+                <a id='proceed-button' class='btn-register'><i class='fas fa-credit-card'></i> Proceder</a>
+            </span>
+            <span class="squared-absolute">
+                <span class="content">
+                    <span class="exit-button">
+                        <a class='btn-delete'><i class='fas fa-times'></i></a>
+                    </span>
+                    <form id="proceed-form">
+                        <span class="proceed-total">
+
+                        </span>
+                        <span class="input-icon">
+                            <input type='text' id='user-card' placeholder='Número de Tarjeta' required>
+                            <i class="fas fa-credit-card"></i>
+                        </span>
+                        <span class="input-icon">
+                            <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="place-select">
+                                <option value=default selected=selected disabled>Seleccione lugar</option>
+                                <option value="Capital">Capital</option>
+                            </select>
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                    </form>
+                </span>
+            </span>
         </div>
     </section>
 </body>
@@ -65,15 +99,34 @@
         rows += "<span class='price'>Q 500.00</span>";
         rows += "</span>";
         rows += "</span>";
-
-        rows += "<span class='total'><b>TOTAL</b>: Q 2,300.00</span>";
-        rows += "<span class='proceed'>";
-        rows += "<a class='btn-register'><i class='fas fa-credit-card'></i> Proceder</a>";
-        rows += "</span>";
-        $(".summaries-container").html(rows);
+        $(".container-1").html(rows);
     }
 
     $(document).ready(function(){
         load_summaries();
+        proceed = 0;
+
+        $('#proceed-button').click(function(){
+            $('.mask').addClass('active');
+            $('.squared-absolute').addClass('active');
+            $('.proceed-total').html($('.total').html());
+            proceed = 1;
+        });
+
+        $('.mask').click(function(){
+            exitSquared();
+        });
+
+        $('.exit-button').find('i').click(function(){
+            exitSquared();
+        });
     });
+
+    function exitSquared(){
+        if(proceed == 1){
+            $('.mask').removeClass('active');
+            $('.squared-absolute').removeClass('active');
+            proceed = 0;
+        }
+    }
 </script>

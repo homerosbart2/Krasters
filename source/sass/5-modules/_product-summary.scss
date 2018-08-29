@@ -18,6 +18,7 @@
     overflow: hidden;
     background: rgb(56, 56, 56);
     margin-bottom: 10px;
+    transition: height 0.2s ease;
     .image{
         position: absolute;
         width: 150%;
@@ -103,6 +104,10 @@
             font-size: 20px;
         }
     }
+
+    input[type=text]{
+        border: black;
+    }
 }
 
 .total{
@@ -113,6 +118,21 @@
     width: 100%;
     justify-content: flex-end; 
     font-size: 22px;
+
+    .value{
+        margin-left: 6px;
+    }
+}
+
+.proceed-total{
+    color: white;
+    font-size: 22px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    .value{
+        margin-left: 12px;
+    } 
 }
 
 .proceed{

@@ -1,5 +1,5 @@
 input[type=text],input[type=password], input[type=number], textarea, select, .btn.dropdown-toggle{
-    height: 30px;
+    height: 34px;
     margin: 10px 0px;
     border: 1px solid white;
     background: none;
@@ -104,7 +104,7 @@ input[type=file] {
         background: white;
         width: 15px;
         text-align: center;
-        z-index: 100;
+        z-index: 2;
     }
 }
 

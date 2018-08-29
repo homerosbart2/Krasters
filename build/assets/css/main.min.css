@@ -261,7 +261,7 @@ section {
     color: white; }
 
 input[type=text], input[type=password], input[type=number], textarea, select, .btn.dropdown-toggle {
-  height: 30px;
+  height: 34px;
   margin: 10px 0px;
   border: 1px solid white;
   background: none;
@@ -346,7 +346,7 @@ input[type=file] {
     background: white;
     width: 15px;
     text-align: center;
-    z-index: 100; }
+    z-index: 2; }
 
 .switch {
   display: flex;
@@ -534,6 +534,78 @@ nav {
   justify-content: center;
   padding-bottom: 10px;
   color: white; }
+
+.squared-absolute {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  top: 50%;
+  left: 50%;
+  padding-bottom: 0vw;
+  transition: z-index 0.5s ease;
+  overflow: hidden; }
+  @media screen and (orientation: portrait) {
+    .squared-absolute {
+      width: 100vw;
+      margin-left: -50vw;
+      margin-top: -50vw; } }
+  @media screen and (orientation: landscape) {
+    .squared-absolute {
+      width: 100vh;
+      margin-left: -50vh;
+      margin-top: -50vh; }
+      .squared-absolute .btn-delete {
+        margin-top: 55px; } }
+  .squared-absolute.active {
+    z-index: 5;
+    transition: z-index 0.3s; }
+    @media screen and (orientation: portrait) {
+      .squared-absolute.active {
+        padding-bottom: 100vw; } }
+    @media screen and (orientation: landscape) {
+      .squared-absolute.active {
+        padding-bottom: 100vh; } }
+  .squared-absolute .content {
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    right: 25px;
+    bottom: 10px; }
+    .squared-absolute .content form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%; }
+      .squared-absolute .content form .input-icon i {
+        color: white;
+        background: none; }
+      .squared-absolute .content form select {
+        text-align-last: center; }
+      .squared-absolute .content form .btn.dropdown-toggle {
+        height: 34px;
+        color: white;
+        background: none;
+        border-color: white;
+        text-align-last: center;
+        font-weight: 100; }
+        .squared-absolute .content form .btn.dropdown-toggle + i {
+          color: white;
+          background: black; }
+      .squared-absolute .content form .dropdown-menu .form-control {
+        border: 1px solid #818181; }
+  .squared-absolute .exit-button {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%; }
+    .squared-absolute .exit-button a {
+      color: white;
+      font-size: 18px; }
+      .squared-absolute .exit-button a:hover {
+        cursor: pointer; }
+        .squared-absolute .exit-button a:hover i {
+          transform: rotate(90deg); }
+    .squared-absolute .exit-button i {
+      transition: 0.2s ease; }
 
 .flex-video {
   height: 0;
@@ -755,7 +827,8 @@ nav {
   height: 150px;
   overflow: hidden;
   background: #383838;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  transition: height 0.2s ease; }
   .product-summary .image {
     position: absolute;
     width: 150%;
@@ -823,6 +896,8 @@ nav {
       justify-content: flex-end;
       width: 100%;
       font-size: 20px; }
+  .product-summary input[type=text] {
+    border: black; }
 
 .total {
   border-top: 4px solid black;
@@ -832,6 +907,17 @@ nav {
   width: 100%;
   justify-content: flex-end;
   font-size: 22px; }
+  .total .value {
+    margin-left: 6px; }
+
+.proceed-total {
+  color: white;
+  font-size: 22px;
+  display: flex;
+  width: 100%;
+  justify-content: center; }
+  .proceed-total .value {
+    margin-left: 12px; }
 
 .proceed {
   display: flex;
@@ -953,9 +1039,9 @@ nav {
   right: 0;
   left: 0;
   background: white;
-  z-index: 0;
+  z-index: -1;
   transition: 0.2s ease;
   transition: background 0.4s ease; }
   .mask.active {
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 4; }
