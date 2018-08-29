@@ -1,0 +1,100 @@
+.squared-absolute{
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    top: 50%;
+    left: 50%;
+    padding-bottom: 0vw;
+    transition: z-index 0s;
+    overflow: hidden;
+    @media screen and (orientation: portrait) {
+        width: 100vw;
+        margin-left: -50vw;
+        margin-top: -50vw;
+    }
+    @media screen and (orientation:landscape) {
+        width: 100vh;
+        margin-left: -50vh;
+        margin-top: -50vh;
+
+        .btn-delete{
+            margin-top: 55px;
+        }
+    }
+    &.active{
+        z-index: 5;
+        @media screen and (orientation: portrait) {
+            padding-bottom: 100vw;
+        }
+        @media screen and (orientation: landscape) {
+            padding-bottom: 100vh;
+        }
+        transition: z-index 0.2s;
+    }
+
+    .content{
+        position: absolute;
+        top: 10px;
+        left: 25px;
+        right: 25px;
+        bottom: 10px;
+
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            margin-top: -25px;
+
+            .input-icon{
+                i{
+                    color: white;
+                    background: none;
+                }
+            }
+
+            select{
+                text-align-last:center;
+            }
+
+            .btn.dropdown-toggle{
+                height: 34px;
+                color: white;
+                background: none;
+                border-color: white;
+                text-align-last:center;
+                font-weight: 100;
+                & + i{
+                    color: white;
+                    background: black;
+                }
+            }
+
+            .dropdown-menu{
+                .form-control{
+                    border: 1px solid rgb(129, 129, 129);
+                }
+            }
+        }
+    }
+
+    .exit-button{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        a{
+            color: white;
+            font-size: 18px;
+            &:hover{
+                cursor: pointer;
+                i{
+                    transform: rotate(90deg);
+                }
+            }
+        }
+        i{
+            transition: 0.2s ease;
+        }
+        
+    }
+}
