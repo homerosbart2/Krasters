@@ -54,7 +54,7 @@
                         </span>
                         <span class="form-row">
                             <span></span>
-                            <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                            <a class="btn-register" id="agregarTarjeta"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
                     </form>
 
@@ -84,7 +84,7 @@
                         </span>
                         <span class="form-row">
                             <span></span>
-                            <a class="btn-register"><i class="fas fa-plus"></i> Agregar</a>
+                            <a class="btn-register" id="agregarProveedor"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
                     </form>
 
@@ -101,9 +101,98 @@
 </html>
 
 <script>
+
+    var agregarProveedor = function(){
+        if($('#format-courier').is(":checked")) formato = "json";
+        else formato = "xml";
+        nombre = document.getElementById("courier_nombre").value;
+        direccion = document.getElementById("courier_direccion").value;
+        costo = document.getElementById("costo_directorio").value; 
+        envio = document.getElementById("envio_directorio").value; 
+        estado = document.getElementById("estado_directorio").value; 
+        if((nombre != "")&&(direccion != "")&&(autorizacion != "")){
+            $.ajax({
+                url: "../rutas_ajax/couriers/insertar.php?nombre=" + nombre + "&direccion=" + direccion + "&costo=" + costo + "&envio=" + envio + "&estado=" + estado + "&formato=" + formato, 
+                type: "POST",
+                success: function(r){
+                    //si elimino crea devuelve 0, si hubo error -1
+                    if(r == 0){ //actualizo producto
+                        new PNotify({
+                            title: 'Crear Courier',
+                            text: 'tarjeta creada exitosamente.',
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });                                                
+                    }else{
+                        new PNotify({
+                            title: 'Crear Courier',
+                            text: 'Error al crear tarjeta, verifique sus datos.',
+                            type: 'error',
+                            styling: 'bootstrap3'
+                        });
+                    }                        
+                }
+            });
+        }else{
+            new PNotify({
+                title: 'Crear Courier',
+                text: 'Complete correctamente todos campos porfavor.',
+                type: 'warning',
+                styling: 'bootstrap3'
+            });
+        } 
+    }
+
+    var agregarTarjeta = function(){
+        if($('#format-card').is(":checked")) formato = "json";
+        else formato = "xml";      
+        nombre = document.getElementById("tarjeta_nombre").value;
+        direccion = document.getElementById("tarjeta_direccion").value;
+        autorizacion = document.getElementById("autorizacion_directorio").value; 
+        if((nombre != "")&&(direccion != "")&&(autorizacion != "")){
+            $.ajax({
+                url: "../rutas_ajax/tarjetas/insertar.php?nombre=" + nombre + "&direccion=" + direccion + "&autorizacion=" + autorizacion + "&formato=" + formato,
+                type: "POST",
+                success: function(r){
+                    //si elimino crea devuelve 0, si hubo error -1
+                    if(r == 0){ //actualizo producto
+                        new PNotify({
+                            title: 'Crear Tarjeta',
+                            text: 'tarjeta creada exitosamente.',
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });                                                
+                    }else{
+                        new PNotify({
+                            title: 'Crear Tarjeta',
+                            text: 'Error al crear tarjeta, verifique sus datos.',
+                            type: 'error',
+                            styling: 'bootstrap3'
+                        });
+                    }                        
+                }
+            });
+        }else{
+            new PNotify({
+                title: 'Crear Tarjeta',
+                text: 'Complete correctamente todos campos porfavor.',
+                type: 'warning',
+                styling: 'bootstrap3'
+            });
+        } 
+    }    
+
     $(document).ready(function(){
         $("#admin-shop-form-card-provider").hide();
         $("#admin-shop-form-courier-provider").hide();
+ 
+        $("#agregarTarjeta").on('click',function(){
+            //agregarTarjeta();
+        }) 
+
+        $("#agregarProveedor").on('click',function(){
+            agregarProveedor();
+        }) 
     });
 
     $("#format-card").click(function(){
