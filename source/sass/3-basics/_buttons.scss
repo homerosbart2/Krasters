@@ -36,6 +36,19 @@
     }
 }
 
+.btn-purchase{
+    @extend %btn;
+    color: green;
+    border-color: green;
+    background: none;
+    &:hover,
+    &:active,
+    &:focus{
+        background: green;
+        color: white;
+    }
+}
+
 
 .btn-cancel{
     @extend %btn;

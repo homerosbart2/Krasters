@@ -9,7 +9,7 @@
 </html>
 <body>
     <span class="mask">
-
+        
     </span>
     <div id="productos" class="products-container"> 
     </div>
@@ -31,6 +31,7 @@ function load_productos(){
             obj = JSON.parse(r);
             rows = "";
             for(var i = 1; i <= obj.length; i++){
+                //ruta debe ser la imagen del producto.
                 ruta = '../../img/productos/default.jpg';
                 rows += "<div id='product-card-" + obj[i - 1].producto_id +"' class='product-card'>";
                 rows += "<img class='image' src='"+ruta+"'>";
@@ -41,11 +42,13 @@ function load_productos(){
                 rows += "<span class='separation m'></span>";
                 rows += "<span class='form-row'>";
                 rows += "<span class='input-icon'>";
+                //Se debe verificar que la talla se encuentre o mostrar un select con las tallas. (Es mejor el select)
                 rows += "<input type='number' min='25' id='producto_talla' placeholder='Talla' required>";
                 rows += "<i class='fas fa-shoe-prints'></i>";
                 rows += "</span>";
+                //Este select debe obtener los colores disponibles para el producto.
                 rows += "<span class='input-icon'>";
-                rows += "<select>";
+                rows += "<select class='select-color'>";
                 rows += "<option value='amarillo'>Amarillo</option>";
                 rows += "</select>";
                 rows += "</span>";
@@ -55,6 +58,7 @@ function load_productos(){
                 rows += "<span class='brand-container'>";
                 rows += "<a class='btn-cancel' id='see-" + obj[i - 1].producto_id + "' onClick=\"expandProductCard('product-card-" + obj[i - 1].producto_id +"');\">Ver más</a>";
                 rows += "<span class='brand'>";
+                //Falta obtener la imagen de la marca.
                 rows += "<img src ='../../img/brands/adidas-white.png'>";
                 rows += "</span>";
                 rows += "</span>";
@@ -77,6 +81,7 @@ $(document).ready(function(){
 
 var actualCardId = '';
 
+//Función que se encarga de cambiar la case de las tarjetas para que se expandan.
 function expandProductCard(card_id){
     if(actualCardId != card_id){
         actualCardId = card_id;
@@ -91,6 +96,7 @@ function expandProductCard(card_id){
     }
 }
 
+//Función para salir de una vista expandida al hacer click afuera de la imagen.
 $('.mask').click(function(){
     if(actualCardId != ''){
         $('#' + actualCardId).removeClass('expanded');

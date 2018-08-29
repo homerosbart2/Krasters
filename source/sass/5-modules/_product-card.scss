@@ -1,4 +1,4 @@
-.products-container{
+.products-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -6,7 +6,7 @@
     margin-top: 20px;
 }
 
-.product-card{
+.product-card {
     position: relative;
     width: 22%;
     padding-bottom: 22%;
@@ -14,84 +14,77 @@
     margin-bottom: 10px;
     margin-top: 10px;
     transition: margin-left 0.4s ease;
-    &.expanded{
+    &.expanded {
         transition: margin-left 0s ease;
         position: fixed;
         top: 50%;
         left: 50%;
-        @media screen and (orientation:portrait) {
+        @media screen and (orientation: portrait) {
             width: 100vw;
             padding-bottom: 100vw;
-            margin-left:-50vw;
-            margin-top:-50vw;
+            margin-left: -50vw;
+            margin-top: -50vw;
         }
         @media screen and (orientation:landscape) {
             width: 100vh;
             padding-bottom: 100vh;
-            margin-left:-50vh;
-            margin-top:-50vh;
+            margin-left: -50vh;
+            margin-top: -50vh;
         }
         z-index: 5;
         margin-top: 0;
         margin-bottom: 0;
-
-        .information{
+        .information {
             align-items: flex-start;
             padding-left: 10%;
             padding-right: 10%;
-            .name{
+            .name {
                 opacity: 0;
                 background: none;
                 justify-content: flex-start;
             }
-            .form-row{
+            .form-row {
                 justify-content: space-between;
             }
-            .input-icon{
+            .input-icon {
                 display: flex;
                 opacity: 0;
             }
         }
-
-        .brand-container{
-            .btn-cancel{
+        .brand-container {
+            .btn-cancel {
                 font-size: 24px;
             }
         }
-
         &:hover,
         &:active,
-        &:focus{
-            .information{
-                .name{
+        &:focus {
+            .information {
+                .name {
                     opacity: 1;
                 }
-                .input-icon{
+                .input-icon {
                     opacity: 1;
                 }
             }
         }
     }
-
-    @include media-max(1000px){
+    @include media-max(1000px) {
         width: 32%;
         padding-bottom: 32%;
         margin-bottom: 20px;
-     }
-
-     @include media-max(720px){
+    }
+    @include media-max(720px) {
         width: 45%;
         padding-bottom: 45%;
         margin-bottom: 20px;
-     }
-
-    @include media-max(460px){
-       width: 90%;
-       padding-bottom: 90%;
-       margin-bottom: 20px;
     }
-
-    .information{
+    @include media-max(460px) {
+        width: 90%;
+        padding-bottom: 90%;
+        margin-bottom: 20px;
+    }
+    .information {
         color: white;
         position: absolute;
         display: flex;
@@ -102,51 +95,44 @@
         left: 0;
         bottom: 20%;
         right: 0;
-        
-        .btn-register{
+        .btn-register {
             width: 100px;
             opacity: 0;
             transition: all 0.2s ease;
         }
-
-        .form-row{
+        .form-row {
             width: 100%;
             justify-content: center;
-            .input-icon{
+            .input-icon {
                 width: 48%;
             }
         }
-
-        input[type=number], select{
+        input[type=number],
+        select {
             height: 33.5px;
             background: none;
             margin-top: 0;
         }
-
-        input[type=number]{
+        input[type=number] {
             width: 100%;
         }
-
-        select{
-            text-align-last:center;
+        select {
+            text-align-last: center;
         }
-
-        .input-icon{
+        .input-icon {
             display: none;
-            i{
+            i {
                 color: white;
                 background: none;
                 top: 1px;
             }
         }
-
-        a{
+        a {
             opacity: 0;
             transition: 0.2s ease;
             transform: scale(0);
         }
-
-        .name{
+        .name {
             text-transform: uppercase;
             font-weight: 600;
             font-size: 20px;
@@ -154,24 +140,21 @@
             display: flex;
             justify-content: center;
             background: $purple;
-            transition: all 0.3s ease;  
+            transition: all 0.3s ease;
         }
-
-        .description{
+        .description {
             opacity: 0;
             transition: all 0.2s ease;
         }
-
-        .price{
+        .price {
             font-size: 16px;
             opacity: 0;
             transition: all 0.2s ease;
         }
     }
-
-    .brand-container{
+    .brand-container {
         position: absolute;
-        top:80%;
+        top: 80%;
         bottom: 5%;
         left: 10%;
         right: 10%;
@@ -181,20 +164,19 @@
         opacity: 0;
         color: $white;
         transition: all 0.2s ease;
-        .btn-cancel{
+        .btn-cancel {
             margin: 0 0;
             padding: 0 0;
             transition: 0.2s ease;
         }
-        .brand{
-            img{
+        .brand {
+            img {
                 max-height: 50px;
                 height: 100%;
             }
         }
     }
-
-    .image{
+    .image {
         position: absolute;
         top: 0;
         left: 0;
@@ -203,27 +185,26 @@
         width: 100%;
         transition: all 0.2s ease;
     }
-
     &:hover,
     &:active,
-    &:focus{
-        .image{
+    &:focus {
+        .image {
             filter: blur(4px) brightness(40%);
             transform: scale(1.04);
         }
-
-        .brand-container{
+        .brand-container {
             opacity: 1;
         }
-
-        .information{
-            .name{
+        .information {
+            .name {
                 background: none;
             }
-            .description, .price, a{
+            .description,
+            .price,
+            a {
                 opacity: 1;
             }
-            a{
+            a {
                 transform: scale(1);
             }
         }
