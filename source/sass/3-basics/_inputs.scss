@@ -86,6 +86,10 @@ input[type=file] {
     justify-content: space-between;
     padding-left: 5px;
     padding-right: 7px;
+
+    .expiration-date, input[type=number]{
+        width: 48%;
+    }
 }
 
 .input-icon{
@@ -157,4 +161,29 @@ input[type=file] {
 .form-alert{
     margin-bottom: 9px;
     margin-top: 12px;
+}
+
+.expiration-date{
+    border: 1px solid white;
+    border-radius: 3px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .sep{
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .month, .year{
+        border: none;
+        margin: 0 0;
+        width: 45%;
+        height: 32px;
+        &:hover,
+        &:active,
+        &:focus{
+            border: none;
+        }
+    }
 }

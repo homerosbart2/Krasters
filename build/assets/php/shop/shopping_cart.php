@@ -30,8 +30,20 @@
 
                         </span>
                         <span class="input-icon">
+                            <input type='text' id='user-name' placeholder='Nombre' required>
+                            <i class="far fa-user"></i>
+                        </span>
+                        <span class="input-icon">
                             <input type='text' id='user-card' placeholder='Número de Tarjeta' required>
                             <i class="fas fa-credit-card"></i>
+                        </span>
+                        <span class="form-row">
+                            <span class="expiration-date">
+                                <input type="number" placeholder="MM" class="month">
+                                <span class='sep'>/</span>
+                                <input type="number" placeholder="YY" class="year">
+                            </span>
+                            <input type="number" placeholder="CVV" class="user-cvv">
                         </span>
                         <span class="input-icon">
                             <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="place-select">
@@ -39,6 +51,9 @@
                                 <option value="Capital">Capital</option>
                             </select>
                             <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                        <span class="proceed">
+                            <a id='purchase-button' class='btn-purchase'><i class="fas fa-dollar-sign"></i> Pagar</a>
                         </span>
                     </form>
                 </span>

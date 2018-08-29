@@ -206,7 +206,7 @@ body {
 section {
   display: -webkit-box; }
 
-.btn-register, .btn-cancel, .btn-login, .btn-menu, .admin-shop-form label {
+.btn-register, .btn-purchase, .btn-cancel, .btn-login, .btn-menu, .admin-shop-form label {
   display: inline-block;
   padding: 5px 10px;
   color: black;
@@ -222,7 +222,7 @@ section {
   border: 1px solid;
   cursor: pointer;
   transition: all 0.2s ease; }
-  .btn-register:hover, .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .admin-shop-form label:hover, .btn-register:active, .btn-cancel:active, .btn-login:active, .btn-menu:active, .admin-shop-form label:active, .btn-register:focus, .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .admin-shop-form label:focus {
+  .btn-register:hover, .btn-purchase:hover, .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .admin-shop-form label:hover, .btn-register:active, .btn-purchase:active, .btn-cancel:active, .btn-login:active, .btn-menu:active, .admin-shop-form label:active, .btn-register:focus, .btn-purchase:focus, .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .admin-shop-form label:focus {
     outline: 0; }
 
 .btn-register {
@@ -234,6 +234,14 @@ section {
     transform: translateY(-2px);
     color: white !important;
     box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.24); }
+
+.btn-purchase {
+  color: green;
+  border-color: green;
+  background: none; }
+  .btn-purchase:hover, .btn-purchase:active, .btn-purchase:focus {
+    background: green;
+    color: white; }
 
 .btn-cancel {
   margin-right: auto;
@@ -331,6 +339,8 @@ input[type=file] {
   justify-content: space-between;
   padding-left: 5px;
   padding-right: 7px; }
+  .form-row .expiration-date, .form-row input[type=number] {
+    width: 48%; }
 
 .input-icon {
   position: relative; }
@@ -389,6 +399,25 @@ input[type=file] {
 .form-alert {
   margin-bottom: 9px;
   margin-top: 12px; }
+
+.expiration-date {
+  border: 1px solid white;
+  border-radius: 3px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+  .expiration-date .sep {
+    color: white;
+    font-size: 16px;
+    font-weight: bold; }
+  .expiration-date .month, .expiration-date .year {
+    border: none;
+    margin: 0 0;
+    width: 45%;
+    height: 32px; }
+    .expiration-date .month:hover, .expiration-date .month:active, .expiration-date .month:focus, .expiration-date .year:hover, .expiration-date .year:active, .expiration-date .year:focus {
+      border: none; }
 
 a {
   color: #0074D9;
@@ -509,7 +538,7 @@ nav {
   .main-nav .nav-logo:hover {
     color: #F2657F;
     transform: translateX(5px); }
-  @media only screen and (max-width: 350px) {
+  @media only screen and (max-width: 380px) {
     .main-nav .logo-division {
       display: none; }
     .main-nav .options-division {
@@ -542,7 +571,7 @@ nav {
   top: 50%;
   left: 50%;
   padding-bottom: 0vw;
-  transition: z-index 0.5s ease;
+  transition: padding 0s;
   overflow: hidden; }
   @media screen and (orientation: portrait) {
     .squared-absolute {
@@ -558,7 +587,7 @@ nav {
         margin-top: 55px; } }
   .squared-absolute.active {
     z-index: 5;
-    transition: z-index 0.3s; }
+    transition: padding 0.2s; }
     @media screen and (orientation: portrait) {
       .squared-absolute.active {
         padding-bottom: 100vw; } }
