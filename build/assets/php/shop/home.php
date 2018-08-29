@@ -71,7 +71,6 @@ function load_productos(){
 
 $(document).ready(function(){
     load_productos();
-    
     $(document).on('click','.agregar-carrito',function(event){
         var div = $(this);
         var producto_id = div.attr('id');
