@@ -25,7 +25,7 @@ html, body {
 
 function load_productos(){
     $.ajax({
-        url: '../productos/listado.php?',
+        url: '../rutas_ajax/productos/listado.php?producto=',
         type: 'GET',
         success: function(r){
             obj = JSON.parse(r);
