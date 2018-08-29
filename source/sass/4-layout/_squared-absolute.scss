@@ -5,7 +5,7 @@
     top: 50%;
     left: 50%;
     padding-bottom: 0vw;
-    transition: padding 0s;
+    transition: z-index 0s;
     overflow: hidden;
     @media screen and (orientation: portrait) {
         width: 100vw;
@@ -29,7 +29,7 @@
         @media screen and (orientation: landscape) {
             padding-bottom: 100vh;
         }
-        transition: padding 0.2s;
+        transition: z-index 0.2s;
     }
 
     .content{
@@ -44,6 +44,7 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
+            margin-top: -25px;
 
             .input-icon{
                 i{
