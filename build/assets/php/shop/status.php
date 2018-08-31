@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Krasters</title>
+
 </head>
 <?php
     include '../modules/nav.php';
@@ -77,6 +78,8 @@ $(document).ready(function(){
     });
 
     load_details();
+
+    setStage(3);
 });
 
 //Función para cambiar el estado, 1 - 5 (int) son estados válidos, cualquier otro valor va a irse al default y si al recargar la página no se llama la función, por predeterminado, ya está cargado el default.
