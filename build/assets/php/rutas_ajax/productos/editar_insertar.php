@@ -1,28 +1,35 @@
 <?php
     //encargado de editar existencia o crear nuevo producto copiando uno existente
-    $nombre = $_GET["nombre"];
     $talla = $_GET["talla"];
     $cantidad = $_GET["cantidad"];
     $color = $_GET["color"];
-    $marca = $_GET["marca"];
-    $precio = $_GET["precio"];        
+    $producto = $_GET["producto"];        
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "SELECT P.producto_nombre FROM Productos as P WHERE (P.producto_nombre = '$nombre') AND (P.talla = '$talla') AND P.color_nombre = '$color' AND P.marca_nombre = '$marca'"; 
+    $query = "SELECT E.producto_id,E.existencia FROM Existencias as E WHERE (E.producto_id = $producto) AND (E.color_nombre = '$color') AND (E.talla = '$talla')"; 
     $result = pg_query($link, $query);
-    $retorno = -1;
+    $retorno = -4;
     if ($result) {
         $resultado = pg_num_rows($result);
         if($resultado > 0){
-            session_start();
-            $query = "UPDATE Productos as P SET existencia= P.existencia + $cantidad WHERE P.producto_nombre = '$nombre' AND P.talla = '$talla' AND P.color_nombre = '$color' AND P.marca_nombre = '$marca'";
-            $result = pg_query($link, $query);
-            $retorno = 0;            
-            //creamos las variables de sesion
+            $rows = pg_fetch_assoc($result);
+            $existencias_actual = $rows["existencia"];
+            if($cantidad < 0){
+                //descontar cantidades
+                if($existencias_actual >= ($cantidad * -1)){
+                    //permitir
+                    $query = "UPDATE Existencias as E SET existencia= E.existencia + $cantidad WHERE (E.color_nombre = '$color') AND (E.talla = '$talla')";
+                    $result = pg_query($link, $query);
+                    if($result) $retorno = -3;                       
+                }else $retorno = $existencias_actual;
+            }else{
+                $query = "UPDATE Existencias as E SET existencia= E.existencia + $cantidad WHERE (E.color_nombre = '$color') AND (E.talla = '$talla')";
+                $result = pg_query($link, $query);
+                if($result) $retorno = -2;            
+            }
         }else{
-            $query = "INSERT INTO Productos(producto_nombre,precio,talla,existencia,color_nombre,marca_nombre) VALUES('$nombre',$precio,'$talla',$cantidad,'$color','$marca') RETURNING producto_id";
+            $query = "INSERT INTO Existencias(producto_id,talla,existencia,color_nombre) VALUES($producto,'$talla',$cantidad,'$color')";
             $result = pg_query($link, $query);
-            $row = pg_fetch_assoc($result);
-            $retorno = $row["producto_id"];
+            if($result) $retorno = -1;
         }
     }  
     pg_close($link);

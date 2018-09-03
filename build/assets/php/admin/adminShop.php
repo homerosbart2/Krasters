@@ -113,17 +113,17 @@
                             <select class="selectpicker" data-live-search="true" data-live-search-style="startsWith"  id="product-select1">
                                 <?php
                                     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-                                    $query = "SELECT DISTINCT P.precio,P.producto_nombre,M.marca_nombre FROM Productos as P, Marcas as M WHERE P.marca_nombre = M.marca_nombre ORDER BY P.producto_nombre";
+                                    $query = "SELECT P.producto_id,P.producto_nombre,M.marca_nombre FROM Productos as P, Marcas as M WHERE P.marca_nombre = M.marca_nombre ORDER BY P.producto_nombre";
                                     $result = pg_query($link, $query);
                                     echo "<option value=default selected=selected disabled>Seleccione producto</option>";
                                     while ($row = pg_fetch_assoc($result)){
                                         $nombre=$row["producto_nombre"];
                                         $marca=$row["marca_nombre"];
-                                        $precio=$row["precio"];
-                                        echo "<option value='".$nombre."-".$marca."-".$precio."'>".$nombre.' - [ '.$marca."]</option>";         
+                                        $producto=$row["producto_id"];
+                                        echo "<option value='".$producto."'>".$nombre.' - [ '.$marca."]</option>";         
                                     }
                                     pg_close($link);
-                                ?>  
+                                ?>
                             </select>
                         </span>
                         
@@ -143,14 +143,13 @@
                                 <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="color-select2">
                                     <?php
                                         $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-                                        $query = "SELECT DISTINCT P.precio,P.producto_nombre,M.marca_nombre FROM Productos as P, Marcas as M WHERE P.marca_nombre = M.marca_nombre ORDER BY P.producto_nombre";
+                                        $query = "SELECT C.color_nombre,C.color_codigo FROM Colores as C order by C.color_nombre";
                                         $result = pg_query($link, $query);
-                                        echo "<option value=default selected=selected disabled>Seleccione producto</option>";
+                                        echo "<option value=default selected=selected disabled>Seleccione color</option>";
                                         while ($row = pg_fetch_assoc($result)){
-                                            $nombre=$row["producto_nombre"];
-                                            $marca=$row["marca_nombre"];
-                                            $precio=$row["precio"];
-                                            echo "<option value='".$nombre."-".$marca."-".$precio."'>".$nombre.' - [ '.$marca."]</option>";         
+                                            $codigo=$row["color_nombre"];
+                                            $nombre=$row["color_nombre"];
+                                            echo "<option value='".$codigo."'>".$nombre."</option>";         
                                         }
                                         pg_close($link);
                                     ?>
@@ -169,16 +168,14 @@
                             <select class="selectpicker" data-live-search="true" id="product-select2">
                                 <?php
                                     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-                                    $query = "SELECT P.producto_id, P.color_nombre, P.producto_nombre,M.marca_nombre FROM Productos as P, Marcas as M, Colores as C WHERE P.marca_nombre = M.marca_nombre AND P.color_nombre = C.color_nombre ORDER BY P.producto_nombre";
+                                    $query = "SELECT P.producto_id,P.producto_nombre,M.marca_nombre FROM Productos as P, Marcas as M WHERE P.marca_nombre = M.marca_nombre ORDER BY P.producto_nombre";
                                     $result = pg_query($link, $query);
                                     echo "<option value=default selected=selected disabled>Seleccione producto</option>";
                                     while ($row = pg_fetch_assoc($result)){
-                                        // $codigo=$row["producto_id"];
-                                        $codigo=$row["producto_id"];
                                         $nombre=$row["producto_nombre"];
                                         $marca=$row["marca_nombre"];
-                                        $color=$row["color_nombre"];
-                                        echo "<option value='".$codigo."'>".$nombre.' - [ '.$marca.", ".$color."] </option>";         
+                                        $producto=$row["producto_id"];
+                                        echo "<option value='".$producto."'>".$nombre.' - [ '.$marca."]</option>";         
                                     }
                                     pg_close($link);
                                 ?>  
@@ -303,6 +300,11 @@
         }
     });
 
+    function renderPage(){
+        //Luego de 1 segundo se redirige hacia la misma pagina
+         $(location).attr('href','adminShop.php')
+    } 
+
     $(document).ready(function(){
         //Agregar nuevo producto
         $('#btn_agregar_producto').on('click', function(){
@@ -321,11 +323,13 @@
                         //en r viene el id
                         if(r > 0){
                             //primer select
+                            /*
                             select = document.getElementById('product-select1');
                             select.options[select.options.length] = new Option(r, nombre);
                             //segundo select
                             select = document.getElementById('product-select2'); 
                             select.options[select.options.length] = new Option(r, nombre);   
+                            */
                             new PNotify({
                                 title: 'Nuevo producto',
                                 text: 'Producto ingresado exitosamente.',
@@ -337,6 +341,7 @@
                             document.getElementById("producto_precio").value = "";
                             document.getElementById("producto_talla").value = "";
                             document.getElementById("producto_cantidad").value = "";                                                       
+                            setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
                         }else{
                             new PNotify({
                                 title: 'Nuevo producto',
@@ -359,27 +364,26 @@
 
         //Agregar existencia producto
         $('#btn_agregar_existencia_producto').on('click', function(){
-            var textoComboProducto = ($("#product-select1").val()).split("-");
-            nombre = textoComboProducto[0];
-            marca = textoComboProducto[1];
-            precio = textoComboProducto[2];
+            producto = $("#product-select1").val();
             cantidad = parseFloat(document.getElementById("producto_cantidad_existencia").value);
             talla = parseInt(document.getElementById("producto_talla_existencia").value);
             color = $("#color-select2").val();
-            if((talla > 0)&&(cantidad > 0)&&(color != null)&&(marca != null)&&(nombre != null)){
+            if((talla > 0)&&(cantidad != null)&&(color != null)&&(producto != null)){
                 $.ajax({
-                    url: "../rutas_ajax/productos/editar_insertar.php?nombre=" + nombre + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca + "&precio=" + precio,
+                    url: "../rutas_ajax/productos/editar_insertar.php?talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&producto=" + producto,
                     type: "POST",
                     success: function(r){
                         alert(r);
-                        //si actualizo devolvera 0, si creo uno nuevo un id > 0 si hubo error -1
-                        if(r > 0){ //creamos un producto nuevo
-                            //primer select
-                            select = document.getElementById('product-select1');
-                            select.options[select.options.length] = new Option(r, nombre);
-                            //segundo select
-                            select = document.getElementById('product-select2'); 
-                            select.options[select.options.length] = new Option(r, nombre);   
+                        //si actualizo devolvera 0, si creo un nuevo producto devuelve 1, si hubo error -1
+                        if(r > 0){
+                            //lo que intentamos quitar excede del actual
+                            new PNotify({
+                                title: 'Descontar producto',
+                                text: 'El producto excede las existencias en inventario, actualmente existen ' + r + ' unidades en inventario',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });                            
+                        }else if(r == -1){ //creamos un producto nuevo   
                             new PNotify({
                                 title: 'Nuevo producto',
                                 text: 'Producto ingresado exitosamente.',
@@ -388,13 +392,24 @@
                             });
                             document.getElementById("producto_talla_existencia").value = "";
                             document.getElementById("producto_cantidad_existencia").value = "";                                                 
-                        }else if(r == 0){ //actualizo productos
+                        }else if(r == -2){ //actualizo productos
                             new PNotify({
                                 title: 'Agregar existencias',
                                 text: 'Inventario actualizado exitosamente.',
                                 type: 'success',
                                 styling: 'bootstrap3'
                             });
+                            document.getElementById("producto_talla_existencia").value = "";
+                            document.getElementById("producto_cantidad_existencia").value = "";                             
+                        }else if(r == -3){ //Desconto productos
+                            new PNotify({
+                                title: 'Descontar existencias',
+                                text: 'Inventario actualizado exitosamente.',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                            document.getElementById("producto_talla_existencia").value = "";
+                            document.getElementById("producto_cantidad_existencia").value = "";  
                         }else{
                             new PNotify({
                                 title: 'Agregar existencias',
@@ -443,6 +458,7 @@
                     url: "../rutas_ajax/productos/editar_eliminar.php?producto=" + producto + "&nombre=" + nombre + "&precio=" + precio + "&descripcion=" + descripcion + "&accion=" + accion,
                     type: "POST",
                     success: function(r){
+                        alert(r);
                         //si elimino devolvera un 0, si actualizo un 1 y si hubo error -1
                         if(r == 1){ //actualizo producto
                             new PNotify({
@@ -450,7 +466,8 @@
                                 text: 'Producto actualizado exitosamente.',
                                 type: 'success',
                                 styling: 'bootstrap3'
-                            });                                                
+                            });                         
+                            setTimeout("renderPage()",500); //RENDER                       
                         }else if(r == 0){ //elimino producto
                             new PNotify({
                                 title: 'Eliminar producto',
@@ -458,10 +475,19 @@
                                 type: 'success',
                                 styling: 'bootstrap3'
                             });
+                            setTimeout("renderPage()",500); //RENDER
+                        }else if(r == -2){
+                            //Existencias de ese producto en inventario no se puede eliminar
+                            new PNotify({
+                                title: 'Eliminar producto',
+                                text: 'El producto no se puede eliminar debido a que contiene existencias en el inventario.',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });                            
                         }else{
                             new PNotify({
                                 title: 'Editar/Eliminar producto',
-                                text: 'Error al editar/eliminar producto, verifique sus datos.',
+                                text: 'Error al editar/eliminar producto, verifique sus datos o recuerde que no se puede eliminar un producto con existencias en inventario.',
                                 type: 'error',
                                 styling: 'bootstrap3'
                             });

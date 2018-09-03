@@ -17,7 +17,7 @@
             <span class="container-1">
             </span>
             <!-- Span donde va el total de los productos en el detalle. -->
-            <span class='total'><b>TOTAL :</b> <span class='value'>Q 2,300.00</span></span>
+            <span class='total'><b>TOTAL :</b> <span class='value' id='totalPago'></span></span>
             <span class='proceed'>
                 <a id='proceed-button' class='btn-register'><i class='fas fa-credit-card'></i> Proceder</a>
             </span>
@@ -70,71 +70,89 @@
 </html>
 
 <script>
+    var sumatoria = 0; //variable global
     function load_summaries(){
-        rows = "";
-        rows += "<span class='title'>DETALLE</span>";
-        rows += "<p class='justify'><i class='fas fa-exclamation'></i> Verifica que los productos listados a continuación sean los desados antes de proceder.</p>";
-        rows += "<span class='product-summary'>";
-        //Imagen del producto.
-        rows += "<img class='image' src='../../img/productos/default2.webp'>";
-        rows += "<span class='information'>";
-        rows += "<a class='btn-delete'><i class='fas fa-times'></i></a>";
-        //Nombre del producto
-        rows += "<span class='name'>KRAST</span>";
-        rows += "<span class='info-row'>";
-        rows += "<span class='details-container'>";
-        rows += "<span class='details'>";
-        //En background:#FFFFFF va el color.
-        rows += "<span class='color' style='background:#E6FF00;'></span>";
-        //Talla del producto.
-        rows += "<span class='size'>28.5</span>";
-        rows += "</span>";
-        //Imagen de la marca del producto.
-        rows += "<img src ='../../img/brands/adidas-white.png'>";
-        rows += "</span>";
-        rows += "<span class='money-quantity'>";
-        //Cantidad de productos agregados.
-        rows += "<span class='quantity'><i class='fas fa-layer-group'></i> 3 </span>";
-        rows += "<b>|</b>";
-        //Precio del producto.
-        rows += "<span class='money'> Q 600.00</span>";
-        rows += "</span>";
-        rows += "</span>";
-        //Multiplicación del precio por la cantidad.
-        rows += "<span class='price'>Q 1,800.00</span>";
-        rows += "</span>";
-        rows += "</span>";
+            $.ajax({
+            url: '../rutas_ajax/carrito/listado.php?',
+            type: 'GET',
+            success: function(r){
+                obj = JSON.parse(r);
+                rows = "";
+                sumatoria = 0;
+                rows += "<span class='title'>DETALLE</span>";
+                rows += "<p class='justify'><i class='fas fa-exclamation'></i> Verifica que los productos listados a continuación sean los desados antes de proceder.</p>";
+                for(var i = 1; i <= obj.length; i++){
+                    rows += "<span class='product-summary'>";
+                    //Imagen del producto.
+                    rows += "<img class='image' src='../../img/productos/default2.webp'>";
+                    rows += "<span class='information'>";
+                    rows += "<a class='btn-delete delete-item' id='" + obj[i - 1].carrito_id +  "-" + obj[i - 1].color_nombre    +  "-" + obj[i - 1].talla +  "-" + obj[i - 1].producto_id +"'><i class='fas fa-times'></i></a>";
+                    //Nombre del producto
+                    rows += "<span class='name'>" + obj[i - 1].producto_nombre + "</span>";
+                    rows += "<span class='info-row'>";
+                    rows += "<span class='details-container'>";
+                    rows += "<span class='details'>";
+                    //En background:#FFFFFF va el color.
+                    rows += "<span class='color' style='background:#" + obj[i - 1].color_codigo + ";'></span>";
+                    //Talla del producto.
+                    rows += "<span class='size'>" + obj[i - 1].talla + "</span>";
+                    rows += "</span>";
+                    //Imagen de la marca del producto.
+                    rows += "<img src ='../../img/brands/adidas-white.png'>";
+                    rows += "</span>";
+                    rows += "<span class='money-quantity'>";
+                    //Cantidad de productos agregados.
+                    rows += "<span class='quantity'><i class='fas fa-layer-group'></i> " + obj[i - 1].cantidad + "</span>";
+                    rows += "<b>|</b>";
+                    //Precio del producto.
+                    rows += "<span class='money'>" + obj[i - 1].precio + "</span>";
+                    rows += "</span>";
+                    rows += "</span>";
+                    //Multiplicación del precio por la cantidad.
+                    total = parseFloat(obj[i - 1].precio) * parseFloat(obj[i - 1].cantidad)
+                    sumatoria += total;
+                    rows += "<span class='price'>" + total + "</span>";
+                    rows += "</span>";
+                    rows += "</span>";
+                }
+                $(".container-1").html(rows);
+                $("#totalPago").html(sumatoria);
+            }
+        });     
+    }
 
-        //Únicamente para ver como se ven varios juntos. (Se puede borrar)
-        rows += "<span class='product-summary'>";
-        rows += "<img class='image' src='../../img/productos/default.jpg'>";
-        rows += "<span class='information'>";
-        rows += "<a class='btn-delete'><i class='fas fa-times'></i></a>";
-        rows += "<span class='name'>SASS</span>";
-        rows += "<span class='info-row'>";
-        rows += "<span class='details-container'>";
-        rows += "<span class='details'>";
-        rows += "<span class='color' style='background:#FF8000;'></span>";
-        rows += "<span class='size'>30</span>";
-        rows += "</span>";
-        rows += "<img src ='../../img/brands/nike-white.png'>";
-        rows += "</span>";
-        rows += "<span class='money-quantity'>";
-        rows += "<span class='quantity'><i class='fas fa-layer-group'></i> 1 </span>";
-        rows += "<b>|</b>";
-        rows += "<span class='money'> Q 500.00</span>";
-        rows += "</span>";
-        rows += "</span>";
-        rows += "<span class='price'>Q 500.00</span>";
-        rows += "</span>";
-        rows += "</span>";
-        $(".container-1").html(rows);
+    var descontarCarrito = function(carrito,color,talla,producto){
+        $.ajax({
+            url: '../rutas_ajax/carrito/eliminar.php?producto=' + producto + '&carrito=' + carrito + '&color=' + color + '&talla=' + talla,
+            type: 'GET',
+            success: function(r){
+                if(r == 0){
+                    load_summaries();
+                }else{
+                    new PNotify({
+                        title: 'Descontar de carrito',
+                        text: 'Ya no existen mas productos por descontar.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });                        
+                }
+            }
+        });        
     }
 
     $(document).ready(function(){
         load_summaries();
         proceed = 0;
         
+        $(document).on('click', '.delete-item', function () {
+            id = $(this).attr("id");
+            carrito = id.split("-")[0];
+            color = id.split("-")[1];
+            talla = id.split("-")[2];
+            producto = id.split("-")[3];
+            descontarCarrito(carrito,color,talla,producto);
+        });
+
         //Función para enseñar el formulario de compra.
         $('#proceed-button').click(function(){
             $('.mask').addClass('active');

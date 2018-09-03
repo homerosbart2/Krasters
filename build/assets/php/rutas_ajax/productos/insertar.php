@@ -8,12 +8,17 @@
     $color = $_GET["color"];
     $marca = $_GET["marca"];        
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "INSERT INTO Productos(producto_nombre,descripcion,precio,talla,existencia,color_nombre,marca_nombre) VALUES('$nombre','$descripcion',$precio,'$talla',$cantidad,'$color','$marca') RETURNING producto_id";
+    $query = "INSERT INTO Productos(producto_nombre,descripcion,precio,marca_nombre) VALUES('$nombre','$descripcion',$precio,'$marca') RETURNING producto_id";
     $result = pg_query($link, $query);
     $retorno = -1;
     if ($result) {
         $row = pg_fetch_assoc($result);
-        $retorno = $row["producto_id"];
+        $producto = $row["producto_id"];
+        $query = "INSERT INTO Existencias(producto_id,talla,existencia,color_nombre) VALUES($producto,'$talla',$cantidad,'$color')";        
+        $result = pg_query($link, $query);
+        if($result){
+            $retorno = $producto;
+        }
     }  
     pg_close($link);
     echo $retorno;
