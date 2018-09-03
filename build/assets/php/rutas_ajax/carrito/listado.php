@@ -4,7 +4,7 @@
     session_start();
     $usuario = $_SESSION['username']; //variable que se obtiene con la cookie
     $result_array = array();
-    $query = "SELECT * FROM Carrito AS Ca, Colores AS Co, Productos AS P, Marcas AS M where Ca.cantidad > 0 AND Ca.usuario='$usuario' AND Ca.color_nombre = Co.color_nombre AND Ca.producto_id = P.producto_id AND P.marca_nombre = M.marca_nombre";
+    $query = "SELECT * FROM Carrito AS Ca, Colores AS Co, Productos AS P, Marcas AS M where Ca.cantidad > 0 AND Ca.usuario='$usuario' AND Ca.color_nombre = Co.color_nombre AND Ca.producto_id = P.producto_id AND P.marca_nombre = M.marca_nombre ORDER BY P.producto_nombre,Ca.carrito_id";
     $result = pg_query($link, $query); 
     $i = 0;
     while($row = pg_fetch_assoc($result)){

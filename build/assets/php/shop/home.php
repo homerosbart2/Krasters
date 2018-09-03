@@ -22,6 +22,7 @@ html, body {
 }
 </style>
 <script>
+var permitirAgregar = false; //variable que permite agregar o no al carrito debido a que tengo colores y tallas permite saber si el producto si existe a partir de sus existencias
 
 function load_productos(){
     $.ajax({
@@ -87,7 +88,14 @@ var cargar_existencias = function(producto,color,talla){
         url: '../rutas_ajax/productos/existencia.php?producto=' + producto + '&color=' + color + '&talla=' + talla,
         type: 'GET',
             success: function(r){
-                $('#existencia-' + producto).html(r);
+                if(r >= 0){ 
+                    permitirAgregar = true;
+                    $('#existencia-' + producto).html(r);
+                }else{ 
+                    permitirAgregar = false;
+                    //si viene -1 el producto no existe
+                    $('#existencia-' + producto).html("NO DISPONIBLE");
+                }
             }
         });
     }    
@@ -96,34 +104,53 @@ var cargar_existencias = function(producto,color,talla){
 $(document).ready(function(){
     load_productos();
     $(document).on('click','.agregar-carrito',function(event){
-        var div = $(this);
-        var producto = div.attr('id');
-        color = $("#select-color-" + producto).val();
-        talla = $("#select-talla-" + producto).val();
-        if((producto != null)&&(color != null)&&(talla != null)){
-            $.ajax({
-            url: '../rutas_ajax/carrito/insertar.php?producto=' + producto + '&color=' + color + '&talla=' + talla,
-            type: 'GET',
-                success: function(r){
-                    if(r == 0 || r == 1){
-                        new PNotify({
-                            title: 'Agregar a carrito',
-                            text: 'Producto agregado exitosamente.',
-                            type: 'success',
-                            styling: 'bootstrap3'
-                        });
-                    }else{
-                        new PNotify({
-                            title: 'Agregar a carrito',
-                            text: 'Producto agotado.',
-                            type: 'warning',
-                            styling: 'bootstrap3'
-                        });                        
+        if(permitirAgregar){
+            var div = $(this);
+            var producto = div.attr('id');
+            color = $("#select-color-" + producto).val();
+            talla = $("#select-talla-" + producto).val();
+            if((producto != null)&&(color != null)&&(talla != null)){
+                $.ajax({
+                url: '../rutas_ajax/carrito/insertar.php?producto=' + producto + '&color=' + color + '&talla=' + talla,
+                type: 'GET',
+                    success: function(r){
+                        if(r == 0 || r == 1){
+                            new PNotify({
+                                title: 'Agregar a carrito',
+                                text: 'Producto agregado exitosamente.',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                            cargar_existencias(producto,color,talla);
+                        }else{
+                            new PNotify({
+                                title: 'Agregar a carrito',
+                                text: 'Producto agotado.',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });                        
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }); 
+
+    $(document).on('click', '.select-colores', function () {
+        id = $(this).attr("id");
+        producto = id.split("-")[2];
+        color = $("#select-color-" + producto).val();
+        talla = $("#select-talla-" + producto).val();
+        cargar_existencias(producto,color,talla);
+    }); 
+
+    $(document).on('click', '.select-tallas', function () {
+        id = $(this).attr("id");
+        producto = id.split("-")[2];
+        color = $("#select-color-" + producto).val();
+        talla = $("#select-talla-" + producto).val();
+        cargar_existencias(producto,color,talla);
+    });        
 });
 
 var actualCardId = '';
