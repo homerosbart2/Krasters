@@ -30,7 +30,7 @@
             $("#message").empty();
             $('#loading').show();
             $.ajax({
-                url: "ajax_php_file.php", // Url to which the request is send
+                url: "../rutas_ajax/image_upload.php", // Url to which the request is send
                 type: "POST", // Type of request to be send, called as method
                 data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                 contentType: false, // The content type used when sending data to the server.
@@ -53,7 +53,7 @@
                 var match = ["image/jpeg", "image/png", "image/jpg"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
                     $('#previewing').attr('src', 'noimage.png');
-                    $("#message").html("<p id='error'>Please Select A valid Image File</p>" + "<h4>Note</h4>" + "<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+                    $("#message").html("<p id='error'>Porfavor seleccione un archivo valido de imagen</p>" + "<h4>Note</h4>" + "<span id='error_message'>Solamente imagenes .png son permitidas</span>");
                     return false;
                 } else {
                     var reader = new FileReader();
