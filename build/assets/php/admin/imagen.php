@@ -50,10 +50,10 @@
                 $("#message").empty(); // To remove the previous error message
                 var file = this.files[0];
                 var imagefile = file.type;
-                var match = ["image/jpeg", "image/png", "image/jpg"];
+                var match = ["image/png"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
                     $('#previewing').attr('src', 'noimage.png');
-                    $("#message").html("<p id='error'>Porfavor seleccione un archivo valido de imagen</p>" + "<h4>Note</h4>" + "<span id='error_message'>Solamente imagenes .png son permitidas</span>");
+                    $("#message").html("<p id='error'>Porfavor seleccione un archivo válido de imagen</p>" + "<h4>Note</h4>" + "<span id='error_message'>Solamente imagenes .png son permitidas</span>");
                     return false;
                 } else {
                     var reader = new FileReader();
