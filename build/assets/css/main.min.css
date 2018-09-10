@@ -962,6 +962,71 @@ nav {
   align-items: center;
   flex-direction: column; }
 
+.advertising-container {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 50px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-bottom: 1px solid #e4e2e2; }
+  .advertising-container img {
+    position: absolute; }
+  .advertising-container .bg {
+    height: 300px;
+    top: -165px;
+    right: -40px; }
+    @media only screen and (max-width: 760px) {
+      .advertising-container .bg {
+        height: 200px;
+        top: -65px;
+        right: -162px; } }
+    @media only screen and (max-width: 450px) {
+      .advertising-container .bg {
+        height: 200px;
+        top: -65px;
+        right: -262px; } }
+  .advertising-container .logo {
+    height: 65px;
+    top: 1px;
+    left: -25px; }
+  .advertising-container .information {
+    font-size: 15px;
+    margin-right: 460px;
+    margin-left: 55px;
+    z-index: 5;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    @media only screen and (max-width: 760px) {
+      .advertising-container .information {
+        margin-right: 190px;
+        font-size: 12px; } }
+    @media only screen and (max-width: 450px) {
+      .advertising-container .information {
+        margin-right: 90px; } }
+    @media only screen and (max-width: 350px) {
+      .advertising-container .information {
+        font-size: 10px; } }
+    .advertising-container .information .brand {
+      font-size: 18px;
+      font-weight: 600; }
+      @media only screen and (max-width: 760px) {
+        .advertising-container .information .brand {
+          font-size: 14px; } }
+      @media only screen and (max-width: 450px) {
+        .advertising-container .information .brand {
+          font-size: 12px; } }
+  .advertising-container .hide {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    cursor: pointer; }
+
+body {
+  background: white; }
+
 #header-login {
   background: url("../img/bg.jpg") no-repeat;
   background-size: cover;

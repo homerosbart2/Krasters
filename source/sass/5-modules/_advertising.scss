@@ -1,0 +1,72 @@
+.advertising-container{
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 50px;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-bottom: 1px solid rgb(228, 226, 226);
+    img{
+        position: absolute;
+    }
+    .bg{
+        height: 300px;
+        top: -165px;
+        right: -40px;
+        @include media-max(760px) {
+            height: 200px;
+            top: -65px;
+            right: -162px;
+        }
+        @include media-max(450px) {
+            height: 200px;
+            top: -65px;
+            right: -262px;
+        }
+    }
+    .logo{
+        height: 65px;
+        top: 1px;
+        left: -25px;
+    }
+    .information{
+        font-size: 15px;
+        margin-right: 460px;
+        margin-left: 55px;
+        z-index: 5;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        @include media-max(760px) {
+            margin-right: 190px;
+            font-size: 12px;
+        }
+        @include media-max(450px) {
+            margin-right: 90px;
+        }
+        @include media-max(350px) {
+            font-size: 10px;
+        }
+        .brand{
+            font-size: 18px;
+            font-weight: 600;
+            @include media-max(760px) {
+                font-size: 14px;
+            }
+            @include media-max(450px) {
+                font-size: 12px;
+            }
+        }
+    }
+    .hide{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        color: white;
+        cursor: pointer;
+    }
+}
+
+body{
+    background: white;
+}
