@@ -35,6 +35,7 @@
 </html>
 
 <script>
+//Funcioón para sacar la información de la DB.
 function load_details(){
     rows = '';
     rows += '<tr class="table-titles"><th></th><th></th><th></th><th></th></tr>';
@@ -79,6 +80,7 @@ $(document).ready(function(){
 
     load_details();
 
+    //Ejemplo de como cambiar el estado.
     setStage(3);
 });
 
