@@ -1,5 +1,7 @@
+<?php header('Access-Control-Allow-Origin: *'); ?>
+
 <html>
-<head>
+<head   >
     <title>Krasters</title>  
     <link rel="stylesheet" href="../../css/bootstrap.min.css"  media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../../css/bootstrap-select.css"  media="all" rel="stylesheet" type="text/css"/>
@@ -29,6 +31,68 @@
                     <!-- Inputs para llamar a los servicios webs: -->
                     <form id="proceed-form">
                         <span class="proceed-total"></span>
+                        <!-- Select del lugar -->
+                        <span class="input-icon">
+                            <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="place-select">
+                                <?php
+                                    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                    $query = "SELECT * FROM Lugares as L order by L.nombre";
+                                    $result = pg_query($link, $query);
+                                    echo "<option value=default selected=selected disabled>Seleccione lugar</option>";
+                                    while ($row = pg_fetch_assoc($result)){
+                                        $id=$row["lugar_id"];
+                                        $nombre=$row["nombre"];
+                                        echo "<option value='".$id."'>".$nombre."</option>";         
+                                    }
+                                    pg_close($link);
+                                ?>  
+                            </select>
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>                        
+                        <!-- select de courier -->
+                        <span class="input-icon">
+                            <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="courier-select">
+                                <?php
+                                    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                    $query = "SELECT * FROM Couriers as C order by C.nombre";
+                                    $result = pg_query($link, $query);
+                                    echo "<option value=default selected=selected disabled>Seleccione courier</option>";
+                                    while ($row = pg_fetch_assoc($result)){
+                                        $id=$row["courier_id"];
+                                        $nombre=$row["nombre"];
+                                        $direccion_ip = $row["direccion_ip"];
+                                        $consulta_path = $row["consulta_path"];
+                                        $envio_path = $row["envio_path"];
+                                        $estado_path = $row["estado_path"];
+                                        $formato = $row["formato"];
+                                        echo "<option value='".$id."-".$direccion_ip."-".$consulta_path."-".$envio_path."-".$estado_path."-".$formato."'>".$nombre."-".$formato."</option>";         
+                                    }
+                                    pg_close($link);
+                                ?>  
+                            </select>
+                        </span>     
+
+                        <!-- Emisores de tarjetas -->
+                        <span class="input-icon">
+                            <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="card-select">
+                                <?php
+                                    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+                                    $query = "SELECT * FROM Emisores as E order by E.nombre";
+                                    $result = pg_query($link, $query);
+                                    echo "<option value=default selected=selected disabled>Seleccione emisor</option>";
+                                    while ($row = pg_fetch_assoc($result)){
+                                        $id=$row["emisor_id"];
+                                        $nombre=$row["nombre"];
+                                        $direccion_ip = $row["direccion_ip"];
+                                        $autorizacion_path = $row["autorizacion_path"];
+                                        $formato = $row["formato"];
+                                        echo "<option value='".$id."-".$direccion_ip."-".$autorizacion_path."-".$formato."'>".$nombre."-".$formato."</option>";         
+                                    }
+                                    pg_close($link);
+                                ?>  
+                            </select>
+                        </span>
+                                    
                         <!-- Nombre del usuario de la tarjeta. -->
                         <span class="input-icon">
                             <input type='text' id='user-name' placeholder='Nombre' required>
@@ -42,20 +106,16 @@
                         <span class="form-row">
                             <!-- Mes y año de la fecha de expiración de la tarjeta. -->
                             <span class="expiration-date">
-                                <input type="number" placeholder="MM" class="month">
+                                <input type="number" placeholder="MM" id="month-tarjeta">
                                 <span class='sep'>/</span>
-                                <input type="number" placeholder="YY" class="year">
+                                <input type="number" placeholder="YYYY" id="year-tarjeta">
                             </span>
                             <!-- Código de seguridad de la tarjeta. -->
-                            <input type="number" placeholder="CVV" class="user-cvv">
+                            <input type="number" placeholder="CVV" id="user-cvv">
                         </span>
-                        <!-- Select del lugar. (Le quité la parte de php) A partir del lugar seleccionado se deben listar los couriers y sus precios. -->
                         <span class="input-icon">
-                            <select data-live-search="true" data-live-search-style="startsWith" class="selectpicker" id="place-select">
-                                <option value=default selected=selected disabled>Seleccione lugar</option>
-                                <option value="Capital">Capital</option>
-                            </select>
-                            <i class="fas fa-map-marker-alt"></i>
+                            <input type='text' id='direccion' placeholder='Dirección' required>
+                            <i class="fas fa-map-marked"></i>
                         </span>
                         <!-- Botón que debería de llamar a los servicios de compra de la tarjeta y del courier. -->
                         <span class="proceed">
@@ -70,7 +130,21 @@
 </html>
 
 <script>
-    var sumatoria = 0; //variable global
+    var codigoLugar = ""; //variable global que mantiene el lugar seleccionado a enviar 
+    var sumatoria = 0; //variable global que mantiene el total a pagar
+
+    //variables logales obtenidas del webServices de courier
+    var nombreCourier = null;
+    var destinoCourier = null;
+    var coberturaCourier = false;
+    var costoCourier = null; 
+
+    //variables logales obtenidas del webServices de emisor
+    var nombreEmisor = null;
+    var tarjetaEmisor = null;
+    var statusEmisor = null;
+    var numeroEmisor = null;       
+
     function load_summaries(){
             $.ajax({
             url: '../rutas_ajax/carrito/listado.php?',
@@ -169,7 +243,128 @@
         $('.exit-button').find('i').click(function(){
             exitSquared();
         });
+
+        $('#purchase-button').on('click',function(){
+            var tarjetaInfo = document.getElementById("card-select").value;
+            var lugarInfo = document.getElementById("card-select").value;
+            var nombre = "Jorge Luis Carrera Estrada";
+            var tarjeta = "0000000000000000";
+            var ccv = "717";
+            var mes  = "09";
+            var year = "2022";
+            var direccion  = "A";
+            if(tarjetaInfo != null && lugarInfo != null && nombre != "" && tarjeta != "" && ccv != "" && mes != "" && year != "" && direccion != ""){        
+                emisor_id = tarjetaInfo.split("-")[0];
+                direccion_ip = tarjetaInfo.split("-")[1];
+                autorizacion_path = tarjetaInfo.split("-")[2];
+                formato = tarjetaInfo.split("-")[3];
+                solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
+            }else{
+                new PNotify({
+                    title: 'Shopping Cart',
+                    text: 'Complete todos los campos porfavor.',
+                    type: 'warning',
+                    styling: 'bootstrap3'
+                });                   
+            }
+        });
+
+        $('#place-select').on('change',function(){
+            codigoLugar = document.getElementById("place-select").value;    
+        });
+
+        $('#courier-select').on('change',function(){    
+            //nos conectamos con el web services
+            var courierInfo = document.getElementById("courier-select").value;
+            if(codigoLugar == null){
+                new PNotify({
+                    title: 'Elegir courier',
+                    text: 'Debe seleccionar un destino.',
+                    type: 'warning',
+                    styling: 'bootstrap3'
+                });  
+            }else{
+                courier_id = courierInfo.split("-")[0];
+                direccion_ip = courierInfo.split("-")[1];
+                consulta_path = courierInfo.split("-")[2];
+                envio_path = courierInfo.split("-")[3];
+                estado_path = courierInfo.split("-")[4];
+                formato = courierInfo.split("-")[5];
+                solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato);
+            }
+        });      
     });
+
+    function solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato){
+        // urlWebServices = "https://" + direccion_ip + "/" +  consulta_path + "?destino=" + codigoLugar + "&formato=" + formato;
+        // $.ajax({
+        //     url: urlWebServices,
+        //     type: 'GET',
+        //     success: function(r){
+        //         if(formato == "xml" || formato == "XML"){
+        //             //XML                
+        //             parser = new DOMParser();
+        //             xmlDoc = parser.parseFromString(r,"text/xml");
+        //             nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
+        //             destinoCourier = xmlDoc.getElementsByTagName("destino")[0].childNodes[0].nodeValue; 
+        //             coberturaCourier = xmlDoc.getElementsByTagName("cobertura")[0].childNodes[0].nodeValue;                    
+        //             costoCourier = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue;
+        //         }else{
+        //             //JSON
+        //             nombreCourier = r.consultaprecio.courrier; 
+        //             destinoCourier =  r.consultaprecio.destino; 
+        //             coberturaCourier = r.consultaprecio.cobertura; 
+        //             costoCourier = r.consultaprecio.costo;
+        //         }
+        //     }
+        // });   
+        // alert(nombreCourier);
+        // alert(destinoCourier);
+        // alert(coberturaCourier);
+        // alert(costoCourier);        
+    }
+ 
+    function solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,fecha){
+        urlWebServices = "http://" + direccion_ip + "/" +  autorizacion_path + "?tarjeta=" + tarjeta + "&nombre=" + nombre + "&fecha_venc=" + fecha + "&num_seguridad=" + ccv + "&monto=" + sumatoria + "&tienda=1&formato=" + formato;
+        $.ajax({
+            url: urlWebServices,
+            contentType: 'text/plain',
+            xhrFields: {
+                // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
+                // This can be used to set the 'withCredentials' property.
+                // Set the value to 'true' if you'd like to pass cookies to the server.
+                // If this is enabled, your server must respond with the header
+                // 'Access-Control-Allow-Credentials: true'.
+                withCredentials: false
+            },   
+            headers: {
+                // Set any custom headers here.
+                // If you set any non-simple headers, your server must include these
+                // headers in the 'Access-Control-Allow-Headers' response header.
+            },                     
+            type: 'GET',
+            success: function(r){
+                if(formato == "xml" || formato == "XML"){
+                    //XML    
+                    console.log(r);            
+                    parser = new DOMParser();
+                    xmlDoc = parser.parseFromString(r,"text/xml");
+                    nombreEmisor = xmlDoc.getElementsByTagName("emisor")[0].childNodes[0].nodeValue; 
+                    tarjetaEmisor = xmlDoc.getElementsByTagName("tarjeta")[0].childNodes[0].nodeValue; 
+                    statusEmisor = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
+                    numeroEmisor = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue; 
+                    console.log(nombreEmisor);
+                }else{
+                    //JSON
+                    console.log(r);  
+                    nombreEmisor = r.autorizacion.emisor; 
+                    tarjetaEmisor =  r.autorizacion.tarjeta; 
+                    statusEmisor = r.autorizacion.status; 
+                    numeroEmisor = r.autorizacion.numero;
+                }
+            }
+        });        
+    }
 
     function exitSquared(){
         if(proceed == 1){

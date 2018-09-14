@@ -1,7 +1,8 @@
 <?php
-    $marca = $_GET["marca"];
+    $nombre = $_GET["nombre"];
+    $codigo = $_GET["codigo"];
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "DELETE FROM Marcas WHERE marca_nombre='$marca'";
+    $query = "INSERT INTO Lugares(lugar_id,nombre) VALUES('$codigo','$nombre')";
     $result = pg_query($link, $query);
     $retorno = -1;
     if ($result) {

@@ -99,8 +99,10 @@
                     </span>
                     
                     <textarea id="producto_descripcion" rows="4" cols="50" form="admin-shop-form" placeholder='Ingresa una descripción'></textarea>
-                    <input type="file" id="product-image" class="inputfile" />
-                    <span class="input-container"><label for="product-image"><i class="fas fa-file-image"></i></label><span id="file-name"></span></span>
+                    <input type="file" id="product-image" class="inputfile" name="file" required />
+                    <span class="input-container"><label for="product-image"><i class="fas fa-file-image"></i></label><span id="file-name"></span></span>                 
+                    <div id="image_preview_producto"><img id="previewing_producto"/></div>
+                    <div id="messageProductos"></div>
                     <span class="form-row">
                         <span></span>
                         <a class="btn-register" id="btn_agregar_producto"><i class="fas fa-plus"></i> Agregar</a>
@@ -196,11 +198,18 @@
 
                     <form id="admin-shop-form-brand-color" class="admin-shop-form">
                         <input type='text' id='marca_nombre' placeholder='Nombre' required>
-                        <input type="file" id="brand-image" class="inputfile" />
-                        <span class="input-container"><label for="brand-image"><i class="fas fa-file-image"></i></label><span id="brand-image-name"></span></span>
+
+                        <input type="file" id="marca-image" class="inputfile" name="file" required />
+                        <span class="input-container"><label for="marca-image"><i class="fas fa-file-image"></i></label><span id="brand-image-name"></span></span>                 
+                        <div id="image_preview_marca"><img id="previewing_marca"/></div>
+                        <div id="messageMarcas"></div>   
+
                         <span class="form-row">
                             <span></span>
                             <a class="btn-register" id="btn_agregar_marca"><i class="fas fa-plus"></i> Agregar</a>
+                        </span>
+                        <span class="separation l" id="listado-marcas">
+                            <!-- LISTAR POR AJAX --> 
                         </span>
 
                         <span class="separation xl"></span>
@@ -220,6 +229,29 @@
                             <span></span>
                             <a class="btn-register" id="btn_agregar_color"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
+                        <span class="separation l" id="listado-colores">
+                            <!-- LISTAR POR AJAX --> 
+                        </span>
+
+                        <span class="separation xl"></span>
+                        <span id="form-title" class="form-title"><b>AGREGAR</b> LUGAR</span>
+                        <span id="form-description" class="description"><i class="fas fa-exclamation-circle"></i> Agrega nuevos lugares de envío<span class="company-name"><b>KRAS</b>TERS</span>.</span>
+                        <span class="form-row">
+                            <span class="input-icon">
+                                <input type='text' id='lugar_nombre' placeholder='Guatemala' required>
+                            </span>
+                            <span class="input-icon">
+                            <input type='text' id='lugar_codigo' placeholder='01000' required>
+                                <i class="fas fa-fill-drip"></i>
+                            </span>
+                        </span>
+                        <span class="form-row">
+                            <span></span>
+                            <a class="btn-register" id="btn_agregar_lugar"><i class="fas fa-plus"></i> Agregar</a>
+                        </span>
+                        <span class="separation l" id="listado-lugares">
+                            <!-- LISTAR POR AJAX --> 
+                        </span>                        
                     </form>
                 </div>
             </div>
@@ -233,6 +265,8 @@
 </html>
 
 <script>
+    var imagenValidaMarca =  false;
+    var imagenValida = false;
     $(document).ready(function(){
         $("#admin-shop-form-add").hide();
         $("#admin-shop-form-existence").hide();
@@ -290,6 +324,9 @@
     });
 
     $("#brand-color-section").click(function(){
+        listarMarcas();
+        listarColores();
+        listarLugares();
         if($(this).is(":checked")){
             $("#admin-shop-form-add").hide();
             $("#admin-shop-form-existence").hide();
@@ -316,42 +353,70 @@
             color = $("#color-select").val();
             marca = $("#marca-select").val();
             if((precio > 0)&&(cantidad > 0)&&(talla > 0)&&(color != null)&&(marca != null)&&(nombre != "")){
-                $.ajax({
-                    url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca,
-                    type: "POST",
-                    success: function(r){
-                        //en r viene el id
-                        if(r > 0){
-                            //primer select
-                            /*
-                            select = document.getElementById('product-select1');
-                            select.options[select.options.length] = new Option(r, nombre);
-                            //segundo select
-                            select = document.getElementById('product-select2'); 
-                            select.options[select.options.length] = new Option(r, nombre);   
-                            */
-                            new PNotify({
-                                title: 'Nuevo producto',
-                                text: 'Producto ingresado exitosamente.',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                            document.getElementById("producto_nombre").value = "";
-                            document.getElementById("producto_descripcion").value = "";
-                            document.getElementById("producto_precio").value = "";
-                            document.getElementById("producto_talla").value = "";
-                            document.getElementById("producto_cantidad").value = "";                                                       
-                            setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
-                        }else{
-                            new PNotify({
-                                title: 'Nuevo producto',
-                                text: 'Error al insertar producto, verifique sus datos.',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        }                        
-                    }
-                });
+                if(imagenValida){
+                    $.ajax({
+                        url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca,
+                        type: "POST",
+                        success: function(r){
+                            //en r viene el id
+                            if(r > 0){
+                                //primer select
+                                /*
+                                select = document.getElementById('product-select1');
+                                select.options[select.options.length] = new Option(r, nombre);
+                                //segundo select
+                                select = document.getElementById('product-select2'); 
+                                select.options[select.options.length] = new Option(r, nombre);   
+                                */
+                                new PNotify({
+                                    title: 'Nuevo producto',
+                                    text: 'Producto ingresado exitosamente.',
+                                    type: 'success',
+                                    styling: 'bootstrap3'
+                                });
+                                document.getElementById("producto_nombre").value = "";
+                                document.getElementById("producto_descripcion").value = "";
+                                document.getElementById("producto_precio").value = "";
+                                document.getElementById("producto_talla").value = "";
+                                document.getElementById("producto_cantidad").value = "";                                                       
+                                //si el producto es guardado guardo la imagen
+                                var x = document.getElementById("product-image");
+                                file = x.files[0];
+                                if(file != undefined){
+                                    var formData = new FormData();
+                                    formData.append('file', file, 'test.png');
+                                    $.ajax({
+                                        url: "../rutas_ajax/image_upload.php?folder=productos&nombre=" + r, // Url to which the request is send
+                                        type: "POST", // Type of request to be send, called as method
+                                        data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                                        contentType: false, // The content type used when sending data to the server.
+                                        cache: false, // To unable request pages to be cached
+                                        processData: false, // To send DOMDocument or non processed data file it is set to false
+                                        success: function(data) // A function to be called if request succeeds
+                                        {
+                                            $('#image_preview_marca').css("display", "none");
+                                        }
+                                    });
+                                }                       
+                                setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
+                            }else{
+                                new PNotify({
+                                    title: 'Nuevo producto',
+                                    text: 'Error al insertar producto, verifique sus datos.',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            }                        
+                        }
+                    });
+                }else{
+                    new PNotify({
+                        title: 'Imagen producto',
+                        text: 'La imagen seleccionada es invalida.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });                    
+                }
             }else{
                 new PNotify({
                     title: 'Nuevo producto',
@@ -362,6 +427,36 @@
             }                       
         });
 
+        // PRODUCTOS - Valido desde antes que la imagen sea png 
+        $('#product-image').on('change', function(){
+            if(this != undefined){
+                $("#messageProductos").empty(); //Limpiamos el mensaje anterior
+                var file = this.files[0];
+                var imagefile = file.type;
+                var match = ["image/png"];
+                if (!(imagefile == match[0])) {
+                    // $('#previewing_producto').attr('src', '../../img/productos/default.png');
+                    // $('#previewing_producto').attr('width', 270)
+                    // $('#previewing_producto').attr('height', 200)
+                    $("#messageProductos").html("<p id='error'>Porfavor seleccione un archivo valido de imagen</p><span id='error_message'>Solamente imagenes .png son permitidas</span>");
+                    imagenValida =  false;
+                } else {
+                    imagenValida = true;
+                    var reader = new FileReader();
+                    reader.onload = imageIsLoadedProducto;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            }
+        });
+
+        function imageIsLoadedProducto(e) {
+            $("#product-image").css("color", "green");
+            $('#image_preview_producto').css("display", "block");
+            $('#previewing_producto').attr('src', e.target.result);
+            $('#previewing_producto').attr('width', '180px');
+            $('#previewing_producto').attr('height', '130px');
+        };
+        
         //Agregar existencia producto
         $('#btn_agregar_existencia_producto').on('click', function(){
             producto = $("#product-select1").val();
@@ -522,13 +617,36 @@
                     type: "POST",
                     success: function(r){
                         //0-> guardo, -1 error
-                        if(r == 0){ //actualizo producto
+                        if(r != -1){ //Creo marca
                             new PNotify({
                                 title: 'Nueva marca',
                                 text: 'Marca ingresada exitosamente.',
                                 type: 'success',
                                 styling: 'bootstrap3'
-                            });                                                
+                            });                         
+                            var x = document.getElementById("marca-image");
+                            file = x.files[0];
+                            if(file != undefined){
+                                var formData = new FormData();
+                                formData.append('file', file, 'test.png');
+                                $.ajax({
+                                    url: "../rutas_ajax/image_upload.php?folder=marcas&nombre=" + r, // Url to which the request is send
+                                    type: "POST", // Type of request to be send, called as method
+                                    data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                                    contentType: false, // The content type used when sending data to the server.
+                                    cache: false, // To unable request pages to be cached
+                                    processData: false, // To send DOMDocument or non processed data file it is set to false
+                                    success: function(data) // A function to be called if request succeeds
+                                    {
+                                       
+                                        document.getElementById("marca-image").value = "";
+                                        document.getElementById("marca_nombre").value = "";;
+                                        $('#image_preview_marca').css("display", "none");
+                                        setTimeout("renderPage()",500); //RENDER
+                                    }
+                                });
+                            }   
+                            listarMarcas();                     
                         }else{
                             new PNotify({
                                 title: 'Nueva marca',
@@ -549,6 +667,36 @@
             }              
         });  
 
+        // MARCAS - Valido desde antes que la imagen sea png 
+        $('#marca-image').on('change', function(){
+            if(this != undefined){
+                $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
+                var file = this.files[0];
+                var imagefile = file.type;
+                var match = ["image/png"];
+                if (!(imagefile == match[0])) {
+                    // $('#previewing_producto').attr('src', '../../img/productos/default.png');
+                    // $('#previewing_producto').attr('width', 270)
+                    // $('#previewing_producto').attr('height', 200)
+                    $("#messageMarcas").html("<p id='error'>Porfavor seleccione un archivo valido de imagen</p><span id='error_message'>Solamente imagenes .png son permitidas</span>");
+                    imagenValidaMarca =  false;
+                } else {
+                    imagenValidaMarca = true;
+                    var reader = new FileReader();
+                    reader.onload = imageIsLoadedMarca;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            }
+        });
+
+        function imageIsLoadedMarca(e) {
+            $("#marca-image").css("color", "green");
+            $('#image_preview_marca').css("display", "block");
+            $('#previewing_marca').attr('src', e.target.result);
+            $('#previewing_marca').attr('width', '180px');
+            $('#previewing_marca').attr('height', '130px');
+        };
+
         //agregar nuevo color
         $('#btn_agregar_color').on('click', function(){
             nombre = document.getElementById("color_nombre").value;
@@ -565,7 +713,10 @@
                                 text: 'Color ingresada exitosamente.',
                                 type: 'success',
                                 styling: 'bootstrap3'
-                            });                                                
+                            });
+                            document.getElementById("color_nombre").value = "";
+                            document.getElementById("color_codigo").value = "";   
+                            listarColores();                                        
                         }else{
                             new PNotify({
                                 title: 'Nuevo color',
@@ -584,6 +735,233 @@
                     styling: 'bootstrap3'
                 });
             }              
-        });                                
-    });
+        });
+        
+        //agregar nuevo lugar
+        $('#btn_agregar_lugar').on('click', function(){
+            nombre = document.getElementById("lugar_nombre").value;
+            codigo = document.getElementById("lugar_codigo").value;
+            if(nombre != ""){
+                $.ajax({
+                    url: "../rutas_ajax/lugares/insertar.php?nombre=" + nombre + "&codigo=" + codigo,
+                    type: "POST",
+                    success: function(r){
+                        //0-> guardo, -1 error
+                        if(r == 0){ //actualizo producto
+                            new PNotify({
+                                title: 'Nuevo lugar',
+                                text: 'Lugar ingresado exitosamente.',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                            document.getElementById("color_nombre").value = "";
+                            document.getElementById("color_codigo").value = "";
+                            listarLugares();                                           
+                        }else{
+                            new PNotify({
+                                title: 'Nuevo lugar',
+                                text: 'Error al insertar lugar, verifique sus datos.',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        }                        
+                    }
+                });
+            }else{
+                new PNotify({
+                    title: 'Nuevo lugar',
+                    text: 'Complete correctamente todos campos porfavor.',
+                    type: 'warning',
+                    styling: 'bootstrap3'
+                });
+            }              
+        });      
+        
+        //FUNCIONES PARA ELIMINAR MARCAS,COLORES Y LUGARES
+        $(document).on('click', '.borrar-marca', function () {
+            var id = $(this).attr('id');
+            eliminarMarca(id);
+        });
+        
+        $(document).on('click', '.borrar-color', function () {
+            var id = $(this).attr('id');
+            eliminarColor(id);
+        });
+        
+        $(document).on('click', '.borrar-lugar', function () {
+            var id = $(this).attr('id');
+            eliminarLugar(id);
+        });        
+    });  
+    
+    //FUNCIONES PARA LISTAR MARCAS,COLORES,LUGARES
+    var listarMarcas = function(){
+        $.ajax({
+            url: "../rutas_ajax/marcas/listar.php?",
+            type: "POST",
+            success: function(r){
+                obj = JSON.parse(r);
+                var rows = "";
+                if(obj.length != 0){
+                    rows += "<table style='margin-top: 5%;'>";
+                    rows += "<thead>";
+                    rows += "<tr>";
+                    rows += "<th>Nombre</th>";
+                    rows += "</tr>";
+                    rows += "</thead>";
+                    rows += "<tbody>";                    
+                    for(var i = 1; i <= obj.length; i++){
+                        rows += "<tr>";
+                        rows += "<td width='50%'>" + obj[i - 1].marca_nombre + "</td>";
+                        rows += "<td width='20%'><input type='button' id='" + obj[i - 1].marca_nombre + "' class='borrar-marca' value='Eliminar'/></td>";
+                        rows += "</tr>";
+                    }
+                    rows += "</tbody>";
+                    rows += "</table>";                        
+                }
+                $("#listado-marcas").html(rows);
+            }
+        });
+    }
+
+    var listarColores = function(){
+        $.ajax({
+            url: "../rutas_ajax/colores/listar.php?",
+            type: "POST",
+            success: function(r){
+                obj = JSON.parse(r);
+                var rows = "";
+                if(obj.length != 0){
+                    rows += "<table style='margin-top: 5%;'>";
+                    rows += "<thead>";
+                    rows += "<tr>";
+                    rows += "<th>Código</th>"
+                    rows += "<th>Nombre</th>";
+                    rows += "</tr>";
+                    rows += "</thead>";
+                    rows += "<tbody>";                    
+                    for(var i = 1; i <= obj.length; i++){
+                        rows += "<tr>";
+                        rows += "<td width='50%'>" + obj[i - 1].color_nombre + "</td>";
+                        rows += "<td width='50%'>" + obj[i - 1].color_codigo + "</td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].color_nombre + "' class='borrar-color' value='Eliminar'/></td>";
+                        rows += "</tr>";
+                    }
+                    rows += "</tbody>";
+                    rows += "</table>";                        
+                }
+                $("#listado-colores").html(rows);
+            }
+        });
+    }
+    
+    var listarLugares = function(){
+        $.ajax({
+            url: "../rutas_ajax/lugares/listar.php?",
+            type: "POST",
+            success: function(r){
+                obj = JSON.parse(r);
+                var rows = "";
+                if(obj.length != 0){
+                    rows += "<table style='margin-top: 5%;'>";
+                    rows += "<thead>";
+                    rows += "<tr>";
+                    rows += "<th>Código</th>"
+                    rows += "<th>Nombre</th>";
+                    rows += "</tr>";
+                    rows += "</thead>";
+                    rows += "<tbody>";                    
+                    for(var i = 1; i <= obj.length; i++){
+                        rows += "<tr>";
+                        rows += "<td width='20%'>" + obj[i - 1].lugar_id + "</td>";
+                        rows += "<td width='20%'>" + obj[i - 1].nombre + "</td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].lugar_id + "' class='borrar-lugar' value='Eliminar'/></td>";
+                        rows += "</tr>";
+                    }
+                    rows += "</tbody>";
+                    rows += "</table>";                        
+                }
+                $("#listado-lugares").html(rows);
+            }
+        });
+    }    
+
+    //FUNCIONES PARA ELIMINAR MARCAS,COLORES Y LUGARES
+    var eliminarMarca = function(id){
+        $.ajax({
+            url: "../rutas_ajax/marcas/eliminar.php?marca=" + id,
+            type: "POST",
+            success: function(r){
+                if(r == 0){
+                    //elimino
+                    new PNotify({
+                        title: 'Eliminar Marca',
+                        text: 'Marca eliminada exitosamente.',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });                    
+                    listarMarcas();
+                }else{
+                    new PNotify({
+                        title: 'Eliminar Marca',
+                        text: 'Error al eliminar marca.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });                     
+                }
+            }
+        });       
+    } 
+
+    var eliminarColor = function(id){
+        $.ajax({
+            url: "../rutas_ajax/colores/eliminar.php?color=" + id,
+            type: "POST",
+            success: function(r){
+                if(r == 0){
+                    //elimino
+                    new PNotify({
+                        title: 'Eliminar Color',
+                        text: 'Color eliminado exitosamente.',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });                    
+                    listarColores();
+                }else{
+                    new PNotify({
+                        title: 'Eliminar Color',
+                        text: 'Error al eliminar color.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });                     
+                }
+            }
+        });       
+    }
+
+    var eliminarLugar = function(id){
+        $.ajax({
+            url: "../rutas_ajax/lugares/eliminar.php?lugar=" + id,
+            type: "POST",
+            success: function(r){
+                if(r == 0){
+                    //elimino
+                    new PNotify({
+                        title: 'Eliminar Lugar',
+                        text: 'Lugar eliminado exitosamente.',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });                    
+                    listarLugares();
+                }else{
+                    new PNotify({
+                        title: 'Eliminar Lugar',
+                        text: 'Error al eliminar lugar.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });                     
+                }
+            }
+        });       
+    }    
 </script>
