@@ -247,18 +247,27 @@
         $('#purchase-button').on('click',function(){
             var tarjetaInfo = document.getElementById("card-select").value;
             var lugarInfo = document.getElementById("card-select").value;
-            var nombre = "Jorge Luis Carrera Estrada";
+            var nombre = "Jorge Luis";
             var tarjeta = "0000000000000000";
             var ccv = "717";
             var mes  = "09";
             var year = "2022";
             var direccion  = "A";
             if(tarjetaInfo != null && lugarInfo != null && nombre != "" && tarjeta != "" && ccv != "" && mes != "" && year != "" && direccion != ""){        
-                emisor_id = tarjetaInfo.split("-")[0];
-                direccion_ip = tarjetaInfo.split("-")[1];
-                autorizacion_path = tarjetaInfo.split("-")[2];
-                formato = tarjetaInfo.split("-")[3];
-                solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
+                // emisor_id = tarjetaInfo.split("-")[0];
+                // direccion_ip = tarjetaInfo.split("-")[1];
+                // autorizacion_path = tarjetaInfo.split("-")[2];
+                // formato = tarjetaInfo.split("-")[3];
+                // solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
+                courier = 1;
+                emisor = 9;
+                lugar = "01000";
+                if(true){
+                    //verificamos que la tarjeta tenga cobertuda
+                    generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year);
+                }else{
+                    
+                }
             }else{
                 new PNotify({
                     title: 'Shopping Cart',
@@ -294,6 +303,25 @@
             }
         });      
     });
+
+    function renderPage(){
+        //Luego de 1 segundo se redirige hacia la misma pagina
+        $(location).attr('href','shopping_cart.php');
+    } 
+
+    function generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,fecha){
+        console.log("llego");
+        $.ajax({
+            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&ccv=" + ccv + "&fecha=" + fecha + "&total=" + sumatoria,
+            type: "POST",
+            success: function(r){
+                if(r == 1){
+                    //orden creada con exito
+                    setTimeout("renderPage()",500);
+                }
+            }
+        });        
+    }
 
     function solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato){
         // urlWebServices = "https://" + direccion_ip + "/" +  consulta_path + "?destino=" + codigoLugar + "&formato=" + formato;

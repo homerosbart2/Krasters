@@ -4,8 +4,10 @@
 
 </head>
 <?php
+    $orden = $_GET["orden"];
     include '../modules/nav.php';
 ?>
+
 <body>
     <section class="status">
         <div class="status-container">
