@@ -156,7 +156,7 @@
         nombre = document.getElementById("tarjeta_nombre").value;
         direccion = document.getElementById("tarjeta_direccion").value;
         autorizacion = document.getElementById("autorizacion_directorio").value; 
-        if((nombre != "")&&(direccion != "")&&(autorizacion != "")){
+        if((nombre != "")&&(direccion != "")){
             $.ajax({
                 url: "../rutas_ajax/emisores/insertar.php?nombre=" + nombre + "&direccion=" + direccion + "&autorizacion=" + autorizacion + "&formato=" + formato,
                 type: "POST",
