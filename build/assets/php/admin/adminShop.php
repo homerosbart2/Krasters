@@ -680,6 +680,7 @@
                 $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
                 imageFileMarca = file.type;
+                
                 match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
                 if (!(imageFileMarca == match[0] || imageFileMarca == match[1] || imageFileMarca == match[2] || imageFileMarca == match[3])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
