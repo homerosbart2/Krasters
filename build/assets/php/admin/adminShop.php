@@ -208,7 +208,7 @@
                             <span></span>
                             <a class="btn-register" id="btn_agregar_marca"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
-                        <span class="separation l" id="listado-marcas">
+                        <span  id="listado-marcas">
                             <!-- LISTAR POR AJAX --> 
                         </span>
 
@@ -229,13 +229,13 @@
                             <span></span>
                             <a class="btn-register" id="btn_agregar_color"><i class="fas fa-plus"></i> Agregar</a>
                         </span>
-                        <span class="separation l" id="listado-colores">
+                        <span id="listado-colores">
                             <!-- LISTAR POR AJAX --> 
                         </span>
 
                         <span class="separation xl"></span>
                         <span id="form-title" class="form-title"><b>AGREGAR</b> LUGAR</span>
-                        <span id="form-description" class="description"><i class="fas fa-exclamation-circle"></i> Agrega nuevos lugares de envío<span class="company-name"><b>KRAS</b>TERS</span>.</span>
+                        <span id="form-description" class="description"><i class="fas fa-exclamation-circle"></i> Agrega nuevos lugares de envío <span class="company-name"><b>KRAS</b>TERS</span>.</span>
                         <span class="form-row">
                             <span class="input-icon">
                                 <input type='text' id='lugar_nombre' placeholder='Guatemala' required>
@@ -803,7 +803,7 @@
                 obj = JSON.parse(r);
                 var rows = "";
                 if(obj.length != 0){
-                    rows += "<table style='margin-top: 5%;'>";
+                    rows += "<table class='tab'>";
                     rows += "<thead>";
                     rows += "<tr>";
                     rows += "<th>Nombre</th>";
@@ -813,7 +813,7 @@
                     for(var i = 1; i <= obj.length; i++){
                         rows += "<tr>";
                         rows += "<td width='50%'>" + obj[i - 1].marca_nombre + "</td>";
-                        rows += "<td width='20%'><input type='button' id='" + obj[i - 1].marca_nombre + "' class='borrar-marca' value='Eliminar'/></td>";
+                        rows += "<td width='20%'><input class='btn-cancel' type='button' id='" + obj[i - 1].marca_nombre + "' class='borrar-marca' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
@@ -835,8 +835,8 @@
                     rows += "<table style='margin-top: 5%;'>";
                     rows += "<thead>";
                     rows += "<tr>";
-                    rows += "<th>Código</th>"
                     rows += "<th>Nombre</th>";
+                    rows += "<th>Código</th>";
                     rows += "</tr>";
                     rows += "</thead>";
                     rows += "<tbody>";                    
@@ -844,7 +844,7 @@
                         rows += "<tr>";
                         rows += "<td width='50%'>" + obj[i - 1].color_nombre + "</td>";
                         rows += "<td width='50%'>" + obj[i - 1].color_codigo + "</td>";
-                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].color_nombre + "' class='borrar-color' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input class='btn-cancel' type='button' id='" + obj[i - 1].color_nombre + "' class='borrar-color' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
@@ -875,7 +875,7 @@
                         rows += "<tr>";
                         rows += "<td width='20%'>" + obj[i - 1].lugar_id + "</td>";
                         rows += "<td width='20%'>" + obj[i - 1].nombre + "</td>";
-                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].lugar_id + "' class='borrar-lugar' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input class='btn-cancel' type='button' id='" + obj[i - 1].lugar_id + "' class='borrar-lugar' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";

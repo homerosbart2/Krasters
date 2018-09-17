@@ -1070,6 +1070,16 @@ nav {
     .admin-shop-form input:active, .admin-shop-form input:focus, .admin-shop-form textarea:active, .admin-shop-form textarea:focus {
       border-color: #111; }
 
+.listado-marcas {
+  display: flex;
+  width: 100%; }
+  .listado-marcas .tab {
+    width: 100%;
+    margin-top: 6px; }
+    .listado-marcas .tab td {
+      display: flex;
+      justify-content: flex-end; }
+
 .mask {
   position: fixed;
   top: 0;

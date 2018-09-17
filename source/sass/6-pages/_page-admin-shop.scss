@@ -91,3 +91,16 @@
     }
     
 }
+
+.listado-marcas{
+    display: flex;
+    width: 100%;
+    .tab{
+        width: 100%;
+        margin-top: 6px;
+        td{
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
