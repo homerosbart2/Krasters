@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
 
 html{
     font-family: 'Roboto', sans-serif;
@@ -14,4 +14,16 @@ html{
 
 .nav-logo{
     font-size: 24px;
+}
+
+.title{
+    font-size: 28px;
+    font-weight: 600;
+    display: flex;
+    width: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.justify{
+    text-align: justify;
 }

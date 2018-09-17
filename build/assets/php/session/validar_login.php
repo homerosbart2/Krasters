@@ -13,7 +13,7 @@
             session_start();
             //creamos las variables de sesion
             $row = pg_fetch_assoc($result);
-            $_SESSION['usuario_actual'] = $row["usuario"];
+            $_SESSION['username'] = $row["usuario"];
             $_SESSION['role'] = $row["role"];
             $retorno = $row["role"];
         }

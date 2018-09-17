@@ -36,6 +36,19 @@
     }
 }
 
+.btn-purchase{
+    @extend %btn;
+    color: green;
+    border-color: green;
+    background: none;
+    &:hover,
+    &:active,
+    &:focus{
+        background: green;
+        color: white;
+    }
+}
+
 
 .btn-cancel{
     @extend %btn;
@@ -78,6 +91,20 @@
         color: white;
     }
 }
+
+.btn-accept{
+    @extend %btn;
+    color: $light-pink;
+    border-color: $light-pink;
+    &:hover,
+    &:active,
+    &:focus{
+        background: $light-pink;
+        border-color: $light-pink;
+        color: white;
+    }
+}
+
   
 
 

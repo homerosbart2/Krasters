@@ -1,7 +1,6 @@
 /*! * Bootstrap v3.3.7 (http://getbootstrap.com) * Copyright 2011-2016 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE) */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html{
-    font-family:sans-serif;
     -webkit-text-size-adjust:100%;
     -ms-text-size-adjust:100%
 }
@@ -79,7 +78,6 @@ pre{
     overflow:auto
 }
 code,kbd,pre,samp{
-    font-family:monospace,monospace;
     font-size:1em
 }
 button,input,optgroup,select,textarea{
@@ -208,7 +206,6 @@ td,th{
     }
 }
 @font-face{
-    font-family:'Glyphicons Halflings';
     src:url(../fonts/glyphicons-halflings-regular.eot);
     src:url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(../fonts/glyphicons-halflings-regular.woff2) format('woff2'),url(../fonts/glyphicons-halflings-regular.woff) format('woff'),url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'),url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
 }
@@ -216,7 +213,6 @@ td,th{
     position:relative;
     top:1px;
     display:inline-block;
-    font-family:'Glyphicons Halflings';
     font-style:normal;
     font-weight:400;
     line-height:1;
@@ -1022,7 +1018,6 @@ body{
     background-color:#fff
 }
 button,input,select,textarea{
-    font-family:inherit;
     font-size:inherit;
     line-height:inherit
 }
@@ -1343,9 +1338,6 @@ address{
     margin-bottom:20px;
     font-style:normal;
     line-height:1.42857143
-}
-code,kbd,pre,samp{
-    font-family:Menlo,Monaco,Consolas,"Courier New",monospace
 }
 code{
     padding:2px 4px;
@@ -3017,9 +3009,6 @@ tbody.collapse.in{
     text-decoration:none;
     outline:0;
     background: #F2657F;
-}
-.dropdown-menu>.disabled>a,.dropdown-menu>.disabled>a:focus,.dropdown-menu>.disabled>a:hover{
-    color:#777
 }
 .dropdown-menu>.disabled>a:focus,.dropdown-menu>.disabled>a:hover{
     text-decoration:none;
@@ -5434,7 +5423,6 @@ button.close{
 .carousel-control .icon-next,.carousel-control .icon-prev{
     width:20px;
     height:20px;
-    font-family:serif;
     line-height:1
 }
 .carousel-control .icon-prev:before{
