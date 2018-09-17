@@ -206,7 +206,7 @@ body {
 section {
   display: -webkit-box; }
 
-.btn-register, .btn-purchase, .btn-cancel, .btn-login, .btn-menu, .admin-shop-form label {
+.btn-register, .btn-purchase, .btn-cancel, .btn-login, .btn-menu, .btn-accept, .admin-shop-form label {
   display: inline-block;
   padding: 5px 10px;
   color: black;
@@ -222,7 +222,7 @@ section {
   border: 1px solid;
   cursor: pointer;
   transition: all 0.2s ease; }
-  .btn-register:hover, .btn-purchase:hover, .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .admin-shop-form label:hover, .btn-register:active, .btn-purchase:active, .btn-cancel:active, .btn-login:active, .btn-menu:active, .admin-shop-form label:active, .btn-register:focus, .btn-purchase:focus, .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .admin-shop-form label:focus {
+  .btn-register:hover, .btn-purchase:hover, .btn-cancel:hover, .btn-login:hover, .btn-menu:hover, .btn-accept:hover, .admin-shop-form label:hover, .btn-register:active, .btn-purchase:active, .btn-cancel:active, .btn-login:active, .btn-menu:active, .btn-accept:active, .admin-shop-form label:active, .btn-register:focus, .btn-purchase:focus, .btn-cancel:focus, .btn-login:focus, .btn-menu:focus, .btn-accept:focus, .admin-shop-form label:focus {
     outline: 0; }
 
 .btn-register {
@@ -266,6 +266,14 @@ section {
   .btn-menu:hover, .btn-menu:active, .btn-menu:focus {
     background: #6C5B7D;
     border-color: #6C5B7D;
+    color: white; }
+
+.btn-accept {
+  color: #F2657F;
+  border-color: #F2657F; }
+  .btn-accept:hover, .btn-accept:active, .btn-accept:focus {
+    background: #F2657F;
+    border-color: #F2657F;
     color: white; }
 
 input[type=text], input[type=password], input[type=number], textarea, select, .btn.dropdown-toggle {
@@ -1070,6 +1078,16 @@ nav {
     .admin-shop-form input:active, .admin-shop-form input:focus, .admin-shop-form textarea:active, .admin-shop-form textarea:focus {
       border-color: #111; }
 
+.listado-marcas {
+  display: flex;
+  width: 100%; }
+  .listado-marcas .tab {
+    width: 100%;
+    margin-top: 6px; }
+    .listado-marcas .tab td {
+      display: flex;
+      justify-content: flex-end; }
+
 .mask {
   position: fixed;
   top: 0;
@@ -1163,3 +1181,32 @@ nav {
         border-bottom: none; }
       .simplified-summary .detail-table table .table-titles {
         text-align: center; }
+
+.orders-list-container {
+  display: flex;
+  width: 100%;
+  justify-content: center; }
+  .orders-list-container .orders-list {
+    display: flex;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 20px;
+    flex-direction: column; }
+    .orders-list-container .orders-list .o {
+      display: flex;
+      width: 100%;
+      height: 100px;
+      margin-bottom: 10px;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 6px solid #25455E; }
+      .orders-list-container .orders-list .o .information {
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px; }
+        .orders-list-container .orders-list .o .information .order-number {
+          font-family: 'Roboto Condensed', sans-serif;
+          font-size: 20px;
+          font-weight: 700; }
+        .orders-list-container .orders-list .o .information .order-total {
+          font-weight: 700; }
