@@ -262,8 +262,8 @@
                 courier = 1;
                 emisor = 9;
                 lugar = "01000";
-                if(true){
-                    //verificamos que la tarjeta tenga cobertuda
+                if(true || statusEmisor == 1){
+                    // generamos la compra
                     generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year);
                 }else{
                     

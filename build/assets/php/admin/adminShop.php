@@ -12,6 +12,9 @@
 
 <?php
     include '../modules/nav.php';
+    if($role != 0){
+       echo  "<script> $(location).attr('href','../../../index.php') </script>";
+    }
 ?>
 
 <body>
@@ -267,6 +270,8 @@
 <script>
     var imagenValidaMarca =  false;
     var imagenValida = false;
+    var imageFileMarca = null;
+    var imageFileProducto = null;
     $(document).ready(function(){
         $("#admin-shop-form-add").hide();
         $("#admin-shop-form-existence").hide();
@@ -355,7 +360,7 @@
             if((precio > 0)&&(cantidad > 0)&&(talla > 0)&&(color != null)&&(marca != null)&&(nombre != "")){
                 if(imagenValida){
                     $.ajax({
-                        url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca,
+                        url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca + "&type=" + imageFileProducto,
                         type: "POST",
                         success: function(r){
                             //en r viene el id
@@ -432,9 +437,9 @@
             if(this != undefined){
                 $("#messageProductos").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
-                var imagefile = file.type;
-                var match = ["image/png"];
-                if (!(imagefile == match[0])) {
+                imagefileProducto = file.type;
+                var match = ["image/png,image/jpg"];
+                if (!(imagefileProducto == match[0])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
                     // $('#previewing_producto').attr('height', 200)
@@ -529,7 +534,7 @@
         $("#product-select2").on('change',function(){
             producto = $("#product-select2").val();
             $.ajax({
-                url: "../rutas_ajax/productos/listado.php?producto=" + producto,
+                url: "../rutas_ajax/ordenes/listado.php?producto=" + producto,
                 type: "POST",
                 success: function(r){
                     if(r != 0){
@@ -613,7 +618,7 @@
             nombre = document.getElementById("marca_nombre").value;
             if(nombre != ""){
                 $.ajax({
-                    url: "../rutas_ajax/marcas/insertar.php?nombre=" + nombre,
+                    url: "../rutas_ajax/marcas/insertar.php?nombre=" + nombre + "&type=" + imagefileMarca,
                     type: "POST",
                     success: function(r){
                         //0-> guardo, -1 error
@@ -672,9 +677,9 @@
             if(this != undefined){
                 $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
-                var imagefile = file.type;
-                var match = ["image/png"];
-                if (!(imagefile == match[0])) {
+                imagefileMarca = file.type;
+                var match = ["image/png,image/jpg"];
+                if (!(imagefileMarca == match[0])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
                     // $('#previewing_producto').attr('height', 200)

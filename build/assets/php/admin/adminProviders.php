@@ -7,6 +7,9 @@
 
 <?php
     include '../modules/nav.php';
+    if($role != 0){
+        echo  "<script> $(location).attr('href','../../../index.php') </script>";
+    }
 ?>
 
 <body>

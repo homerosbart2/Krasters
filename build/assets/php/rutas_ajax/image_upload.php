@@ -8,7 +8,7 @@ if (isset($_FILES["file"]["type"])) {
     );
     $temporary = explode(".", $_FILES["file"]["name"]);
     $file_extension  = end($temporary);
-    if (($_FILES["file"]["type"] == "image/png") && ($_FILES["file"]["size"] < 100000) && in_array($file_extension, $validextensions)) {
+    if (($_FILES["file"]["type"] == "image/png" || $_FILES["file"]["type"] == "image/jpg") && ($_FILES["file"]["size"] < 100000) && in_array($file_extension, $validextensions)) {
         if ($_FILES["file"]["error"] > 0) {
             echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
             $retorno = -3;

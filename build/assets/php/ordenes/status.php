@@ -67,9 +67,32 @@ function load_details(){
 
 function load_order_status(){
     id = document.getElementById("id-compra");
-    ip = id.getAttribute("ip");
-    estado = id.getAttribute("estado");
+    compra = id.getAttribute("compra");
+    direccion_ip = id.getAttribute("ip");
+    estado_path = id.getAttribute("estado");
     formato = id.getAttribute("formato");
+    urlWebServices = "https://" + direccion_ip + "/" +  estado_path + "?orden=" + compra + "&tienda=Krasters&formato=" + formato;
+    $.ajax({
+        url: urlWebServices,
+        type: "POST",
+        success: function(r){
+            if(formato == "xml" || formato == "XML"){
+                //XML                
+                parser = new DOMParser();
+                xmlDoc = parser.parseFromString(r,"text/xml");
+                nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
+                ordenCourier = xmlDoc.getElementsByTagName("orden")[0].childNodes[0].nodeValue; 
+                statusCourier = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
+                setStage(statusCourier);
+            }else{
+                //JSON
+                nombreCourier = r.orden.courrier; 
+                ordenCourier =  r.orden.orden; 
+                statusCourier = r.orden.status; 
+                setStage(statusCourier);
+            }            
+        }
+    });    
 }
 
 $(document).ready(function(){
