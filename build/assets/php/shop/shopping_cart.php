@@ -143,7 +143,19 @@
     var nombreEmisor = null;
     var tarjetaEmisor = null;
     var statusEmisor = null;
-    var numeroEmisor = null;       
+    var numeroEmisor = null;
+    var d;
+    var date = [];
+    //var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];  
+
+    //Función que obtiene el tiempo actual y lo devuelve como arreglo como: [16, 9, 2018].
+    function getActualTime(){
+        d = new Date();
+        date.push(d.getDate());
+        date.push(d.getMonth() + 1);
+        date.push(d.getFullYear());
+        return date;
+    }    
 
     function load_summaries(){
             $.ajax({
