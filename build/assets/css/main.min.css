@@ -718,10 +718,12 @@ nav {
       align-items: flex-start;
       padding-left: 10%;
       padding-right: 10%; }
-      .product-card.expanded .information .name {
+      .product-card.expanded .information .name, .product-card.expanded .information .cantidad {
         opacity: 0;
         background: none;
         justify-content: flex-start; }
+      .product-card.expanded .information .cantidad {
+        display: flex; }
       .product-card.expanded .information .form-row {
         justify-content: space-between; }
       .product-card.expanded .information .input-icon {
@@ -729,7 +731,7 @@ nav {
         opacity: 0; }
     .product-card.expanded .brand-container .btn-cancel {
       font-size: 24px; }
-    .product-card.expanded:hover .information .name, .product-card.expanded:active .information .name, .product-card.expanded:focus .information .name {
+    .product-card.expanded:hover .information .name, .product-card.expanded:hover .information .cantidad, .product-card.expanded:active .information .name, .product-card.expanded:active .information .cantidad, .product-card.expanded:focus .information .name, .product-card.expanded:focus .information .cantidad {
       opacity: 1; }
     .product-card.expanded:hover .information .input-icon, .product-card.expanded:active .information .input-icon, .product-card.expanded:focus .information .input-icon {
       opacity: 1; }
@@ -773,6 +775,9 @@ nav {
       height: 33.5px;
       background: none;
       margin-top: 0; }
+      .product-card .information input[type=number] option,
+      .product-card .information select option {
+        color: black; }
     .product-card .information input[type=number] {
       width: 100%; }
     .product-card .information select {
@@ -795,6 +800,10 @@ nav {
       display: flex;
       justify-content: center;
       background: #6C5B7D;
+      transition: all 0.3s ease; }
+    .product-card .information .cantidad {
+      display: none;
+      opacity: 0;
       transition: all 0.3s ease; }
     .product-card .information .description {
       opacity: 0;
