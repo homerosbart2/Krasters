@@ -38,10 +38,13 @@
             align-items: flex-start;
             padding-left: 10%;
             padding-right: 10%;
-            .name {
+            .name, .cantidad {
                 opacity: 0;
                 background: none;
                 justify-content: flex-start;
+            }
+            .cantidad{
+                display: flex;
             }
             .form-row {
                 justify-content: space-between;
@@ -60,7 +63,7 @@
         &:active,
         &:focus {
             .information {
-                .name {
+                .name, .cantidad {
                     opacity: 1;
                 }
                 .input-icon {
@@ -112,6 +115,9 @@
             height: 33.5px;
             background: none;
             margin-top: 0;
+            option{
+                color: black;
+            }
         }
         input[type=number] {
             width: 100%;
@@ -140,6 +146,11 @@
             display: flex;
             justify-content: center;
             background: $purple;
+            transition: all 0.3s ease;
+        }
+        .cantidad{
+            display: none;
+            opacity: 0;
             transition: all 0.3s ease;
         }
         .description {
