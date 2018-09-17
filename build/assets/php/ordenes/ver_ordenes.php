@@ -25,7 +25,11 @@
 
         $(document).on('click', '.ver-compras', function () {
             id = $(this).attr("id");
-            $(location).attr('href','status.php?orden=' + id);
+            compra = id.split("-")[0];
+            ip = id.split("-")[1];
+            estado = id.split("-")[2];
+            formato = id.split("-")[3];
+            $(location).attr('href','status.php?orden=' + compra + "&ip=" + ip + "&estado=" + estado + "&formato=" + formato);
         });
 
     }); 
@@ -61,7 +65,7 @@
                         tarjeta = "x".repeat(longitud-4) + ultimos4Tarjeta;
                         rows += "<td width='10%'>" + tarjeta + "</td>"
                         rows += "<td width='10%'>" + obj[i - 1].total_compra + "</td>";
-                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].compra_id + "' class='ver-compras' value='Ver compra'/></td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].compra_id + "-" + obj[i - 1].direccion_ip + "-" + obj[i - 1].estado_path + "-" + obj[i - 1].formato + "' class='ver-compras' value='Ver compra'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
