@@ -176,7 +176,8 @@
                 for(var i = 1; i <= obj.length; i++){
                     rows += "<span class='product-summary'>";
                     //Imagen del producto.
-                    rows += "<img class='image' src='../../img/productos/default2.webp'>";
+                    ruta = '../../img/productos/' + obj[i - 1].producto_id + "." + obj[i - 1].tipo_producto;
+                    rows += "<img class='image' src='"+ruta+"'>";
                     rows += "<span class='information'>";
                     rows += "<a class='btn-delete delete-item' id='" + obj[i - 1].carrito_id +  "-" + obj[i - 1].color_nombre    +  "-" + obj[i - 1].talla +  "-" + obj[i - 1].producto_id +"'><i class='fas fa-times'></i></a>";
                     //Nombre del producto
@@ -190,7 +191,8 @@
                     rows += "<span class='size'>" + obj[i - 1].talla + "</span>";
                     rows += "</span>";
                     //Imagen de la marca del producto.
-                    rows += "<img src ='../../img/brands/adidas-white.png'>";
+                    ruta2 = '../../img/marcas/' + obj[i - 1].marca_nombre + "." + obj[i - 1].tipo_marca;
+                    rows += "<img src ='"+ruta2+"'>";
                     rows += "</span>";
                     rows += "<span class='money-quantity'>";
                     //Cantidad de productos agregados.
@@ -267,6 +269,7 @@
             var lugarInfo = document.getElementById("card-select").value;
             var nombre = "Jorge Luis";
             var tarjeta = "0000000000000000";
+            var date = getActualTime();
             var ccv = "717";
             var mes  = "09";
             var year = "2022";
@@ -282,7 +285,7 @@
                 lugar = "01000";
                 if(true || statusEmisor == 1){
                     // generamos la compra
-                    generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year);
+                    generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year,date);
                 }else{
                     
                 }
@@ -327,10 +330,10 @@
         $(location).attr('href','shopping_cart.php');
     } 
 
-    function generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,fecha){
+    function generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,fecha,date){
         console.log("llego");
         $.ajax({
-            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&ccv=" + ccv + "&fecha=" + fecha + "&total=" + sumatoria,
+            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&ccv=" + ccv + "&fecha=" + fecha + "&total=" + sumatoria + "&date=" + date,
             type: "POST",
             success: function(r){
                 if(r == 1){

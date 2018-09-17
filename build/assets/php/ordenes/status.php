@@ -42,7 +42,7 @@
 <script>
 //Funcioón para sacar la información de la DB.
 function load_details(){
-    compra = document.getElementById("id-compra").getAttribute("compra");
+    compra = document.getElementById("id-compra").getAttribute("orden");
     $.ajax({
         url: "../rutas_ajax/ordenes/listar_productos.php?compra=" + compra,
         type: "POST",
@@ -67,14 +67,14 @@ function load_details(){
 
 function load_order_status(){
     id = document.getElementById("id-compra");
-    compra = id.getAttribute("compra");
+    compra = id.getAttribute("orden");
     direccion_ip = id.getAttribute("ip");
     estado_path = id.getAttribute("estado");
     formato = id.getAttribute("formato");
     urlWebServices = "https://" + direccion_ip + "/" +  estado_path + "?orden=" + compra + "&tienda=Krasters&formato=" + formato;
     $.ajax({
         url: urlWebServices,
-        type: "POST",
+        type: "GET",
         success: function(r){
             if(formato == "xml" || formato == "XML"){
                 //XML                
@@ -110,7 +110,7 @@ $(document).ready(function(){
     });
 
     load_details();
-    load_order_status();
+    //load_order_status();
 
     //Ejemplo de como cambiar el estado.
     setStage(2);

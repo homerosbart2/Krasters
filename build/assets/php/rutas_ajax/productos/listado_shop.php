@@ -3,7 +3,7 @@
     $producto = $_GET["producto"];     
     $result_array = array(); //creamos un array
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "SELECT * FROM Productos AS P, Marcas AS M WHERE (P.marca_nombre = M.marca_nombre) ORDER BY P.producto_nombre";        
+    $query = "SELECT producto_id,producto_nombre,descripcion,precio,M.marca_nombre,P.img_type as tipo_producto,M.img_type as tipo_marca FROM Productos AS P, Marcas AS M WHERE (P.marca_nombre = M.marca_nombre) ORDER BY P.producto_nombre";        
     $result = pg_query($link, $query); 
     $i = 0;
     while($each_producto = pg_fetch_assoc($result)){
