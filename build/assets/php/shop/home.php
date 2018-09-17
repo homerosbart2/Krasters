@@ -117,22 +117,23 @@ $(document).ready(function(){
                 url: '../rutas_ajax/carrito/insertar.php?producto=' + producto + '&color=' + color + '&talla=' + talla,
                 type: 'GET',
                     success: function(r){
-                        if(r == 0 || r == 1){
-                            new PNotify({
-                                title: 'Agregar a carrito',
-                                text: 'Producto agregado exitosamente.',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                            cargar_existencias(producto,color,talla);
-                        }else{
-                            new PNotify({
-                                title: 'Agregar a carrito',
-                                text: 'Producto agotado.',
-                                type: 'warning',
-                                styling: 'bootstrap3'
-                            });                        
-                        }
+                        alert(r);
+                        // if(r == 0 || r == 1){
+                        //     new PNotify({
+                        //         title: 'Agregar a carrito',
+                        //         text: 'Producto agregado exitosamente.',
+                        //         type: 'success',
+                        //         styling: 'bootstrap3'
+                        //     });
+                        //     cargar_existencias(producto,color,talla);
+                        // }else{
+                        //     new PNotify({
+                        //         title: 'Agregar a carrito',
+                        //         text: 'Producto agotado.',
+                        //         type: 'warning',
+                        //         styling: 'bootstrap3'
+                        //     });                        
+                        // }
                     }
                 });
             }

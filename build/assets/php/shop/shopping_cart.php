@@ -296,22 +296,26 @@
                         var ccv = "717";
                         var mes  = "09";
                         var year = "2022";
-                        var direccion  = "A";
+                        var autorizacion_path = "autorizacion.php" 
+                        var direccion_ip  = "172.20.10.4";
+                        formato = "json";
+                        sumatoria = 500;
                         if(tarjetaInfo != null && lugarInfo != null && nombre != "" && tarjeta != "" && ccv != "" && mes != "" && year != "" && direccion != ""){        
                             // emisor_id = tarjetaInfo.split("-")[0];
                             // direccion_ip = tarjetaInfo.split("-")[1];
                             // autorizacion_path = tarjetaInfo.split("-")[2];
                             // formato = tarjetaInfo.split("-")[3];
-                            // solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
                             courier = 1;
-                            emisor = 1;
-                            lugar = "01000";
-                            if(true || statusEmisor == 1){
-                                // generamos la compra
-                                generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year,date);
-                            }else{
+                            emisor_id = 1;
+                            // lugar = "01000";
+
+                            solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
+                            // if(true || statusEmisor == 1){
+                            //     // generamos la compra
+                            //     generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year,date);
+                            // }else{
                                 
-                            }
+                            // }
                         }else{
                             new PNotify({
                                 title: 'Shopping Cart',
@@ -370,72 +374,59 @@
     }
 
     function solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato){
-        // urlWebServices = "https://" + direccion_ip + "/" +  consulta_path + "?destino=" + codigoLugar + "&formato=" + formato;
-        // $.ajax({
-        //     url: urlWebServices,
-        //     type: 'GET',
-        //     success: function(r){
-        //         if(formato == "xml" || formato == "XML"){
-        //             //XML                
-        //             parser = new DOMParser();
-        //             xmlDoc = parser.parseFromString(r,"text/xml");
-        //             nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
-        //             destinoCourier = xmlDoc.getElementsByTagName("destino")[0].childNodes[0].nodeValue; 
-        //             coberturaCourier = xmlDoc.getElementsByTagName("cobertura")[0].childNodes[0].nodeValue;                    
-        //             costoCourier = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue;
-        //         }else{
-        //             //JSON
-        //             nombreCourier = r.consultaprecio.courrier; 
-        //             destinoCourier =  r.consultaprecio.destino; 
-        //             coberturaCourier = r.consultaprecio.cobertura; 
-        //             costoCourier = r.consultaprecio.costo;
-        //         }
-        //     }
-        // });   
-        // alert(nombreCourier);
-        // alert(destinoCourier);
-        // alert(coberturaCourier);
-        // alert(costoCourier);        
-    }
- 
-    function solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,fecha){
-        urlWebServices = "http://" + direccion_ip + "/" +  autorizacion_path + "?tarjeta=" + tarjeta + "&nombre=" + nombre + "&fecha_venc=" + fecha + "&num_seguridad=" + ccv + "&monto=" + sumatoria + "&tienda=1&formato=" + formato;
+        urlWebServices = "../webservices/autorizacion.php?&direccion" + direccion_ip + "&consulta=" +  consulta_path + "&destino=" + codigoLugar + "&formato=" + formato;
         $.ajax({
             url: urlWebServices,
-            contentType: 'text/plain',
-            xhrFields: {
-                // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
-                // This can be used to set the 'withCredentials' property.
-                // Set the value to 'true' if you'd like to pass cookies to the server.
-                // If this is enabled, your server must respond with the header
-                // 'Access-Control-Allow-Credentials: true'.
-                withCredentials: false
-            },   
-            headers: {
-                // Set any custom headers here.
-                // If you set any non-simple headers, your server must include these
-                // headers in the 'Access-Control-Allow-Headers' response header.
-            },                     
             type: 'GET',
             success: function(r){
                 if(formato == "xml" || formato == "XML"){
-                    //XML    
-                    console.log(r);            
+                    //XML                
                     parser = new DOMParser();
                     xmlDoc = parser.parseFromString(r,"text/xml");
-                    nombreEmisor = xmlDoc.getElementsByTagName("emisor")[0].childNodes[0].nodeValue; 
-                    tarjetaEmisor = xmlDoc.getElementsByTagName("tarjeta")[0].childNodes[0].nodeValue; 
-                    statusEmisor = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
-                    numeroEmisor = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue; 
-                    console.log(nombreEmisor);
+                    nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
+                    destinoCourier = xmlDoc.getElementsByTagName("destino")[0].childNodes[0].nodeValue; 
+                    coberturaCourier = xmlDoc.getElementsByTagName("cobertura")[0].childNodes[0].nodeValue;                    
+                    costoCourier = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue;
                 }else{
                     //JSON
-                    console.log(r);  
-                    nombreEmisor = r.autorizacion.emisor; 
-                    tarjetaEmisor =  r.autorizacion.tarjeta; 
-                    statusEmisor = r.autorizacion.status; 
-                    numeroEmisor = r.autorizacion.numero;
+                    nombreCourier = r.consultaprecio.courrier; 
+                    destinoCourier =  r.consultaprecio.destino; 
+                    coberturaCourier = r.consultaprecio.cobertura; 
+                    costoCourier = r.consultaprecio.costo;
                 }
+            }
+        });   
+        alert(nombreCourier);
+        alert(destinoCourier);
+        alert(coberturaCourier);
+        alert(costoCourier);        
+    }
+ 
+    function solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,fecha){
+        urlWebServices = "../rutas_ajax/webservices/autorizacion.php?direccion=" + direccion_ip + "&autorizacion=" + autorizacion_path + "&tarjeta=" + tarjeta + "&nombre=" + nombre + "&fecha_venc=" + fecha + "&num_seguridad=" + ccv + "&monto=" + sumatoria + "&formato=" + formato;
+        $.ajax({
+            url: urlWebServices,                
+            type: 'GET',
+            success: function(r){
+                alert(r);
+                // if(formato == "xml" || formato == "XML"){
+                //     //XML    
+                //     console.log(r);            
+                //     parser = new DOMParser();
+                //     xmlDoc = parser.parseFromString(r,"text/xml");
+                //     nombreEmisor = xmlDoc.getElementsByTagName("emisor")[0].childNodes[0].nodeValue; 
+                //     tarjetaEmisor = xmlDoc.getElementsByTagName("tarjeta")[0].childNodes[0].nodeValue; 
+                //     statusEmisor = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
+                //     numeroEmisor = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue; 
+                //     console.log(nombreEmisor);
+                // }else{
+                //     //JSON
+                //     console.log(r);  
+                //     nombreEmisor = r.autorizacion.emisor; 
+                //     tarjetaEmisor =  r.autorizacion.tarjeta; 
+                //     statusEmisor = r.autorizacion.status; 
+                //     numeroEmisor = r.autorizacion.numero;
+                // }
             }
         });        
     }
