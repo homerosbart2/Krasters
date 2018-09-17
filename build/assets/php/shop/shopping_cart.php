@@ -160,8 +160,15 @@
         date.push(d.getDate());
         date.push(d.getMonth() + 1);
         date.push(d.getFullYear());
-        return date;
+        return date[1]+"/"+date[0]+"/"+date[2];
     }    
+
+    function prettyNumber(number) {
+        number = Math.round(number * Math.pow(10, 2)) / Math.pow(10, 2);
+        var components = number.toString().split(".");
+        components[0] = components[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return components.join(".");
+    }
 
     function load_summaries(){
             $.ajax({
@@ -196,21 +203,21 @@
                     rows += "</span>";
                     rows += "<span class='money-quantity'>";
                     //Cantidad de productos agregados.
-                    rows += "<span class='quantity'><i class='fas fa-layer-group'></i> " + obj[i - 1].cantidad + "</span>";
+                    rows += "<span class='quantity'><i class='fas fa-layer-group'></i> " + prettyNumber(obj[i - 1].cantidad) + "</span>";
                     rows += "<b>|</b>";
                     //Precio del producto.
-                    rows += "<span class='money'>" + obj[i - 1].precio + "</span>";
+                    rows += "<span class='money'>Q " + prettyNumber(obj[i - 1].precio) + "</span>";
                     rows += "</span>";
                     rows += "</span>";
                     //Multiplicación del precio por la cantidad.
                     total = parseFloat(obj[i - 1].precio) * parseFloat(obj[i - 1].cantidad)
                     sumatoria += total;
-                    rows += "<span class='price'>" + total + "</span>";
+                    rows += "<span class='price'>Q " + prettyNumber(total) + "</span>";
                     rows += "</span>";
                     rows += "</span>";
                 }
                 $(".container-1").html(rows);
-                $("#totalPago").html(sumatoria);
+                $("#totalPago").html("Q " + prettyNumber(sumatoria));
             }
         });     
     }
@@ -237,6 +244,8 @@
     $(document).ready(function(){
         load_summaries();
         proceed = 0;
+
+        // alert(getActualTime());
         
         $(document).on('click', '.delete-item', function () {
             id = $(this).attr("id");
@@ -265,38 +274,55 @@
         });
 
         $('#purchase-button').on('click',function(){
-            var tarjetaInfo = document.getElementById("card-select").value;
-            var lugarInfo = document.getElementById("card-select").value;
-            var nombre = "Jorge Luis";
-            var tarjeta = "0000000000000000";
-            var date = getActualTime();
-            var ccv = "717";
-            var mes  = "09";
-            var year = "2022";
-            var direccion  = "A";
-            if(tarjetaInfo != null && lugarInfo != null && nombre != "" && tarjeta != "" && ccv != "" && mes != "" && year != "" && direccion != ""){        
-                // emisor_id = tarjetaInfo.split("-")[0];
-                // direccion_ip = tarjetaInfo.split("-")[1];
-                // autorizacion_path = tarjetaInfo.split("-")[2];
-                // formato = tarjetaInfo.split("-")[3];
-                // solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
-                courier = 1;
-                emisor = 9;
-                lugar = "01000";
-                if(true || statusEmisor == 1){
-                    // generamos la compra
-                    generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year,date);
-                }else{
-                    
+            $.ajax({
+            url: "../rutas_ajax/carrito/verificar_existencias.php?",
+            type: "POST",
+                success: function(r){
+                    if(r == -1){
+                        //justo en este momento verifico existencias si aun estan disponibles
+                        new PNotify({
+                            title: 'Compra',
+                            text: 'Algunos productos se han agotado.',
+                            type: 'warning',
+                            styling: 'bootstrap3'
+                        });
+                        load_summaries();                         
+                    }else{
+                        var tarjetaInfo = document.getElementById("card-select").value;
+                        var lugarInfo = document.getElementById("card-select").value;
+                        var nombre = "Jorge Luis";
+                        var tarjeta = "0000000000000000";
+                        var date = getActualTime();
+                        var ccv = "717";
+                        var mes  = "09";
+                        var year = "2022";
+                        var direccion  = "A";
+                        if(tarjetaInfo != null && lugarInfo != null && nombre != "" && tarjeta != "" && ccv != "" && mes != "" && year != "" && direccion != ""){        
+                            // emisor_id = tarjetaInfo.split("-")[0];
+                            // direccion_ip = tarjetaInfo.split("-")[1];
+                            // autorizacion_path = tarjetaInfo.split("-")[2];
+                            // formato = tarjetaInfo.split("-")[3];
+                            // solicitar_datos_emisor(emisor_id,direccion_ip,autorizacion_path,formato,nombre,tarjeta,ccv,(year+mes))
+                            courier = 1;
+                            emisor = 1;
+                            lugar = "01000";
+                            if(true || statusEmisor == 1){
+                                // generamos la compra
+                                generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year,date);
+                            }else{
+                                
+                            }
+                        }else{
+                            new PNotify({
+                                title: 'Shopping Cart',
+                                text: 'Complete todos los campos porfavor.',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });                   
+                        }                        
+                    }
                 }
-            }else{
-                new PNotify({
-                    title: 'Shopping Cart',
-                    text: 'Complete todos los campos porfavor.',
-                    type: 'warning',
-                    styling: 'bootstrap3'
-                });                   
-            }
+            }); 
         });
 
         $('#place-select').on('change',function(){
@@ -331,14 +357,13 @@
     } 
 
     function generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,fecha,date){
-        console.log("llego");
         $.ajax({
             url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&ccv=" + ccv + "&fecha=" + fecha + "&total=" + sumatoria + "&date=" + date,
             type: "POST",
             success: function(r){
                 if(r == 1){
                     //orden creada con exito
-                    setTimeout("renderPage()",500);
+                    //setTimeout("renderPage()",500);
                 }
             }
         });        
