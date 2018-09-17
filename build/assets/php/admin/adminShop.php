@@ -439,9 +439,10 @@
                 $("#messageProductos").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
                 imageFileProducto = file.type;
-                var match = ["image/jpeg", "image/png", "image/jpg"];
+                alert(imageFileProducto);
+                var match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
                 alert(imageFileProducto.split("/")[1]);
-                if (!(imageFileProducto == match[0] || imageFileProducto == match[1] || imageFileProducto == match[2])){
+                if (!(imageFileProducto == match[0] || imageFileProducto == match[1] || imageFileProducto == match[2] || imageFileProducto == match[3])){
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
                     // $('#previewing_producto').attr('height', 200)
@@ -680,7 +681,7 @@
                 $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
                 imageFileMarca = file.type;
-                var match = ["image/jpeg", "image/png", "image/jpg"];
+                match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
                 if (!(imageFileMarca == match[0] || imageFileMarca == match[1] || imageFileMarca == match[2])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
