@@ -7,6 +7,9 @@
 
 <?php
     include '../modules/nav.php';
+    if($role != 0){
+        echo  "<script> $(location).attr('href','../../../index.php') </script>";
+    }
 ?>
 
 <body>
@@ -269,7 +272,7 @@
                         rows += "<td width='20%'>" + obj[i - 1].direccion_ip + "</td>";
                         rows += "<td width='35%'>" + obj[i - 1].autorizacion_path + "</td>";
                         rows += "<td width='15%'>" + obj[i - 1].formato + "</td>";
-                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].emisor_id + "' class='borrar-emisor' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].emisor_id + "' class='btn-cancel borrar-emisor' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
@@ -308,7 +311,7 @@
                         rows += "<td width='25%'>" + obj[i - 1].envio_path + "</td>";
                         rows += "<td width='25%'>" + obj[i - 1].estado_path + "</td>";
                         rows += "<td width='25%'>" + obj[i - 1].formato + "</td>";
-                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].courier_id + "' class='borrar-courier' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].courier_id + "' class='btn-cancel borrar-courier' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";

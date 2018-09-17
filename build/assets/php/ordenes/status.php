@@ -5,6 +5,9 @@
 </head>
 <?php
     $orden = $_GET["orden"];
+    $ip = $_GET["ip"];
+    $estado = $_GET["estado"];
+    $formato = $_GET["formato"];
     include '../modules/nav.php';
 ?>
 
@@ -13,7 +16,7 @@
         <div class="status-container">
             <span class="order">
                 <span class="name">
-                    <b>COMPRA</b> #1345245
+                    <b>COMPRA</b> <div id="id-compra" formato="<?php echo htmlspecialchars($formato) ?>"  estado="<?php echo htmlspecialchars($estado) ?>" ip="<?php echo htmlspecialchars($ip) ?>" orden="<?php echo htmlspecialchars($orden) ?>">#<?php echo htmlspecialchars($orden) ?>
                 </span>
             </span>
             <span class="simplified-summary">
@@ -39,31 +42,57 @@
 <script>
 //Funcioón para sacar la información de la DB.
 function load_details(){
-    rows = '';
-    rows += '<tr class="table-titles"><th></th><th></th><th></th><th></th></tr>';
-    //Como agregar elementos a la tabla de detalles.
-    rows += '<tr class="element">';
-    rows += '<td>- KRAST</td>'; //Nombre
-    rows += '<td>Rojo</td>'; //Color
-    rows += '<td>28.5</td>'; //Talla
-    rows += '<td>1</td>'; //Cantidad
-    rows += '</tr>';
+    compra = document.getElementById("id-compra").getAttribute("orden");
+    $.ajax({
+        url: "../rutas_ajax/ordenes/listar_productos.php?compra=" + compra,
+        type: "POST",
+        success: function(r){  
+            obj = JSON.parse(r);  
+            var rows = '';
+            rows += '<tr class="table-titles"><th></th><th></th><th></th><th></th></tr>';
+            for(var i = 1; i <= obj.length; i++){
+                //Como agregar elementos a la tabla de detalles.
+                rows += '<tr class="element">';
+                rows += '<td>-' +  obj[i - 1].producto_nombre + '</td>'; //Nombre
+                rows += '<td>' +  obj[i - 1].color_nombre +  '</td>'; //Color
+                rows += '<td>' +  obj[i - 1].talla +  '</td>'; //Talla
+                rows += '<td>' +  obj[i - 1].cantidad +  '</td>'; //Cantidad
+                rows += '</tr>';
+            }
 
-    rows += '<tr class="element">';
-    rows += '<td>- KRAST</td>'; //Nombre
-    rows += '<td>Rojo</td>'; //Color
-    rows += '<td>28.5</td>'; //Talla
-    rows += '<td>1</td>'; //Cantidad
-    rows += '</tr>';
+            $('.detail-table').find('table').html(rows);
+        }
+    });
+}
 
-    rows += '<tr class="element">';
-    rows += '<td>- KRAST</td>'; //Nombre
-    rows += '<td>Rojo</td>'; //Color
-    rows += '<td>28.5</td>'; //Talla
-    rows += '<td>1</td>'; //Cantidad
-    rows += '</tr>';
-
-    $('.detail-table').find('table').html(rows);
+function load_order_status(){
+    id = document.getElementById("id-compra");
+    compra = id.getAttribute("orden");
+    direccion_ip = id.getAttribute("ip");
+    estado_path = id.getAttribute("estado");
+    formato = id.getAttribute("formato");
+    urlWebServices = "https://" + direccion_ip + "/" +  estado_path + "?orden=" + compra + "&tienda=Krasters&formato=" + formato;
+    $.ajax({
+        url: urlWebServices,
+        type: "GET",
+        success: function(r){
+            if(formato == "xml" || formato == "XML"){
+                //XML                
+                parser = new DOMParser();
+                xmlDoc = parser.parseFromString(r,"text/xml");
+                nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
+                ordenCourier = xmlDoc.getElementsByTagName("orden")[0].childNodes[0].nodeValue; 
+                statusCourier = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
+                setStage(statusCourier);
+            }else{
+                //JSON
+                nombreCourier = r.orden.courrier; 
+                ordenCourier =  r.orden.orden; 
+                statusCourier = r.orden.status; 
+                setStage(statusCourier);
+            }            
+        }
+    });    
 }
 
 $(document).ready(function(){
@@ -81,9 +110,10 @@ $(document).ready(function(){
     });
 
     load_details();
+    //load_order_status();
 
     //Ejemplo de como cambiar el estado.
-    setStage(3);
+    setStage(2);
 });
 
 //Función para cambiar el estado, 1 - 5 (int) son estados válidos, cualquier otro valor va a irse al default y si al recargar la página no se llama la función, por predeterminado, ya está cargado el default.

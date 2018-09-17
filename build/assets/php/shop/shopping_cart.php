@@ -70,6 +70,7 @@
                                     pg_close($link);
                                 ?>  
                             </select>
+                            <i class="fas fa-truck"></i>
                         </span>     
 
                         <!-- Emisores de tarjetas -->
@@ -91,6 +92,7 @@
                                     pg_close($link);
                                 ?>  
                             </select>
+                            <i class="fab fa-cc-visa"></i>
                         </span>
                                     
                         <!-- Nombre del usuario de la tarjeta. -->
@@ -106,9 +108,9 @@
                         <span class="form-row">
                             <!-- Mes y año de la fecha de expiración de la tarjeta. -->
                             <span class="expiration-date">
-                                <input type="number" placeholder="MM" id="month-tarjeta">
+                                <input class="month" type="number" placeholder="MM" id="month-tarjeta">
                                 <span class='sep'>/</span>
-                                <input type="number" placeholder="YYYY" id="year-tarjeta">
+                                <input class="year" type="number" placeholder="YYYY" id="year-tarjeta">
                             </span>
                             <!-- Código de seguridad de la tarjeta. -->
                             <input type="number" placeholder="CVV" id="user-cvv">
@@ -116,6 +118,10 @@
                         <span class="input-icon">
                             <input type='text' id='direccion' placeholder='Dirección' required>
                             <i class="fas fa-map-marked"></i>
+                        </span>
+                        <!-- Código de descuento. -->
+                        <span class="input-icon">
+                            <input type='text' id='discount' placeholder='Código de Decuento' required>
                         </span>
                         <!-- Botón que debería de llamar a los servicios de compra de la tarjeta y del courier. -->
                         <span class="proceed">
@@ -143,7 +149,19 @@
     var nombreEmisor = null;
     var tarjetaEmisor = null;
     var statusEmisor = null;
-    var numeroEmisor = null;       
+    var numeroEmisor = null;
+    var d;
+    var date = [];
+    //var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];  
+
+    //Función que obtiene el tiempo actual y lo devuelve como arreglo como: [16, 9, 2018].
+    function getActualTime(){
+        d = new Date();
+        date.push(d.getDate());
+        date.push(d.getMonth() + 1);
+        date.push(d.getFullYear());
+        return date;
+    }    
 
     function load_summaries(){
             $.ajax({
@@ -158,7 +176,8 @@
                 for(var i = 1; i <= obj.length; i++){
                     rows += "<span class='product-summary'>";
                     //Imagen del producto.
-                    rows += "<img class='image' src='../../img/productos/default2.webp'>";
+                    ruta = '../../img/productos/' + obj[i - 1].producto_id + "." + obj[i - 1].tipo_producto;
+                    rows += "<img class='image' src='"+ruta+"'>";
                     rows += "<span class='information'>";
                     rows += "<a class='btn-delete delete-item' id='" + obj[i - 1].carrito_id +  "-" + obj[i - 1].color_nombre    +  "-" + obj[i - 1].talla +  "-" + obj[i - 1].producto_id +"'><i class='fas fa-times'></i></a>";
                     //Nombre del producto
@@ -172,7 +191,8 @@
                     rows += "<span class='size'>" + obj[i - 1].talla + "</span>";
                     rows += "</span>";
                     //Imagen de la marca del producto.
-                    rows += "<img src ='../../img/brands/adidas-white.png'>";
+                    ruta2 = '../../img/marcas/' + obj[i - 1].marca_nombre + "." + obj[i - 1].tipo_marca;
+                    rows += "<img src ='"+ruta2+"'>";
                     rows += "</span>";
                     rows += "<span class='money-quantity'>";
                     //Cantidad de productos agregados.
@@ -249,6 +269,7 @@
             var lugarInfo = document.getElementById("card-select").value;
             var nombre = "Jorge Luis";
             var tarjeta = "0000000000000000";
+            var date = getActualTime();
             var ccv = "717";
             var mes  = "09";
             var year = "2022";
@@ -262,9 +283,9 @@
                 courier = 1;
                 emisor = 9;
                 lugar = "01000";
-                if(true){
-                    //verificamos que la tarjeta tenga cobertuda
-                    generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year);
+                if(true || statusEmisor == 1){
+                    // generamos la compra
+                    generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,mes+year,date);
                 }else{
                     
                 }
@@ -309,10 +330,10 @@
         $(location).attr('href','shopping_cart.php');
     } 
 
-    function generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,fecha){
+    function generar_compra(courier,emisor,lugar,tarjeta,nombre,ccv,fecha,date){
         console.log("llego");
         $.ajax({
-            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&ccv=" + ccv + "&fecha=" + fecha + "&total=" + sumatoria,
+            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&ccv=" + ccv + "&fecha=" + fecha + "&total=" + sumatoria + "&date=" + date,
             type: "POST",
             success: function(r){
                 if(r == 1){

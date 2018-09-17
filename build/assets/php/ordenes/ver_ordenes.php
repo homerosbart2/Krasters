@@ -14,8 +14,10 @@
     include '../modules/nav.php';
 ?>
 <html>
-    <span class="separation l" id="listado-compras">
-        <!-- LISTAR POR AJAX --> 
+    <span class="orders-list-container">
+        <span class="orders-list" id="listado-compras">
+            <!-- LISTAR POR AJAX -->
+        </span>
     </span>
 </html>
 
@@ -25,7 +27,11 @@
 
         $(document).on('click', '.ver-compras', function () {
             id = $(this).attr("id");
-            $(location).attr('href','status.php?orden=' + id);
+            compra = id.split("-")[0];
+            ip = id.split("-")[1];
+            estado = id.split("-")[2];
+            formato = id.split("-")[3];
+            $(location).attr('href','status.php?orden=' + compra + "&ip=" + ip + "&estado=" + estado + "&formato=" + formato);
         });
 
     }); 
@@ -38,34 +44,27 @@
                 obj = JSON.parse(r);
                 var rows = "";
                 if(obj.length != 0){
-                    rows += "<table style='margin-top: 5%;'>";
-                    rows += "<thead>";
-                    rows += "<tr>";
-                    rows += "<th>#Orden</th>"
-                    rows += "<th>Emisor</th>";
-                    rows += "<th>Courier</th>";
-                    rows += "<th>Lugar</th>";
-                    rows += "<th>Tarjeta</th>";
-                    rows += "<th>Total</th>";
-                    rows += "</tr>";
-                    rows += "</thead>";
-                    rows += "<tbody>";                    
                     for(var i = 1; i <= obj.length; i++){
-                        rows += "<tr>";
-                        rows += "<td width='10%'>" + obj[i - 1].compra_id + "</td>";
-                        rows += "<td width='10%'>" + obj[i - 1].emisor_nombre + "</td>";
-                        rows += "<td width='10%'>" + obj[i - 1].courier_nombre + "</td>";
-                        rows += "<td width='10%'>" + obj[i - 1].lugar_nombre + "</td>";
-                        longitud = (obj[i - 1].tarjeta).length;
-                        ultimos4Tarjeta = (obj[i - 1].tarjeta).substring(longitud-4,longitud);
-                        tarjeta = "x".repeat(longitud-4) + ultimos4Tarjeta;
-                        rows += "<td width='10%'>" + tarjeta + "</td>"
-                        rows += "<td width='10%'>" + obj[i - 1].total_compra + "</td>";
-                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].compra_id + "' class='ver-compras' value='Ver compra'/></td>";
-                        rows += "</tr>";
-                    }
-                    rows += "</tbody>";
-                    rows += "</table>";                        
+                        rows+='<span class="o">';
+                        rows+='<span class="information">';
+                        rows+='<span class="order-number">';
+                        rows+='#' + obj[i - 1].compra_id;
+                        rows+='</span>';
+                        rows+='<span class="order-courier">';
+                        rows+= obj[i - 1].courier_nombre;
+                        rows+='</span>';
+                        rows+='<span class="order-place">';
+                        rows+=obj[i - 1].lugar_nombre;
+                        rows+='</span>';
+                        rows+='<span class="order-total">';
+                        rows+='Q. ' + obj[i - 1].total_compra + '.00';
+                        rows+='</span>';
+                        rows+='</span>';
+                        rows+='<span class="state">';
+                        rows+="<a class='btn-accept ver-compras' id='" + obj[i - 1].compra_id + "-" + obj[i - 1].direccion_ip + "-" + obj[i - 1].estado_path + "-" + obj[i - 1].formato + "'><i class='fas fa-info'></i> Estado</a>";
+                        rows+='</span>';
+                        rows+='</span>';
+                    }                          
                 }
                 $("#listado-compras").html(rows);
             }

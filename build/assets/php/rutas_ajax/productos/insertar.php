@@ -1,5 +1,6 @@
 <?php
     //encargado de crear la sesion del usuario y ver que si se haya creado una sesion
+    $type = $_GET["type"];
     $nombre = $_GET["nombre"];
     $descripcion = $_GET["descripcion"];
     $precio = $_GET["precio"];
@@ -8,7 +9,7 @@
     $color = $_GET["color"];
     $marca = $_GET["marca"];        
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "INSERT INTO Productos(producto_nombre,descripcion,precio,marca_nombre) VALUES('$nombre','$descripcion',$precio,'$marca') RETURNING producto_id";
+    $query = "INSERT INTO Productos(producto_nombre,descripcion,precio,marca_nombre,img_type) VALUES('$nombre','$descripcion',$precio,'$marca','$type') RETURNING producto_id";
     $result = pg_query($link, $query);
     $retorno = -1;
     if ($result) {

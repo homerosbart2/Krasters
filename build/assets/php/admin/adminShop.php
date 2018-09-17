@@ -12,6 +12,9 @@
 
 <?php
     include '../modules/nav.php';
+    if($role != 0){
+       echo  "<script> $(location).attr('href','../../../index.php') </script>";
+    }
 ?>
 
 <body>
@@ -267,6 +270,8 @@
 <script>
     var imagenValidaMarca =  false;
     var imagenValida = false;
+    var imageFileMarca = null;
+    var imageFileProducto = null;
     $(document).ready(function(){
         $("#admin-shop-form-add").hide();
         $("#admin-shop-form-existence").hide();
@@ -355,7 +360,7 @@
             if((precio > 0)&&(cantidad > 0)&&(talla > 0)&&(color != null)&&(marca != null)&&(nombre != "")){
                 if(imagenValida){
                     $.ajax({
-                        url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca,
+                        url: "../rutas_ajax/productos/insertar.php?nombre=" + nombre + "&descripcion=" + descripcion + "&precio=" + precio + "&talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&marca=" + marca + "&type=" + imageFileProducto.split("/")[1],
                         type: "POST",
                         success: function(r){
                             //en r viene el id
@@ -386,7 +391,7 @@
                                     var formData = new FormData();
                                     formData.append('file', file, 'test.png');
                                     $.ajax({
-                                        url: "../rutas_ajax/image_upload.php?folder=productos&nombre=" + r, // Url to which the request is send
+                                        url: "../rutas_ajax/image_upload.php?folder=productos&nombre=" + r + "&type=" + imageFileProducto.split("/")[1], // Url to which the request is send
                                         type: "POST", // Type of request to be send, called as method
                                         data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                                         contentType: false, // The content type used when sending data to the server.
@@ -394,11 +399,12 @@
                                         processData: false, // To send DOMDocument or non processed data file it is set to false
                                         success: function(data) // A function to be called if request succeeds
                                         {
+                                            alert(data);
                                             $('#image_preview_marca').css("display", "none");
                                         }
                                     });
                                 }                       
-                                setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
+                                //setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
                             }else{
                                 new PNotify({
                                     title: 'Nuevo producto',
@@ -432,9 +438,10 @@
             if(this != undefined){
                 $("#messageProductos").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
-                var imagefile = file.type;
-                var match = ["image/png"];
-                if (!(imagefile == match[0])) {
+                imageFileProducto = file.type;
+                var match = ["image/jpeg", "image/png", "image/jpg"];
+                alert(imageFileProducto.split("/")[1]);
+                if (!(imageFileProducto == match[0] || imageFileProducto == match[1] || imageFileProducto == match[2])){
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
                     // $('#previewing_producto').attr('height', 200)
@@ -529,7 +536,7 @@
         $("#product-select2").on('change',function(){
             producto = $("#product-select2").val();
             $.ajax({
-                url: "../rutas_ajax/productos/listado.php?producto=" + producto,
+                url: "../rutas_ajax/ordenes/listado.php?producto=" + producto,
                 type: "POST",
                 success: function(r){
                     if(r != 0){
@@ -611,13 +618,13 @@
         //Agregar nueva marca
         $('#btn_agregar_marca').on('click', function(){
             nombre = document.getElementById("marca_nombre").value;
-            if(nombre != ""){
+            if(nombre != "" && (imagenValidaMarca)){
                 $.ajax({
-                    url: "../rutas_ajax/marcas/insertar.php?nombre=" + nombre,
+                    url: "../rutas_ajax/marcas/insertar.php?nombre=" + nombre + "&type=" + imageFileMarca.split("/")[1],
                     type: "POST",
                     success: function(r){
                         //0-> guardo, -1 error
-                        if(r != -1){ //Creo marca
+                        if(r != 1){ //Creo marca
                             new PNotify({
                                 title: 'Nueva marca',
                                 text: 'Marca ingresada exitosamente.',
@@ -630,7 +637,7 @@
                                 var formData = new FormData();
                                 formData.append('file', file, 'test.png');
                                 $.ajax({
-                                    url: "../rutas_ajax/image_upload.php?folder=marcas&nombre=" + r, // Url to which the request is send
+                                    url: "../rutas_ajax/image_upload.php?folder=marcas&nombre=" + r + "&type=" + imageFileMarca.split("/")[1], // Url to which the request is send
                                     type: "POST", // Type of request to be send, called as method
                                     data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                                     contentType: false, // The content type used when sending data to the server.
@@ -642,7 +649,7 @@
                                         document.getElementById("marca-image").value = "";
                                         document.getElementById("marca_nombre").value = "";;
                                         $('#image_preview_marca').css("display", "none");
-                                        setTimeout("renderPage()",500); //RENDER
+                                        //setTimeout("renderPage()",500); //RENDER
                                     }
                                 });
                             }   
@@ -672,9 +679,9 @@
             if(this != undefined){
                 $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
-                var imagefile = file.type;
-                var match = ["image/png"];
-                if (!(imagefile == match[0])) {
+                imageFileMarca = file.type;
+                var match = ["image/jpeg", "image/png", "image/jpg"];
+                if (!(imageFileMarca == match[0] || imageFileMarca == match[1] || imageFileMarca == match[2])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
                     // $('#previewing_producto').attr('height', 200)
@@ -813,7 +820,7 @@
                     for(var i = 1; i <= obj.length; i++){
                         rows += "<tr>";
                         rows += "<td width='50%'>" + obj[i - 1].marca_nombre + "</td>";
-                        rows += "<td width='20%'><input class='btn-cancel' type='button' id='" + obj[i - 1].marca_nombre + "' class='borrar-marca' value='Eliminar'/></td>";
+                        rows += "<td width='20%'><input class='btn-cancel borrar-marca' type='button' id='" + obj[i - 1].marca_nombre + "' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
@@ -844,7 +851,7 @@
                         rows += "<tr>";
                         rows += "<td width='50%'>" + obj[i - 1].color_nombre + "</td>";
                         rows += "<td width='50%'>" + obj[i - 1].color_codigo + "</td>";
-                        rows += "<td width='10%'><input class='btn-cancel' type='button' id='" + obj[i - 1].color_nombre + "' class='borrar-color' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input class='btn-cancel borrar-color' type='button' id='" + obj[i - 1].color_nombre + "' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
@@ -875,7 +882,7 @@
                         rows += "<tr>";
                         rows += "<td width='20%'>" + obj[i - 1].lugar_id + "</td>";
                         rows += "<td width='20%'>" + obj[i - 1].nombre + "</td>";
-                        rows += "<td width='10%'><input class='btn-cancel' type='button' id='" + obj[i - 1].lugar_id + "' class='borrar-lugar' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input class='btn-cancel borrar-lugar' type='button' id='" + obj[i - 1].lugar_id + "' value='Eliminar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
