@@ -44,26 +44,27 @@
                 obj = JSON.parse(r);
                 var rows = "";
                 if(obj.length != 0){
-                    rows+='<span class="o">';
-                    rows+='<span class="information">';
-                    rows+='<span class="order-number">';
-                    rows+='#' + obj[i - 1].compra_id;
-                    rows+='</span>';
-                    rows+='<span class="order-courier">';
-                    rows+= obj[i - 1].courier_nombre;
-                    rows+='</span>';
-                    rows+='<span class="order-place">';
-                    rows+=obj[i - 1].lugar_nombre;
-                    rows+='</span>';
-                    rows+='<span class="order-total">';
-                    rows+='Q. ' + obj[i - 1].total_compra + '.00';
-                    rows+='</span>';
-                    rows+='</span>';
-                    rows+='<span class="state">';
-                    rows+='<a class="btn-accept"><i class="fas fa-info"></i> Estado</a>';
-                    rows+='</span>';
-                    rows+='</span>';
-
+                    for(var i = 1; i <= obj.length; i++){
+                        rows+='<span class="o">';
+                        rows+='<span class="information">';
+                        rows+='<span class="order-number">';
+                        rows+='#' + obj[i - 1].compra_id;
+                        rows+='</span>';
+                        rows+='<span class="order-courier">';
+                        rows+= obj[i - 1].courier_nombre;
+                        rows+='</span>';
+                        rows+='<span class="order-place">';
+                        rows+=obj[i - 1].lugar_nombre;
+                        rows+='</span>';
+                        rows+='<span class="order-total">';
+                        rows+='Q. ' + obj[i - 1].total_compra + '.00';
+                        rows+='</span>';
+                        rows+='</span>';
+                        rows+='<span class="state">';
+                        rows+='<a class="btn-accept"><i class="fas fa-info"></i> Estado</a>';
+                        rows+='</span>';
+                        rows+='</span>';
+                    }
                     /*rows += "<table style='margin-top: 5%;'>";
                     rows += "<thead>";
                     rows += "<tr>";
