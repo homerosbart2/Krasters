@@ -91,6 +91,20 @@
         color: white;
     }
 }
+
+.btn-accept{
+    @extend %btn;
+    color: $light-pink;
+    border-color: $light-pink;
+    &:hover,
+    &:active,
+    &:focus{
+        background: $light-pink;
+        border-color: $light-pink;
+        color: white;
+    }
+}
+
   
 
 

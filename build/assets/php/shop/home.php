@@ -38,7 +38,7 @@ function load_productos(){
             */
             for(var i = 1; i <= obj.length; i++){
                 //ruta debe ser la imagen del producto.
-                ruta = '../../img/productos/default.jpg';
+                ruta = '../../img/productos/' + obj[i - 1][0].producto_id + '.png';
                 rows += "<div id='product-card-" + obj[i - 1][0].producto_id +"' class='product-card'>";
                 rows += "<img class='image' src='"+ruta+"'>";
                 rows += "<span class='information'>";
@@ -71,7 +71,8 @@ function load_productos(){
                 rows += "<a class='btn-cancel' id='see-" + obj[i - 1][0].producto_id + "' onClick=\"expandProductCard('product-card-" + obj[i - 1][0].producto_id +"');\">Ver más</a>";
                 rows += "<span class='brand'>";
                 //Falta obtener la imagen de la marca.
-                rows += "<img src ='../../img/brands/adidas-white.png'>";
+                ruta2 = '../../img/marcas/' + obj[i - 1][0].marca_nombre.split(" ")[0] + '.png';
+                rows += "<img src ='"+ruta2+"'>";
                 rows += "</span>";
                 rows += "</span>";
                 rows += "</div>";

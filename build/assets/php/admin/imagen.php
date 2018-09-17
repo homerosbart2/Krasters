@@ -14,7 +14,7 @@
 <div id="selectImage">
 <label>Select Your Image</label><br/>
 <input type="file" name="file" id="file" required />
-<input type="submit" value="Upload" class="submit" />
+<a href="#" type="submit" id="boton" value="Upload" class="submit">CLICK</a>
 </div>
 </form>
 </div>
@@ -24,24 +24,32 @@
 </html>
 
 <script>
+
     $(document).ready(function(e) {
-        $("#uploadimage").on('submit', (function(e) {
-            e.preventDefault();
-            $("#message").empty();
-            $('#loading').show();
-            $.ajax({
-                url: "../rutas_ajax/image_upload.php", // Url to which the request is send
-                type: "POST", // Type of request to be send, called as method
-                data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-                contentType: false, // The content type used when sending data to the server.
-                cache: false, // To unable request pages to be cached
-                processData: false, // To send DOMDocument or non processed data file it is set to false
-                success: function(data) // A function to be called if request succeeds
-                {
-                    $('#loading').hide();
-                    $("#message").html(data);
-                }
-            });
+        $("#boton").on('click', (function() {
+            var x = document.getElementById("file");
+            file = x.files[0];
+            if(file != undefined){
+                $("#message").empty();
+                $('#loading').show();
+                var formData = new FormData();
+                formData.append('file', file, 'test.png');
+                $.ajax({
+                    url: "../rutas_ajax/image_upload.php?folder=productos&nombre=file", // Url to which the request is send
+                    type: "POST", // Type of request to be send, called as method
+                    data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                    contentType: false, // The content type used when sending data to the server.
+                    cache: false, // To unable request pages to be cached
+                    processData: false, // To send DOMDocument or non processed data file it is set to false
+                    success: function(data) // A function to be called if request succeeds
+                    {
+                        $('#loading').hide();
+                        $("#message").html(data);
+                    }
+                });
+            }else{
+                alert("seleccione un archivo porfavor");
+            }
         }));
 
         // Function to preview image after validation
@@ -52,7 +60,9 @@
                 var imagefile = file.type;
                 var match = ["image/jpeg", "image/png", "image/jpg"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
-                    $('#previewing').attr('src', 'noimage.png');
+                    $('#previewing').attr('src', '../../img/productos/default.png');
+                    $('#previewing').attr('width', 300)
+                    $('#previewing').attr('height', 200)
                     $("#message").html("<p id='error'>Porfavor seleccione un archivo valido de imagen</p>" + "<h4>Note</h4>" + "<span id='error_message'>Solamente imagenes .png son permitidas</span>");
                     return false;
                 } else {
