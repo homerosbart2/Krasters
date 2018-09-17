@@ -475,7 +475,6 @@
                     url: "../rutas_ajax/productos/editar_insertar.php?talla=" + talla + "&cantidad=" + cantidad + "&color=" + color + "&producto=" + producto,
                     type: "POST",
                     success: function(r){
-                        alert(r);
                         //si actualizo devolvera 0, si creo un nuevo producto devuelve 1, si hubo error -1
                         if(r > 0){
                             //lo que intentamos quitar excede del actual
@@ -536,7 +535,7 @@
         $("#product-select2").on('change',function(){
             producto = $("#product-select2").val();
             $.ajax({
-                url: "../rutas_ajax/ordenes/listado.php?producto=" + producto,
+                url: "../rutas_ajax/productos/listado.php?producto=" + producto,
                 type: "POST",
                 success: function(r){
                     if(r != 0){
@@ -555,12 +554,11 @@
             precio = document.getElementById("producto_precio_editar").value;
             nombre = document.getElementById("producto_nombre_editar").value;
             descripcion = document.getElementById("producto_descripcion_editar").value; 
-            if((precio > 0)&&(nombre != "")&&(producto != null)){
+            if((accion == 0 && producto != null) || ((accion == 1)&&(precio > 0)&&(nombre != "")&&(producto != null))){
                 $.ajax({
                     url: "../rutas_ajax/productos/editar_eliminar.php?producto=" + producto + "&nombre=" + nombre + "&precio=" + precio + "&descripcion=" + descripcion + "&accion=" + accion,
                     type: "POST",
                     success: function(r){
-                        alert(r);
                         //si elimino devolvera un 0, si actualizo un 1 y si hubo error -1
                         if(r == 1){ //actualizo producto
                             new PNotify({
@@ -680,7 +678,6 @@
                 $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
                 imageFileMarca = file.type;
-                
                 match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
                 if (!(imageFileMarca == match[0] || imageFileMarca == match[1] || imageFileMarca == match[2] || imageFileMarca == match[3])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
