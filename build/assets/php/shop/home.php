@@ -4,7 +4,9 @@
 </head>
 <?php
     include '../modules/nav.php';
-
+?>
+<?php
+    include '../modules/ad.php';
 ?>
 </html>
 <body>
