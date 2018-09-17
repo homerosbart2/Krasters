@@ -70,6 +70,7 @@
                                     pg_close($link);
                                 ?>  
                             </select>
+                            <i class="fas fa-truck"></i>
                         </span>     
 
                         <!-- Emisores de tarjetas -->
@@ -91,6 +92,7 @@
                                     pg_close($link);
                                 ?>  
                             </select>
+                            <i class="fab fa-cc-visa"></i>
                         </span>
                                     
                         <!-- Nombre del usuario de la tarjeta. -->
@@ -106,9 +108,9 @@
                         <span class="form-row">
                             <!-- Mes y año de la fecha de expiración de la tarjeta. -->
                             <span class="expiration-date">
-                                <input type="number" placeholder="MM" id="month-tarjeta">
+                                <input class="month" type="number" placeholder="MM" id="month-tarjeta">
                                 <span class='sep'>/</span>
-                                <input type="number" placeholder="YYYY" id="year-tarjeta">
+                                <input class="year" type="number" placeholder="YYYY" id="year-tarjeta">
                             </span>
                             <!-- Código de seguridad de la tarjeta. -->
                             <input type="number" placeholder="CVV" id="user-cvv">
@@ -116,6 +118,10 @@
                         <span class="input-icon">
                             <input type='text' id='direccion' placeholder='Dirección' required>
                             <i class="fas fa-map-marked"></i>
+                        </span>
+                        <!-- Código de descuento. -->
+                        <span class="input-icon">
+                            <input type='text' id='discount' placeholder='Código de Decuento' required>
                         </span>
                         <!-- Botón que debería de llamar a los servicios de compra de la tarjeta y del courier. -->
                         <span class="proceed">
