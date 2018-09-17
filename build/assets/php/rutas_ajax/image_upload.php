@@ -11,7 +11,7 @@ if (isset($_FILES["file"]["type"])) {
     );
     $temporary = explode(".", $_FILES["file"]["name"]);
     $file_extension  = end($temporary);
-    if (($_FILES["file"]["size"] < 300000) && in_array($file_extension, $validextensions)) {
+    if (($_FILES["file"]["size"] < 1000000) && in_array($file_extension, $validextensions)) {
         if ($_FILES["file"]["error"] > 0) {
             echo "Return Code: " . $_FILES["file"]["error"] . "<br/><br/>";
             $retorno = -3;
