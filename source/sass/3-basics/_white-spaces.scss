@@ -1,0 +1,28 @@
+%separation{
+    width: 100%;
+}
+
+.separation.s{
+    @extend %separation;
+    height: 6px;
+}
+
+.separation.m{
+    @extend %separation;
+    height: 12px;
+}
+
+.separation.l{
+    @extend %separation;
+    height: 24px;
+}
+
+.separation.xl{
+    @extend %separation;
+    height: 48px;
+}
+
+.separation.xxl{
+    @extend %separation;
+    height: 96px;
+}

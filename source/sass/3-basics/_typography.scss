@@ -1,9 +1,29 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
 
 html{
     font-family: 'Roboto', sans-serif;
 }
 
+.form-title{
+    font-size: 18px;
+}
+
+.company-name{
+    color: $light-pink;
+}
+
+.nav-logo{
+    font-size: 24px;
+}
+
 .title{
-    font-size: 23px;
+    font-size: 28px;
+    font-weight: 600;
+    display: flex;
+    width: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.justify{
+    text-align: justify;
 }

@@ -1,0 +1,108 @@
+nav{
+    width: 100%;
+}
+
+
+.main-nav{
+    position: fixed;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0;
+    background: $dark-blue;
+    box-shadow:  0 7px 10px 0 rgba(0,0,0,0.15); 
+    z-index: 2000;
+    li{
+        list-style: none;
+        margin: 0 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    a{
+        text-decoration: none;
+        color: white;
+        padding: 6px 15px;
+        display: flex;
+        transition: all 0.2s ease;
+    }
+    .options-division{
+        display: flex;
+        flex-wrap: nowrap;
+        .option-icon{
+            display: flex;
+            align-items: center;
+            margin-right: 3px;
+        }
+        @include media-max(700px){
+            li{
+                margin: 0 5px;
+            }
+            .option-label{
+                display: none;
+            }
+            .option-icon{
+                font-size: 20px;
+            }
+        }
+
+        @include media-max(550px){
+            .nav-user{
+                display: none;
+            }
+        }
+
+    }
+    .nav-option{
+        &:hover{
+            background: white;
+            color: $dark-blue;
+            .counter{
+                color: white;
+                background: $dark-blue;
+            }
+        }
+    }
+    .nav-user{
+        font-size: 18px;
+        border-right: 2px solid white;
+        padding-right: 10px;
+        a{
+            cursor: default;
+        }
+    }
+    .nav-logo{
+        &:hover{
+            color: $light-pink;
+            transform: translateX(5px);
+        }
+    }
+
+    
+    @include media-max(380px){
+        .logo-division{
+            display: none;
+        }
+        .options-division{
+            width: 100%;
+            justify-content: space-around;
+            padding-top: 10px;
+            padding-bottom: 10px; 
+        }
+    }
+    
+}
+
+#header{
+    height: 50px;
+}
+
+.counter{
+    background: $light-pink;
+    border-radius: 100px;
+    padding: 0 7px;
+    margin-left: 3px;
+    color: white;
+    transition: 0.2s ease;
+}

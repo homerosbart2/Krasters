@@ -1,0 +1,23 @@
+%button-bar{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    input{
+        display: none;
+        &:checked + label{
+            background: $purple;
+            border-color: $purple;
+            color: white;
+        }
+    }
+}
+
+.button-bar{
+    @extend %button-bar;
+    justify-content: space-between;
+}
+
+.button-bar-around{
+    @extend %button-bar;
+    justify-content: space-around;
+}
