@@ -404,7 +404,7 @@
                                         }
                                     });
                                 }                       
-                                //setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
+                                setTimeout("renderPage()",500); //RENDER POR QUE NO ME ACTUALIZAN LOS SELECT USANDO EL SELECTPICKER
                             }else{
                                 new PNotify({
                                     title: 'Nuevo producto',
@@ -439,7 +439,6 @@
                 $("#messageProductos").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
                 imageFileProducto = file.type;
-                alert(imageFileProducto);
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
                 alert(imageFileProducto.split("/")[1]);
                 if (!(imageFileProducto == match[0] || imageFileProducto == match[1] || imageFileProducto == match[2] || imageFileProducto == match[3])){
@@ -650,7 +649,7 @@
                                         document.getElementById("marca-image").value = "";
                                         document.getElementById("marca_nombre").value = "";;
                                         $('#image_preview_marca').css("display", "none");
-                                        //setTimeout("renderPage()",500); //RENDER
+                                        setTimeout("renderPage()",500); //RENDER
                                     }
                                 });
                             }   
@@ -681,8 +680,9 @@
                 $("#messageMarcas").empty(); //Limpiamos el mensaje anterior
                 var file = this.files[0];
                 imageFileMarca = file.type;
+                
                 match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
-                if (!(imageFileMarca == match[0] || imageFileMarca == match[1] || imageFileMarca == match[2])) {
+                if (!(imageFileMarca == match[0] || imageFileMarca == match[1] || imageFileMarca == match[2] || imageFileMarca == match[3])) {
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)
                     // $('#previewing_producto').attr('height', 200)
@@ -724,7 +724,8 @@
                             });
                             document.getElementById("color_nombre").value = "";
                             document.getElementById("color_codigo").value = "";   
-                            listarColores();                                        
+                            listarColores();
+                            setTimeout("renderPage()",500); //RENDER                                        
                         }else{
                             new PNotify({
                                 title: 'Nuevo color',
