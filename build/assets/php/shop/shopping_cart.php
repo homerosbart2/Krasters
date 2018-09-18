@@ -247,7 +247,7 @@
 
     $(document).ready(function(){
         load_summaries();
-        proceed = 0;
+        proceed = 0; 
 
         // alert(getActualTime());
         
@@ -413,8 +413,18 @@
                         text: 'Compra realizada exitosamente.',
                         type: 'success',
                         styling: 'bootstrap3'
-                    });                      
-                    //setTimeout("renderPage()",500);
+                    });
+
+                    $.ajax({
+                        url: "../rutas_ajax/webservices/descuentos.php",
+                        type: "POST",
+                        success: function(r){
+                            $('#proceed-form').html('<span class="discount-text">Código de descuento en &shop:</span><span class="discount-code">' + r + '</span><span class="discount-text small"><i class="fas fa-exclamation"></i> El código no es almacenado, no lo pierdas.</span>');
+                        }
+                    }); 
+
+                    load_summaries();
+
                 }else{
                     new PNotify({
                         title: 'Shopping Cart',
