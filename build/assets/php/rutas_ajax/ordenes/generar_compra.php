@@ -1,5 +1,11 @@
 <?php
     session_start();
+    $destinatario = $_GET["destinatario"];
+    $direccion_ip = $_GET["direccion_ip"];
+    $envio_path = $_GET["envio_path"];
+    $direccion = $_GET["direccion"];
+    $destino = $_GET["destino"];
+    $envio = $_GET["envio"];    
     $total = $_GET["total"];
     $date = $_GET["date"];
     $tarjeta = $_GET["tarjeta"];
@@ -7,11 +13,11 @@
     $courier = $_GET["courier"];
     $emisor = $_GET["emisor"];
     $lugar = $_GET["lugar"];
-    $ccv = $_GET["ccv"];
+    $cvv = $_GET["cvv"];
     $fecha = $_GET["fecha"];
     $usuario = $_SESSION['username']; //variable que se obtiene con la cookie 
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "INSERT INTO Compras(emisor_id,courier_id,lugar_id,usuario,tarjeta,tarjeta_nombre,tarjeta_ccv,tarjeta_fecha,total_compra,fecha_compra) VALUES($emisor,$courier,'$lugar','$usuario','$tarjeta','$tarjeta_nombre','$ccv','$fecha',$total,'$date') RETURNING compra_id";
+    $query = "INSERT INTO Compras(emisor_id,courier_id,lugar_id,usuario,tarjeta,tarjeta_nombre,tarjeta_ccv,tarjeta_fecha,total_compra,fecha_compra,destino,costo_envio) VALUES($emisor,$courier,'$lugar','$usuario','$tarjeta','$tarjeta_nombre','$ccv','$fecha',$total,'$date','$destino',$envio) RETURNING compra_id";
     $result = pg_query($link, $query);
     $retorno = -1;
     if ($result) {
@@ -36,6 +42,9 @@
                 if($result){
                     //LISTO PROCESO DE COMPRA
                     $retorno = 1;
+                    //solicito el envio
+                    $url = "http://".$direccion_ip."/".$envio_path."?orden=".$compra."&destinatario=".$destinatario."&destino=".$destino."&direccion=".$direccion."&tienda=Krasters";
+                    $respuesta = file_get_contents($url);                    
                 }
             }
         }

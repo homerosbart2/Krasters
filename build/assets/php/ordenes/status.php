@@ -71,7 +71,7 @@ function load_order_status(){
     direccion_ip = id.getAttribute("ip");
     estado_path = id.getAttribute("estado");
     formato = id.getAttribute("formato");
-    urlWebServices = "https://" + direccion_ip + "/" +  estado_path + "?orden=" + compra + "&tienda=Krasters&formato=" + formato;
+    urlWebServices = "../webservices/status.php?direccion=" + direccion_ip + "&status=" + estado_path + "&orden=" + compra + "&formato=" + formato;
     $.ajax({
         url: urlWebServices,
         type: "GET",
@@ -86,6 +86,7 @@ function load_order_status(){
                 setStage(statusCourier);
             }else{
                 //JSON
+                r = JSON.parse(r);
                 nombreCourier = r.orden.courrier; 
                 ordenCourier =  r.orden.orden; 
                 statusCourier = r.orden.status; 

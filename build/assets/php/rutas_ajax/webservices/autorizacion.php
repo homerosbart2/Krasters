@@ -7,13 +7,8 @@
     $num_seguridad = $_GET["num_seguridad"];  
     $formato = $_GET["formato"]; 
     $monto = $_GET["monto"];
-    $url = "https://".$direccion."/".$autorizacion."?tarjeta=".$tarjeta."&nombre=".$nombre."&fecha_venc=".$fecha."&num_seguridad=".$num_seguridad."&monto=".$monto."&formato=".$formato;
-    echo $url;
-    $json = file_get_contents($direccion);
-    $data = json_decode($json,true);
-    $informacion = $data['courrier'];
-    foreach($informacion as $info){
-        echo $info['text'];
-        echo '<br>';
-    }
+    $nombre = urlencode($nombre);
+    $url = "http://".$direccion."/".$autorizacion."?tarjeta=".$tarjeta."&nombre='$nombre'&fecha_venc=".$fecha."&num_seguridad=".$num_seguridad."&monto=".$monto."&formato=".$formato."&tienda=krasters";
+    $respuesta = file_get_contents($url);
+    echo $respuesta;
 ?>
