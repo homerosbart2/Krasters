@@ -7,17 +7,17 @@
     $destino = $_GET["destino"];
     $envio = $_GET["envio"];    
     $total = $_GET["total"];
-    $date = $_GET["date"];
+    $fecha_actual = $_GET["fecha_actual"];
     $tarjeta = $_GET["tarjeta"];
     $tarjeta_nombre = $_GET["tarjeta_nombre"];
     $courier = $_GET["courier"];
     $emisor = $_GET["emisor"];
     $lugar = $_GET["lugar"];
     $cvv = $_GET["cvv"];
-    $fecha = $_GET["fecha"];
+    $fecha = $_GET["fecha_tarjeta"];
     $usuario = $_SESSION['username']; //variable que se obtiene con la cookie 
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "INSERT INTO Compras(emisor_id,courier_id,lugar_id,usuario,tarjeta,tarjeta_nombre,tarjeta_ccv,tarjeta_fecha,total_compra,fecha_compra,destino,costo_envio) VALUES($emisor,$courier,'$lugar','$usuario','$tarjeta','$tarjeta_nombre','$ccv','$fecha',$total,'$date','$destino',$envio) RETURNING compra_id";
+    $query = "INSERT INTO Compras(emisor_id,courier_id,lugar_id,usuario,tarjeta,tarjeta_nombre,tarjeta_ccv,tarjeta_fecha,total_compra,fecha_compra,destino,costo_envio,direccion,destinatario) VALUES($emisor,$courier,'$lugar','$usuario','$tarjeta','$tarjeta_nombre','$cvv','$fecha',$total,'$fecha_actual','$destino',$envio,'$direccion','$destinatario') RETURNING compra_id";
     $result = pg_query($link, $query);
     $retorno = -1;
     if ($result) {

@@ -71,7 +71,7 @@ function load_order_status(){
     direccion_ip = id.getAttribute("ip");
     estado_path = id.getAttribute("estado");
     formato = id.getAttribute("formato");
-    urlWebServices = "../webservices/status.php?direccion=" + direccion_ip + "&status=" + estado_path + "&orden=" + compra + "&formato=" + formato;
+    urlWebServices = "../rutas_ajax/webservices/status.php?direccion=" + direccion_ip + "&status=" + estado_path + "&orden=" + compra + "&formato=" + formato;
     $.ajax({
         url: urlWebServices,
         type: "GET",

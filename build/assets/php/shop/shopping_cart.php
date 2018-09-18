@@ -292,25 +292,17 @@
                         });
                         load_summaries();                         
                     }else{
-
-                        
-                       
-                        
-                        
-                        
-                        
-                        
-                        discount                         
                         var tarjetaInfo = document.getElementById("card-select").value;
                         var lugar = document.getElementById("place-select").value;
                         var nombre = document.getElementById("user-name").value;
                         var tarjeta = document.getElementById("user-card").value;
-                        var mes = getActualTime("month-tarjeta").value;
+                        var mes = document.getElementById("month-tarjeta").value;
                         var year = document.getElementById("year-tarjeta").value;
                         var cvv  = document.getElementById("user-cvv").value;
                         var direccion = document.getElementById("direccion").value;
                         var destinatario = document.getElementById("destinatario").value;
-                        fecha = mes+year;
+                        var descuento = document.getElementById("discount").value;
+                        var fecha = mes+year;
                         sumatoria = 500;
                         if(coberturaCourier){
                             if(tarjetaInfo != null && lugar != null && nombre != "" && tarjeta != "" && cvv != "" && mes != "" && year != "" && direccion != "" && destinatario != ""){        
@@ -339,13 +331,14 @@
                                             statusEmisor = r.autorizacion.status; 
                                             numeroEmisor = r.autorizacion.numero;
                                         }
+                                        alert(statusEmisor == "APROBADO");
                                         if(statusEmisor == "APROBADO" || statusEmisor == "aprobado"){
                                             //generamos la compra
                                             var courierInfo = document.getElementById("courier-select").value;
                                             courier = courierInfo.split("-")[0];
                                             direccion_ip = courierInfo.split("-")[1];
                                             envio_path = courierInfo.split("-")[3];                                         
-                                            generar_compra(courier,emisor,lugar,tarjeta,nombre,cvv,mes+year,date,destinoCourier,costoCourier,direccion,destinatario,direccion_ip,envio_path);
+                                            generar_compra(courier,emisor,lugar,tarjeta,nombre,cvv,fecha,getActualTime(),destinoCourier,costoCourier,direccion,destinatario,direccion_ip,envio_path);
                                         }else{
                                             new PNotify({
                                                 title: 'Shopping Cart',
@@ -408,9 +401,9 @@
         $(location).attr('href','shopping_cart.php');
     } 
 
-    function generar_compra(courier,emisor,lugar,tarjeta,nombre,cvv,fecha,date,destino,costo,direccion,destinatario,direccion_ip,envio_path){
+    function generar_compra(courier,emisor,lugar,tarjeta,nombre,cvv,fecha,fecha_actual,destino,costo,direccion,destinatario,direccion_ip,envio_path){
         $.ajax({
-            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&cvv=" + cvv + "&fecha=" + fecha + "&total=" + sumatoria + "&date=" + date + "&destino=" + destino + "&envio=" costo + "&direccion" + direccion + "&destinatario=" + destinatario + "&direccion_ip=" + direccion_ip + "&envio_path=" + envio_path,
+            url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&cvv=" + cvv + "&fecha_tarjeta=" + fecha + "&total=" + sumatoria + "&fecha_actual=" + fecha_actual + "&destino=" + destino + "&envio=" + costo + "&direccion=" + direccion + "&destinatario=" + destinatario + "&direccion_ip=" + direccion_ip + "&envio_path=" + envio_path,
             type: "POST",
             success: function(r){
                 if(r == 1){
@@ -422,14 +415,20 @@
                         styling: 'bootstrap3'
                     });                      
                     //setTimeout("renderPage()",500);
+                }else{
+                    new PNotify({
+                        title: 'Shopping Cart',
+                        text: 'Error al generar compra.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });                                          
                 }
             }
         });        
     }
 
     function solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato){
-        alert(codigoLugar);
-        urlWebServices = "../webservices/consulta.php?&direccion" + direccion_ip + "&consulta=" +  consulta_path  + "&formato=" + formato + "&destino=" + codigoLugar;
+        urlWebServices = "../rutas_ajax/webservices/consulta.php?direccion" + direccion_ip + "&consulta=" +  consulta_path  + "&formato=" + formato + "&destino=" + codigoLugar;
         $.ajax({
             url: urlWebServices,
             type: 'GET',
@@ -440,7 +439,7 @@
                     xmlDoc = parser.parseFromString(r,"text/xml");
                     destinoCourier = xmlDoc.getElementsByTagName("destino")[0].childNodes[0].nodeValue; 
                     coberturaCourier = xmlDoc.getElementsByTagName("cobertura")[0].childNodes[0].nodeValue;                    
-                    costoCourier = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue;
+                    costoCourier = xmlDoc.getElementsByTagName("costo")[0].childNodes[0].nodeValue;
                 }else{
                     //JSON
                     r = JSON.parse(r);
@@ -449,11 +448,12 @@
                     coberturaCourier = obj.consultaprecio.cobertura; 
                     costoCourier = obj.consultaprecio.costo;
                 }
-                if(coberturaCourier != TRUE || coberturaCourier != true){
-                    $('#input-cobertura').html("Sin Cobertura");
+                alert(coberturaCourier == "TRUE");
+                if(coberturaCourier == "TRUE" || coberturaCourier == "true" || coberturaCourier == true){
+                    document.getElementById("input-cobertura").value = costoCourier;
                 }else{
                     coberturaCourier = true;
-                    $('#input-cobertura').html(costoCourier);
+                    document.getElementById("input-cobertura").value = "SIN COBERTURA";
                 }       
             }
         });  
