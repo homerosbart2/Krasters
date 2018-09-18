@@ -4,7 +4,7 @@
     $color = $_GET["color"];
     $talla = $_GET["talla"];
     $usuario = $_SESSION['username']; //variable que se obtiene con la cookie
-    $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
+    $link = pg_connect("host=localhost dbname=TIENDA user=normal_user password=%normalNormal2018%");
     $query = "SELECT producto_id FROM Carrito AS C WHERE C.usuario='$usuario' AND C.producto_id=$producto AND C.talla='$talla' AND C.color_nombre='$color'";
     $result = pg_query($link, $query);
     $retorno = -1;
