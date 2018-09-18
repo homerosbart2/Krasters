@@ -686,7 +686,8 @@ nav {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-top: 20px; }
+  margin-top: 20px;
+  margin-bottom: 65px; }
 
 .product-card {
   position: relative;
@@ -989,7 +990,7 @@ nav {
   width: 100vw;
   height: 50px;
   transition: 0.2s ease;
-  z-index: 1000; }
+  z-index: 4; }
   .ad .advertising-container {
     position: relative;
     display: flex;
