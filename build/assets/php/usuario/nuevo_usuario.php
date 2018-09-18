@@ -9,7 +9,7 @@
     $rows = pg_num_rows($result);
     $create = 0;
     if($rows == 0){  
-        $query = "INSERT INTO Usuarios(password_usuario,nombre,usuario,role) VALUES('$password','$name ','$username',0)";
+        $query = "INSERT INTO Usuarios(password_usuario,nombre,usuario,role) VALUES('$password','$name ','$username',1)";
         $result = pg_query($link, $query);
         if ($result) {
             $create = 1;

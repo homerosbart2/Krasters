@@ -27,9 +27,11 @@
                 if($result) $retorno = -2;            
             }
         }else{
-            $query = "INSERT INTO Existencias(producto_id,talla,existencia,color_nombre) VALUES($producto,'$talla',$cantidad,'$color')";
-            $result = pg_query($link, $query);
-            if($result) $retorno = -1;
+            if($cantidad > 0){
+                $query = "INSERT INTO Existencias(producto_id,talla,existencia,color_nombre) VALUES($producto,'$talla',$cantidad,'$color')";
+                $result = pg_query($link, $query);
+                if($result) $retorno = -1;
+            }
         }
     }  
     pg_close($link);
