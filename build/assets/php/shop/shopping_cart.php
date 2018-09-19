@@ -302,8 +302,7 @@
                         var direccion = document.getElementById("direccion").value;
                         var destinatario = document.getElementById("destinatario").value;
                         var descuento = document.getElementById("discount").value;
-                        var fecha = mes+year;
-                        sumatoria = 500;
+                        var fecha = year+mes;
                         if(coberturaCourier){
                             if(tarjetaInfo != null && lugar != null && nombre != "" && tarjeta != "" && cvv != "" && mes != "" && year != "" && direccion != "" && destinatario != ""){        
                                 emisor = tarjetaInfo.split("-")[0];
@@ -428,7 +427,7 @@
     }
 
     function solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato){
-        urlWebServices = "../rutas_ajax/webservices/consulta.php?direccion" + direccion_ip + "&consulta=" +  consulta_path  + "&formato=" + formato + "&destino=" + codigoLugar;
+        urlWebServices = "../rutas_ajax/webservices/consulta.php?direccion=" + direccion_ip + "&consulta=" +  consulta_path  + "&formato=" + formato + "&destino=" + codigoLugar;
         $.ajax({
             url: urlWebServices,
             type: 'GET',
