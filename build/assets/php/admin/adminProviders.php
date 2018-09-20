@@ -44,7 +44,7 @@
                                 <input type='text' id='tarjeta_direccion' name='' placeholder='IP' required>
                             </span>
                         </span>
-                        <input type='text' id='autorizacion_directorio' name='' placeholder='Autorización' required>
+                        <input type='text' id='autorizacion_directorio' value='autorizacion.php' placeholder='Autorización' required>
                         <span class="form-alert"><i class="fas fa-wrench"></i> Opciones avanzadas:</span>
                         <span id="format-card-switch" class="switch">
                             <label for="format-card">
@@ -72,9 +72,9 @@
                                 <input type='text' id='courier_direccion' name='' placeholder='IP' required>
                             </span>
                         </span>
-                        <input type='text' id='costo_directorio' name='' placeholder='Consulta' required>
-                        <input type='text' id='envio_directorio' name='' placeholder='Envío' required>
-                        <input type='text' id='estado_directorio' name='' placeholder='Estado' required>
+                        <input type='text' id='costo_directorio' value='consulta.php' placeholder='Consulta' required>
+                        <input type='text' id='envio_directorio' value='envio.php' placeholder='Envío' required>
+                        <input type='text' id='estado_directorio' value='status.php' placeholder='Estado' required>
                         <span class="form-alert"><i class="fas fa-wrench"></i> Opciones avanzadas:</span>
                         <span id="format-courier-switch" class="switch">
                             <label for="format-courier">
@@ -128,10 +128,7 @@
                             styling: 'bootstrap3'
                         });            
                         document.getElementById("courier_nombre").value = "";
-                        document.getElementById("courier_direccion").value = "";
-                        document.getElementById("costo_directorio").value = ""; 
-                        document.getElementById("envio_directorio").value = ""; 
-                        document.getElementById("estado_directorio").value = "";    
+                        document.getElementById("courier_direccion").value = "";   
                         listarCouriers();                                                         
                     }else{
                         new PNotify({
@@ -174,7 +171,6 @@
                         });
                         document.getElementById("tarjeta_nombre").value = "";
                         document.getElementById("tarjeta_direccion").value = "";
-                        document.getElementById("autorizacion_directorio").value = ""; 
                         listarTarjetas();                                                                        
                     }else{
                         new PNotify({
@@ -222,6 +218,36 @@
         });       
     }  
 
+    var editarTarjeta = function(id){
+        nombre = document.getElementById(id + "-nombre").value;
+        direccion = document.getElementById(id + "-direccion_ip").value;
+        autorizacion = document.getElementById(id + "-autorizacion_path").value; 
+        formato = document.getElementById(id + "-formato").value; 
+        $.ajax({
+            url: "../rutas_ajax/emisores/editar.php?nombre=" + nombre + "&direccion=" + direccion + "&autorizacion=" + autorizacion + "&formato=" + formato + "&id=" + id,
+            type: "POST",
+            success: function(r){
+                if(r == 1){
+                    //Actualizo
+                    new PNotify({
+                        title: 'Editar Tarjeta',
+                        text: 'Tarjeta editada exitosamente.',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });                    
+                    listarTarjetas();
+                }else{
+                    new PNotify({
+                        title: 'Editada Tarjeta',
+                        text: 'Error al editar tarjeta, verifique sus datos.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });                     
+                }
+            }
+        });       
+    }      
+
      var eliminarCourier = function(id){
         $.ajax({
             url: "../rutas_ajax/couriers/eliminar.php?courier=" + id,
@@ -235,7 +261,6 @@
                         type: 'success',
                         styling: 'bootstrap3'
                     });                    
-                    listarCouriers();
                 }else{
                     new PNotify({
                         title: 'Eliminar Courier',
@@ -244,9 +269,42 @@
                         styling: 'bootstrap3'
                     });                     
                 }
+                listarCouriers();
             }
         });       
     }   
+
+    var editarCourier = function(id){
+        nombre = document.getElementById(id + "-nombre").value;
+        direccion = document.getElementById(id + "-direccion_ip").value;
+        consulta = document.getElementById(id + "-consulta_path").value; 
+        envio = document.getElementById(id + "-envio_path").value; 
+        estado = document.getElementById(id + "-estado_path").value; 
+        formato = document.getElementById(id + "-formato").value; 
+        $.ajax({
+            url: "../rutas_ajax/couriers/editar.php?nombre=" + nombre + "&direccion=" + direccion + "&consulta=" + consulta + "&envio=" + envio + "&estado=" + estado + "&formato=" + formato + "&id=" + id,
+            type: "POST",
+            success: function(r){
+                if(r == 1){
+                    //Actualizo
+                    new PNotify({
+                        title: 'Editar Courier',
+                        text: 'Courier editado exitosamente.',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });                    
+                }else{
+                    new PNotify({
+                        title: 'Editada Tarjeta',
+                        text: 'Error al editar tarjeta, verifique sus datos.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });                     
+                }
+                listarCouriers();
+            }
+        });       
+    } 
 
     var listarTarjetas = function(){
         $.ajax({
@@ -268,11 +326,12 @@
                     rows += "<tbody>";                    
                     for(var i = 1; i <= obj.length; i++){
                         rows += "<tr>";
-                        rows += "<td width='20%'>" + obj[i - 1].nombre + "</td>";
-                        rows += "<td width='20%'>" + obj[i - 1].direccion_ip + "</td>";
-                        rows += "<td width='35%'>" + obj[i - 1].autorizacion_path + "</td>";
-                        rows += "<td width='15%'>" + obj[i - 1].formato + "</td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-nombre' style='color: #000;' value='" + obj[i - 1].nombre + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-direccion_ip' style='color: #000;' value='" + obj[i - 1].direccion_ip + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-autorizacion_path' style='color: #000;' value='" + obj[i - 1].autorizacion_path + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-formato' style='color: #000;' value='" + obj[i - 1].formato + "'></td>";                     
                         rows += "<td width='10%'><input type='button' id='" + obj[i - 1].emisor_id + "' class='btn-cancel borrar-emisor' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].emisor_id + "' class='btn-cancel editar-emisor' value='Editar'/></td>";
                         rows += "</tr>";
                     }
                     rows += "</tbody>";
@@ -283,7 +342,7 @@
         });
     }
 
-    var listarCouriers = function(){
+    var listarCouriers2 = function(){
         $.ajax({
             url: "../rutas_ajax/couriers/listar.php?",
             type: "POST",
@@ -322,6 +381,46 @@
         });
     }    
 
+    var listarCouriers = function(){
+        $.ajax({
+            url: "../rutas_ajax/couriers/listar.php?",
+            type: "POST",
+            success: function(r){
+                obj = JSON.parse(r);
+                var rows = "";
+                if(obj.length != 0){
+                    rows += "<table style='margin-top: 5%;'>";
+                    rows += "<thead>";
+                    rows += "<tr>";
+                    rows += "<th>Nombre</th>";
+                    rows += "<th>Ip</th>";
+                    rows += "<th>Consulta</th>";
+                    rows += "<th>Envio</th>";
+                    rows += "<th>Estado</th>";
+                    rows += "<th>Formato</th>";
+                    rows += "</tr>";
+                    rows += "</thead>";
+                    rows += "<tbody>";                    
+                    for(var i = 1; i <= obj.length; i++){
+                        rows += "<tr>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-nombre' style='color: #000;' value='" + obj[i - 1].nombre + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-direccion_ip' style='color: #000;' value='" + obj[i - 1].direccion_ip + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-consulta_path' style='color: #000;' value='" + obj[i - 1].consulta_path + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-envio_path' style='color: #000;' value='" + obj[i - 1].envio_path + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-estado_path' style='color: #000;' value='" + obj[i - 1].estado_path + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-formato' style='color: #000;' value='" + obj[i - 1].formato + "'></td>";                     
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].courier_id + "' class='btn-cancel borrar-courier' value='Eliminar'/></td>";
+                        rows += "<td width='10%'><input type='button' id='" + obj[i - 1].courier_id + "' class='btn-cancel editar-courier' value='Editar'/></td>";
+                        rows += "</tr>";
+                    }
+                    rows += "</tbody>";
+                    rows += "</table>";                        
+                }
+                $("#listado").html(rows);
+            }
+        });
+    }
+    
     $(document).ready(function(){
         $("#admin-shop-form-card-provider").hide();
         $("#admin-shop-form-courier-provider").hide();
@@ -341,11 +440,23 @@
             // $(this).closest('tr').remove();
         }); 
 
+        $(document).on('click', '.editar-emisor', function (event) {
+            var id = $(this).attr('id');
+            editarTarjeta(id);
+            //$(this).closest('tr').remove();
+        });         
+
         $(document).on('click', '.borrar-courier', function (event) {
             var id = $(this).attr('id');
             eliminarCourier(id);
             // $(this).closest('tr').remove();
-        });                
+        });
+
+        $(document).on('click', '.editar-courier', function (event) {
+            var id = $(this).attr('id');
+            editarCourier(id);
+            //$(this).closest('tr').remove();
+        });                          
     });
 
     $("#format-card").click(function(){

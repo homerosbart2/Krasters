@@ -22,7 +22,7 @@
             <span class="simplified-summary">
                 <a id='expand-detail-table' class='btn-register'><i class="fas fa-angle-down"></i> Detalle</a>
                 <span class="detail-table">
-                    <table></table>
+                    <table class="table table-striped"></table>
                 </span>
             </span>
             <span class="center-box">
@@ -49,17 +49,25 @@ function load_details(){
         success: function(r){  
             obj = JSON.parse(r);  
             var rows = '';
-            rows += '<tr class="table-titles"><th></th><th></th><th></th><th></th></tr>';
+            var total = 0;
+            var sumatoria = 0;
+            rows += '<tr class="table-titles"><th>Producto</th><th>Color</th><th>Talla</th><th>Precio U.</th><th>Cantidad</th><th>Subtotal</th></tr>';
             for(var i = 1; i <= obj.length; i++){
                 //Como agregar elementos a la tabla de detalles.
-                rows += '<tr class="element">';
+                rows += '<tr class="">';
                 rows += '<td>-' +  obj[i - 1].producto_nombre + '</td>'; //Nombre
                 rows += '<td>' +  obj[i - 1].color_nombre +  '</td>'; //Color
                 rows += '<td>' +  obj[i - 1].talla +  '</td>'; //Talla
-                rows += '<td>' +  obj[i - 1].cantidad +  '</td>'; //Cantidad
+                rows += '<td>Q ' +  obj[i - 1].precio +  '</td>'; //Precio
+                rows += '<td align="center">' +  obj[i - 1].cantidad +  '</td>'; //Cantidad
+                total = parseFloat(parseFloat(obj[i - 1].cantidad) * parseFloat(obj[i - 1].precio));
+                sumatoria += total;
+                rows += '<td>Q ' +  total  + '</td>'; //Cantidad
                 rows += '</tr>';
             }
-
+            rows += '<tr class=""><td></td><td></td><td></td><td></td><td align="rigth"><strong>TOTAL</strong></td>';
+            rows += '<td>Q ' +  parseFloat(sumatoria) + '</td>'; //TOTAL
+            rows += '</tr>';
             $('.detail-table').find('table').html(rows);
         }
     });
@@ -83,14 +91,14 @@ function load_order_status(){
                 nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
                 ordenCourier = xmlDoc.getElementsByTagName("orden")[0].childNodes[0].nodeValue; 
                 statusCourier = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
-                setStage(statusCourier);
+                setStage(parseInt(statusCourier));
             }else{
                 //JSON
                 r = JSON.parse(r);
                 nombreCourier = r.orden.courrier; 
                 ordenCourier =  r.orden.orden; 
                 statusCourier = r.orden.status; 
-                setStage(statusCourier);
+                setStage(parseInt(statusCourier));
             }            
         }
     });    
@@ -111,10 +119,7 @@ $(document).ready(function(){
     });
 
     load_details();
-    //load_order_status();
-
-    //Ejemplo de como cambiar el estado.
-    setStage(2);
+    load_order_status();
 });
 
 //Función para cambiar el estado, 1 - 5 (int) son estados válidos, cualquier otro valor va a irse al default y si al recargar la página no se llama la función, por predeterminado, ya está cargado el default.

@@ -1,5 +1,6 @@
 <?php
     session_start();
+    $descuento = $_GET["descuento"];
     $destinatario = $_GET["destinatario"];
     $direccion_ip = $_GET["direccion_ip"];
     $envio_path = $_GET["envio_path"];
@@ -41,10 +42,14 @@
                 $result = pg_query($link, $query);            
                 if($result){
                     //LISTO PROCESO DE COMPRA
-                    $retorno = 1;
                     //solicito el envio
-                    $url = "http://".$direccion_ip."/".$envio_path."?orden=".$compra."&destinatario=".$destinatario."&destino=".$destino."&direccion=".$direccion."&tienda=Krasters";
-                    $respuesta = file_get_contents($url);                    
+                    $direccion = urlencode($direccion);
+                    $destinatario = urlencode($destinatario);
+                    $retorno = 1;
+                    
+                    $url = "http://".$direccion_ip."/".$envio_path."?orden=".$compra."&destinatario=".$destinatario."&destino=".$destino."&direccion=".$direccion."&tienda=Krasters";                 
+                    // echo $url;
+                    // file_get_contents($url);
                 }
             }
         }

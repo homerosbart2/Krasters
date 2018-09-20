@@ -39,7 +39,7 @@
                         </label>
                         <input type="radio" name="menu-bar" id="brand-color-section" value="3"> 
                         <label for="brand-color-section" class="btn-menu">
-                            Marcas y colores
+                            Marcas, Colores y Lugares
                         </label>
                         
                     </form>
@@ -439,7 +439,7 @@
                 var file = this.files[0];
                 imageFileProducto = file.type;
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
-                alert(imageFileProducto.split("/")[1]);
+                // alert(imageFileProducto.split("/")[1]);
                 if (!(imageFileProducto == match[0] || imageFileProducto == match[1] || imageFileProducto == match[2] || imageFileProducto == match[3])){
                     // $('#previewing_producto').attr('src', '../../img/productos/default.png');
                     // $('#previewing_producto').attr('width', 270)

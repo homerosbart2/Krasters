@@ -2,7 +2,7 @@
 //Lista los productos actuales del cliente
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
     $result_array = array();
-    $query = "SELECT * FROM Colores";
+    $query = "SELECT * FROM Colores ORDER BY color_nombre";
     $result = pg_query($link, $query); 
     $i = 0;
     while($row = pg_fetch_assoc($result)){

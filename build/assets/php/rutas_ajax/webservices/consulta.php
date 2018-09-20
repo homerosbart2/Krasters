@@ -5,5 +5,6 @@
     $formato = $_GET["formato"]; 
     $url = "http://".$direccion."/".$consulta."?destino=".$destino."&formato=".$formato;
     $respuesta = file_get_contents($url);
+    // echo $url;
     echo $respuesta;
 ?>

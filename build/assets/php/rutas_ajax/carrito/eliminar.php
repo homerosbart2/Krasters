@@ -11,9 +11,10 @@
     $retorno = -1;
     if ($result) {
         //actualizamos existencias en uno mas
-        $query = "UPDATE Existencias As E SET existencia = E.existencia + 1 WHERE E.producto_id=$producto AND E.talla='$talla' AND E.color_nombre='$color'";
-        $result = pg_query($link, $query);
-        if($result) $retorno = 0;
+        //$query = "UPDATE Existencias As E SET existencia = E.existencia + 1 WHERE E.producto_id=$producto AND E.talla='$talla' AND E.color_nombre='$color'";
+        //$result = pg_query($link, $query);
+        //if($result) 
+        $retorno = 0;
     }  
     pg_close($link);
     echo $retorno;    
