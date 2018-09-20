@@ -12,6 +12,11 @@ input[type=text],input[type=password], input[type=number], textarea, select, .bt
         border:1px solid white;
         box-shadow: none;
     }
+    &.text-input-modify{
+        border: 1px solid black;
+        color: black;
+        width: 95%;
+    }
 }
 
 input:-webkit-autofill {

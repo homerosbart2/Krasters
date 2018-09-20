@@ -44,7 +44,7 @@
                                 <input type='text' id='tarjeta_direccion' name='' placeholder='IP' required>
                             </span>
                         </span>
-                        <input type='text' id='autorizacion_directorio' value='autorizacion.php' placeholder='Autorización' required>
+                        <input type='text' id='autorizacion_directorio' placeholder='autorizacion.php' placeholder='Autorización' required>
                         <span class="form-alert"><i class="fas fa-wrench"></i> Opciones avanzadas:</span>
                         <span id="format-card-switch" class="switch">
                             <label for="format-card">
@@ -72,9 +72,9 @@
                                 <input type='text' id='courier_direccion' name='' placeholder='IP' required>
                             </span>
                         </span>
-                        <input type='text' id='costo_directorio' value='consulta.php' placeholder='Consulta' required>
-                        <input type='text' id='envio_directorio' value='envio.php' placeholder='Envío' required>
-                        <input type='text' id='estado_directorio' value='status.php' placeholder='Estado' required>
+                        <input type='text' id='costo_directorio' placeholder='consulta.php' placeholder='Consulta' required>
+                        <input type='text' id='envio_directorio' placeholder='envio.php' placeholder='Envío' required>
+                        <input type='text' id='estado_directorio' placeholder='status.php' placeholder='Estado' required>
                         <span class="form-alert"><i class="fas fa-wrench"></i> Opciones avanzadas:</span>
                         <span id="format-courier-switch" class="switch">
                             <label for="format-courier">
@@ -326,10 +326,10 @@
                     rows += "<tbody>";                    
                     for(var i = 1; i <= obj.length; i++){
                         rows += "<tr>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-nombre' style='color: #000;' value='" + obj[i - 1].nombre + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-direccion_ip' style='color: #000;' value='" + obj[i - 1].direccion_ip + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-autorizacion_path' style='color: #000;' value='" + obj[i - 1].autorizacion_path + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].emisor_id + "-formato' style='color: #000;' value='" + obj[i - 1].formato + "'></td>";                     
+                        rows += "<td width='18%'><input type='text' id='" + obj[i - 1].emisor_id + "-nombre' class='text-input-modify' value='" + obj[i - 1].nombre + "'></td>";
+                        rows += "<td width='32%'><input type='text' id='" + obj[i - 1].emisor_id + "-direccion_ip' class='text-input-modify' value='" + obj[i - 1].direccion_ip + "'></td>";
+                        rows += "<td width='24%'><input type='text' id='" + obj[i - 1].emisor_id + "-autorizacion_path' class='text-input-modify' value='" + obj[i - 1].autorizacion_path + "'></td>";
+                        rows += "<td width='6%'><input type='text' id='" + obj[i - 1].emisor_id + "-formato' class='text-input-modify' value='" + obj[i - 1].formato + "'></td>";                     
                         rows += "<td width='10%'><input type='button' id='" + obj[i - 1].emisor_id + "' class='btn-cancel borrar-emisor' value='Eliminar'/></td>";
                         rows += "<td width='10%'><input type='button' id='" + obj[i - 1].emisor_id + "' class='btn-cancel editar-emisor' value='Editar'/></td>";
                         rows += "</tr>";
@@ -403,12 +403,12 @@
                     rows += "<tbody>";                    
                     for(var i = 1; i <= obj.length; i++){
                         rows += "<tr>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-nombre' style='color: #000;' value='" + obj[i - 1].nombre + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-direccion_ip' style='color: #000;' value='" + obj[i - 1].direccion_ip + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-consulta_path' style='color: #000;' value='" + obj[i - 1].consulta_path + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-envio_path' style='color: #000;' value='" + obj[i - 1].envio_path + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-estado_path' style='color: #000;' value='" + obj[i - 1].estado_path + "'></td>";
-                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-formato' style='color: #000;' value='" + obj[i - 1].formato + "'></td>";                     
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-nombre' class='text-input-modify' value='" + obj[i - 1].nombre + "'></td>";
+                        rows += "<td width='15%'><input type='text' id='" + obj[i - 1].courier_id + "-direccion_ip' class='text-input-modify' value='" + obj[i - 1].direccion_ip + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-consulta_path' class='text-input-modify' value='" + obj[i - 1].consulta_path + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-envio_path' class='text-input-modify' value='" + obj[i - 1].envio_path + "'></td>";
+                        rows += "<td width='10%'><input type='text' id='" + obj[i - 1].courier_id + "-estado_path' class='text-input-modify' value='" + obj[i - 1].estado_path + "'></td>";
+                        rows += "<td width=5%'><input type='text' id='" + obj[i - 1].courier_id + "-formato' class='text-input-modify' value='" + obj[i - 1].formato + "'></td>";                     
                         rows += "<td width='10%'><input type='button' id='" + obj[i - 1].courier_id + "' class='btn-cancel borrar-courier' value='Eliminar'/></td>";
                         rows += "<td width='10%'><input type='button' id='" + obj[i - 1].courier_id + "' class='btn-cancel editar-courier' value='Editar'/></td>";
                         rows += "</tr>";
