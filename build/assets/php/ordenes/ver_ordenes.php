@@ -58,7 +58,8 @@
                         rows+='</span>';
                         longitud = (obj[i - 1].tarjeta.length);
                         rows+='<span class="order-card">';
-                        rows+= "Tarjeta: " + ("X").repeat(longitud - 4) + (obj[i - 1].tarjeta).substring(longitud-4,longitud);
+                        if(longitud > 4) rows+= "Tarjeta: " + ("X").repeat(longitud - 4) + (obj[i - 1].tarjeta).substring(longitud-4,longitud);
+                        else rows += "Tarjeta: " + obj[i - 1].tarjeta;
                         rows+='</span>';
                         rows+='<span class="order-send">';
                         rows+= "Envío: Q " + obj[i - 1].costo_envio;
@@ -66,6 +67,9 @@
                         rows+='<span class="order-subtotal">';
                         rows+='Subtotal: Q ' + obj[i - 1].total_compra;
                         rows+='</span>';
+                        rows+='<span class="order-descuento">';
+                        rows+='Descuento: Q ' + obj[i - 1].descuento;
+                        rows+='</span>';                        
                         rows+='<span class="order-total">';
                         rows+='Total: Q ' + parseFloat(parseFloat(obj[i - 1].total_compra) + parseFloat(obj[i - 1].costo_envio));
                         rows+='</span>';

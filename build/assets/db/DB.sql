@@ -16,7 +16,7 @@ DROP TABLE Lugares;
 
 CREATE TABLE Marcas(
     marca_nombre varchar(20),
-    dir_logo varchar(100),
+    img_type  varchar(5),
     PRIMARY KEY(marca_nombre)
 );
 
@@ -32,7 +32,8 @@ CREATE TABLE Productos(
     descripcion varchar(30),
     precio decimal,
     marca_nombre varchar(20),
-    PRIMARY KEY(producto_id,marca_nombre),
+    img_type  varchar(5),
+    PRIMARY KEY(producto_id),
     FOREIGN KEY(marca_nombre) REFERENCES Marcas(marca_nombre),
     UNIQUE(producto_nombre,marca_nombre)
 );
@@ -58,8 +59,8 @@ CREATE TABLE Usuarios(
 CREATE TABLE Emisores(
 	emisor_id SERIAL,
 	nombre varchar(30),
-    direccion_ip varchar(25),
-    autorizacion_path varchar(20),
+    direccion_ip varchar(100),
+    autorizacion_path varchar(100),
     formato varchar(10),
     PRIMARY KEY(emisor_id),
     UNIQUE (direccion_ip)
@@ -68,10 +69,10 @@ CREATE TABLE Emisores(
 CREATE TABLE Couriers(
 	courier_id SERIAL,
 	nombre varchar(30),
-    direccion_ip varchar(25),
-    consulta_path varchar(20),
-    envio_path varchar(20),
-    estado_path varchar(20),
+    direccion_ip varchar(100),
+    consulta_path varchar(100),
+    envio_path varchar(100),
+    estado_path varchar(100),
     formato varchar(10),
     PRIMARY KEY(courier_id),
     UNIQUE (direccion_ip)
@@ -90,11 +91,17 @@ CREATE TABLE Compras(
     courier_id integer,
     lugar_id varchar(10),
     usuario varchar(15),
-    tarjeta_ccv varchar(25),
-    tarjeta_nombre varchar(25),
-    tarjeta_tipo varchar(10),
-    tarjeta_fecha_vencimiento date,
-    fecha timestamp,
+    tarjeta varchar(25),
+    tarjeta_nombre varchar(100),
+    tarjeta_ccv varchar(10),
+    tarjeta_fecha varchar(10),
+    total_compra decimal,
+    costo_envio decimal,
+    destino varchar(10),
+    destinatario varchar(25),
+    direccion varchar(100),
+    descuento decimal,
+    fecha_compra date,
     PRIMARY KEY(compra_id),
     FOREIGN KEY(lugar_id) REFERENCES Lugares(lugar_id),
     FOREIGN KEY(usuario) REFERENCES Usuarios(usuario),
@@ -103,6 +110,7 @@ CREATE TABLE Compras(
 );
 
 CREATE TABLE DetalleCompras(
+    detalle_compra_id SERIAL,
     compra_id integer,
     producto_id integer,
     color_nombre varchar(10),
@@ -126,18 +134,32 @@ CREATE TABLE Carrito(
     CHECK (cantidad >= 0)
 );
 
-CREATE TABLE Lugares(
-    codigo varchar(5),
-    nombre varchar(30),
-    PRIMARY KEY(codigo),
-    UNIQUE(nombre)
+CREATE TABLE Codigos(
+    codigo integer,
+    habilitado integer,
+    PRIMARY KEY(codigo)
 );
 
-CREATE USER tienda;
 ALTER USER tienda WITH ENCRYPTED PASSWORD '%TiendaAdmin18%';
 GRANT ALL PRIVILEGES ON DATABASE "TIENDA" TO tienda;
-GRANT ALL PRIVILEGES ON TABLE Marcas,Colores,Productos,Existencias,Usuarios,Emisores,Couriers,Lugares,Compras,DetalleCompras,Carrito TO tienda;
+GRANT ALL PRIVILEGES ON TABLE Marcas,Colores,Productos,Existencias,Usuarios,Emisores,Couriers,Lugares,Compras,DetalleCompras,Carrito,Codigos TO tienda;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public to tienda;
+
+ALTER USER normal_user WITH ENCRYPTED PASSWORD '%normalNormal2018%';
+GRANT ALL PRIVILEGES ON DATABASE "TIENDA" TO normal_user;
+GRANT SELECT ON TABLE Marcas,Colores,Productos,Existencias,Usuarios,Emisores,Couriers,Lugares,Compras,DetalleCompras,Carrito TO normal_user;
+GRANT UPDATE ON TABLE Compras, DetalleCompras, Carrito, Existencias TO normal_user;
+GRANT INSERT, DELETE ON TABLE Compras, DetalleCompras, Carrito TO normal_user;
+GRANT INSERT, SELECT, UPDATE ON TABLE Codigos TO normal_user;
+GRANT ALL PRIVILEGES ON SEQUENCE carrito_carrito_id_seq TO normal_user
+
+INSERT INTO Colores(color_nombre,color_codigo) VALUES('Blue','0000FF');
+INSERT INTO Colores(color_nombre,color_codigo) VALUES('Amarillo','FFFF00');
+INSERT INTO Colores(color_nombre,color_codigo) VALUES('Fuchsia','FF00FF');
+INSERT INTO Colores(color_nombre,color_codigo) VALUES('Rojo','FF0000');
+INSERT INTO Colores(color_nombre,color_codigo) VALUES('Verde','008000');
+
+
 
 INSERT INTO Colores(color_nombre,color_codigo) VALUES('Blue','0000FF');
 INSERT INTO Colores(color_nombre,color_codigo) VALUES('Amarillo','FFFF00');

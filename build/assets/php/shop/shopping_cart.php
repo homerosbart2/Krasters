@@ -303,61 +303,50 @@
                         var direccion = document.getElementById("direccion").value;
                         var destinatario = document.getElementById("destinatario").value;
                         var descuento = document.getElementById("discount").value;
-                        lugar = "01001";
-                        nombre = "Jorge";
-                        tarjeta = "0000000000000000";
-                        year = "202209"
-                        cvv = "671";
-                        direccion = "14 calle 16-13";
-                        destinatario = "Diego Alay";
-                        destinoCourier = "01001";
-                        costoCourier = 25;
-                        coberturaCourier = true;
                         var fecha = year+mes;
-                        // if(tarjetaInfo != null && lugar != null && nombre != "" && tarjeta != "" && cvv != "" && mes != "" && year != "" && direccion != "" && destinatario != ""){        
-                            if(true){
+                        if(tarjetaInfo != null && lugar != null && nombre != "" && tarjeta != "" && cvv != "" && mes != "" && year != "" && direccion != "" && destinatario != ""){        
+                            if(coberturaCourier){
                                 emisor = tarjetaInfo.split("-")[0];
                                 direccion_ip = tarjetaInfo.split("-")[1];
                                 autorizacion_path = tarjetaInfo.split("-")[2];
-                                formato = tarjetaInfo.split("-")[3];
-                                // // lugar = "01000";
-                                // urlWebServices = "../rutas_ajax/webservices/autorizacion.php?direccion=" + direccion_ip + "&autorizacion=" + autorizacion_path + "&tarjeta=" + tarjeta + "&nombre=" + nombre + "&fecha_venc=" + fecha + "&num_seguridad=" + cvv + "&monto=" + sumatoria + "&formato=" + formato;
-                                // $.ajax({
-                                //     url: urlWebServices,                
-                                //     type: 'GET',
-                                //     success: function(r){
-                                //         if(formato == "xml" || formato == "XML"){
-                                //             //XML    
-                                //             console.log(r);            
-                                //             parser = new DOMParser();
-                                //             xmlDoc = parser.parseFromString(r,"text/xml");
-                                //             tarjetaEmisor = xmlDoc.getElementsByTagName("tarjeta")[0].childNodes[0].nodeValue; 
-                                //             statusEmisor = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
-                                //             numeroEmisor = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue; 
-                                //         }else{
-                                //             //JSON
-                                //             r = JSON.parse(r); 
-                                //             tarjetaEmisor =  r.autorizacion.tarjeta; 
-                                //             statusEmisor = (r.autorizacion.status).trim(); 
-                                //             numeroEmisor = r.autorizacion.numero;
-                                //         }
-                                //         if(statusEmisor == "APROBADO" || " APROBADO " || " APROBADO" || "APROBADO "){
-                                //             //generamos la compra
+                                formato = tarjetaInfo.split("-")[3];    
+                                urlWebServices = "../rutas_ajax/webservices/autorizacion.php?direccion=" + direccion_ip + "&autorizacion=" + autorizacion_path + "&tarjeta=" + tarjeta + "&nombre=" + nombre + "&fecha_venc=" + fecha + "&num_seguridad=" + cvv + "&monto=" + (sumatoria + costoCourier) + "&formato=" + formato;
+                                $.ajax({
+                                    url: urlWebServices,                
+                                    type: 'GET',
+                                    success: function(r){
+                                        if(formato == "xml" || formato == "XML"){
+                                            //XML    
+                                            console.log(r);            
+                                            parser = new DOMParser();
+                                            xmlDoc = parser.parseFromString(r,"text/xml");
+                                            tarjetaEmisor = xmlDoc.getElementsByTagName("tarjeta")[0].childNodes[0].nodeValue; 
+                                            statusEmisor = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
+                                            numeroEmisor = xmlDoc.getElementsByTagName("numero")[0].childNodes[0].nodeValue; 
+                                        }else{
+                                            //JSON
+                                            r = JSON.parse(r); 
+                                            tarjetaEmisor =  r.autorizacion.tarjeta; 
+                                            statusEmisor = (r.autorizacion.status).trim(); 
+                                            numeroEmisor = r.autorizacion.numero;
+                                        }
+                                        if(statusEmisor == "APROBADO" || " APROBADO " || " APROBADO" || "APROBADO "){
+                                            //generamos la compra
                                             var courierInfo = document.getElementById("courier-select").value;
                                             courier = courierInfo.split("-")[0];
                                             direccion_ip = courierInfo.split("-")[1];
                                             envio_path = courierInfo.split("-")[3];                                         
                                             generar_compra(courier,emisor,lugar,tarjeta,nombre,cvv,fecha,getActualTime(),destinoCourier,costoCourier,direccion,destinatario,direccion_ip,envio_path,descuento);
-                                //         }else{
-                                //             new PNotify({
-                                //                 title: 'Shopping Cart',
-                                //                 text: 'La transacción a sigo denegada.',
-                                //                 type: 'error',
-                                //                 styling: 'bootstrap3'
-                                //             });                                         
-                                //         }                                    
-                                //     }
-                                // });  
+                                        }else{
+                                            new PNotify({
+                                                title: 'Shopping Cart',
+                                                text: 'La transacción a sigo denegada.',
+                                                type: 'error',
+                                                styling: 'bootstrap3'
+                                            });                                         
+                                        }                                    
+                                    }
+                                });  
                             }else{
                                 new PNotify({
                                     title: 'Shopping Cart',
@@ -366,14 +355,14 @@
                                     styling: 'bootstrap3'
                                 });                             
                             }                               
-                        // }else{
-                        //     new PNotify({
-                        //         title: 'Shopping Cart',
-                        //         text: 'Complete todos los campos porfavor.',
-                        //         type: 'warning',
-                        //         styling: 'bootstrap3'
-                        //     });                   
-                        // }                       
+                        }else{
+                            new PNotify({
+                                title: 'Shopping Cart',
+                                text: 'Complete todos los campos porfavor.',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });                   
+                        }                       
                     }
                 }
             }); 
@@ -401,7 +390,7 @@
                 envio_path = courierInfo.split("-")[3];
                 estado_path = courierInfo.split("-")[4];
                 formato = courierInfo.split("-")[5];
-                //solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato);
+                solicitar_datos_courier(courier_id,direccion_ip,consulta_path,envio_path,estado_path,formato);
             }
         });      
     });
@@ -414,12 +403,10 @@
     function generar_compra(courier,emisor,lugar,tarjeta,nombre,cvv,fecha,fecha_actual,destino,costo,direccion,destinatario,direccion_ip,envio_path,descuento){
         if(deshabilitarCompra == false){
             deshabilitarCompra = true;
-            alert("GENERANDO TRANSACCION");
             $.ajax({
                 url: "../rutas_ajax/ordenes/generar_compra.php?courier=" + courier + "&emisor=" + emisor + "&lugar=" + lugar + "&tarjeta=" + tarjeta + "&tarjeta_nombre=" + nombre + "&cvv=" + cvv + "&fecha_tarjeta=" + fecha + "&total=" + sumatoria + "&fecha_actual=" + fecha_actual + "&destino=" + destino + "&envio=" + costo + "&direccion=" + direccion + "&destinatario=" + destinatario + "&direccion_ip=" + direccion_ip + "&envio_path=" + envio_path + "&descuento=" + descuento,
                 type: "POST",
                 success: function(r){
-                    alert(r);
                     if(r == 1){
                         deshabilitarCompra = false;
                         //orden creada con exito y solicitud de courier hecha
@@ -434,6 +421,7 @@
                             type: "POST",
                             success: function(r){
                                 if(r > 0) $('#proceed-form').html('<span class="discount-text">Código de descuento en &shop:</span><span class="discount-code">' + r + '</span><span class="discount-text small"><i class="fas fa-exclamation"></i> El código no es almacenado, no lo pierdas.</span>');
+                                else exitSquared();
                             }
                         }); 
                         //LIMPIAMOS VARIABLES
@@ -457,7 +445,6 @@
                         var direccion = document.getElementById("direccion").value = "";
                         var destinatario = document.getElementById("destinatario").value = "";                 
                         load_summaries();
-                        exitSquared();
                     }else{
                         deshabilitarCompra = false;
                         new PNotify({
@@ -502,7 +489,6 @@
                 if(coberturaCourier == "TRUE" || coberturaCourier == "true" || coberturaCourier == true){
                     $('#envioSpan').html("Envio: " + prettyNumber(costoCourier));
                     $('#totalSpan').html("Total: " + prettyNumber(parseFloat(sumatoria) + parseFloat(costoCourier)));
-                    alert(costoCourier);
                 }else{
                     coberturaCourier = false;
                     $('#envioSpan').html('INVALIDO');

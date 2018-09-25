@@ -18,7 +18,21 @@
     $fecha = $_GET["fecha_tarjeta"];
     $usuario = $_SESSION['username']; //variable que se obtiene con la cookie 
     $link = pg_connect("host=localhost dbname=TIENDA user=tienda password=%TiendaAdmin18%");
-    $query = "INSERT INTO Compras(emisor_id,courier_id,lugar_id,usuario,tarjeta,tarjeta_nombre,tarjeta_ccv,tarjeta_fecha,total_compra,fecha_compra,destino,costo_envio,direccion,destinatario) VALUES($emisor,$courier,'$lugar','$usuario','$tarjeta','$tarjeta_nombre','$cvv','$fecha',$total,'$fecha_actual','$destino',$envio,'$direccion','$destinatario') RETURNING compra_id";
+    //VERIFICAMOS SI EXISTE Y ESTA DISPONIBLE EL DESCUENTO
+    $query = "SELECT * FROM Codigos WHERE codigo=$descuento AND habilitado=1";
+    $result = pg_query($link, $query);
+    $validCode = pg_num_rows($result);
+    echo "resultaldo " + $validCode;
+    $descuento_compra = 0;
+    if($validCode > 0){
+        //codigo disponible
+        $descuento_compra = $total * 0.35;
+        //cambiamos el estado
+        $query = "UPDATE Codigos SET habilitado=0 WHERE codigo=$descuento";
+        $result = pg_query($link, $query);        
+    }
+    echo "DESCUENTO " + $descuento_compra;
+    $query = "INSERT INTO Compras(emisor_id,courier_id,lugar_id,usuario,tarjeta,tarjeta_nombre,tarjeta_ccv,tarjeta_fecha,total_compra,fecha_compra,destino,costo_envio,direccion,destinatario,descuento) VALUES($emisor,$courier,'$lugar','$usuario','$tarjeta','$tarjeta_nombre','$cvv','$fecha',$total,'$fecha_actual','$destino',$envio,'$direccion','$destinatario',$descuento_compra) RETURNING compra_id";
     $result = pg_query($link, $query);
     $retorno = -1;
     if ($result) {
@@ -46,10 +60,9 @@
                     $direccion = urlencode($direccion);
                     $destinatario = urlencode($destinatario);
                     $retorno = 1;
-                    
-                    $url = "http://".$direccion_ip."/".$envio_path."?orden=".$compra."&destinatario=".$destinatario."&destino=".$destino."&direccion=".$direccion."&tienda=Krasters";                 
-                    // echo $url;
-                    // file_get_contents($url);
+                    $url = "http://".$direccion_ip."/".$envio_path."?orden=".$compra."&destinatario=".$destinatario."&destino=".$destino."&direccion=".$direccion."&tienda=krasters";                 
+                    //echo $url;
+                    file_get_contents($url);
                 }
             }
         }

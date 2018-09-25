@@ -4,21 +4,23 @@
     session_start();
     $usuario = $_SESSION['username']; //variable que se obtiene con la cookie
     $result_array = array();
-    $query = "SELECT * FROM Carrito AS C WHERE C.usuario =  '$usuario'";
+    $query = "SELECT Ca.producto_id, Ca.talla, Co.color_nombre, Ca.cantidad FROM Carrito AS Ca, Colores AS Co WHERE Ca.usuario =  '$usuario'";
     $result = pg_query($link, $query); 
     $retorno = 0;
     $i = 0;
     while($row = pg_fetch_assoc($result)){
         $each_producto = $row["producto_id"];
+        $talla = $row["talla"];
+        $color = $row["color_nombre"];
         $cantidad_a_comprar = $row["cantidad"];
-        $query = "SELECT E.existencia FROM Existencias AS E WHERE E.producto_id = $each_producto";
+        $query = "SELECT E.existencia FROM Existencias AS E WHERE E.producto_id = $each_producto AND E.talla = '$talla' AND E.color_nombre = '$color'";
         $result2 = pg_query($link, $query); 
         $row2 = pg_fetch_assoc($result2);
         $cantidad_disponible = $row2["existencia"];
         if($cantidad_disponible < $cantidad_a_comprar){
             //error ya no disponible dicha cantidad
             $retorno = -1;
-            $query = "UPDATE Carrito AS C SET cantidad = $cantidad_disponible WHERE  C.usuario='$usuario' AND C.producto_id = $each_producto";
+            $query = "UPDATE Carrito AS C SET cantidad = $cantidad_disponible WHERE (C.usuario='$usuario' AND C.producto_id = $each_producto AND E.talla = '$talla' AND E.color_nombre = '$color')";
             $result3 = pg_query($link, $query); 
         }
     }

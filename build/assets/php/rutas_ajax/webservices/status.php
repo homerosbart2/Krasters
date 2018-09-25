@@ -4,6 +4,7 @@
     $orden = $_GET["orden"]; 
     $formato = $_GET["formato"]; 
     $url = "http://".$direccion."/".$status."?orden=".$orden."&tienda=krasters&formato=".$formato;
+    // echo $url;
     $respuesta = file_get_contents($url);
     echo $respuesta;
 ?>
