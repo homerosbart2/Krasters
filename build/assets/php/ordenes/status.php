@@ -88,15 +88,15 @@ function load_order_status(){
                 //XML                
                 parser = new DOMParser();
                 xmlDoc = parser.parseFromString(r,"text/xml");
-                nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
-                ordenCourier = xmlDoc.getElementsByTagName("orden")[0].childNodes[0].nodeValue; 
+                // nombreCourier = xmlDoc.getElementsByTagName("courrier")[0].childNodes[0].nodeValue; 
+                // ordenCourier = xmlDoc.getElementsByTagName("orden")[0].childNodes[0].nodeValue; 
                 statusCourier = xmlDoc.getElementsByTagName("status")[0].childNodes[0].nodeValue;                    
                 setStage(parseInt(statusCourier));
             }else{
                 //JSON
                 r = JSON.parse(r);
-                nombreCourier = r.orden.courrier; 
-                ordenCourier =  r.orden.orden; 
+                // nombreCourier = r.orden.courrier; 
+                // ordenCourier =  r.orden.orden; 
                 statusCourier = r.orden.status; 
                 setStage(parseInt(statusCourier));
             }            

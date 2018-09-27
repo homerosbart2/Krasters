@@ -12,6 +12,7 @@ DROP TABLE Couriers;
 DROP TABLE Marcas;
 DROP TABLE Colores;
 DROP TABLE Lugares;
+DROP TABLE Codigos;
 */
 
 CREATE TABLE Marcas(
@@ -140,11 +141,14 @@ CREATE TABLE Codigos(
     PRIMARY KEY(codigo)
 );
 
+/*SCRIPT PARA PERMISOS DE USUARIO USUARIO ADMIN*/
 ALTER USER tienda WITH ENCRYPTED PASSWORD '%TiendaAdmin18%';
 GRANT ALL PRIVILEGES ON DATABASE "TIENDA" TO tienda;
 GRANT ALL PRIVILEGES ON TABLE Marcas,Colores,Productos,Existencias,Usuarios,Emisores,Couriers,Lugares,Compras,DetalleCompras,Carrito,Codigos TO tienda;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public to tienda;
 
+
+/*SCRIPT PARA PERMISOS DE USUARIO NORMAL*/
 ALTER USER normal_user WITH ENCRYPTED PASSWORD '%normalNormal2018%';
 GRANT ALL PRIVILEGES ON DATABASE "TIENDA" TO normal_user;
 GRANT SELECT ON TABLE Marcas,Colores,Productos,Existencias,Usuarios,Emisores,Couriers,Lugares,Compras,DetalleCompras,Carrito TO normal_user;
@@ -152,24 +156,3 @@ GRANT UPDATE ON TABLE Compras, DetalleCompras, Carrito, Existencias TO normal_us
 GRANT INSERT, DELETE ON TABLE Compras, DetalleCompras, Carrito TO normal_user;
 GRANT INSERT, SELECT, UPDATE ON TABLE Codigos TO normal_user;
 GRANT ALL PRIVILEGES ON SEQUENCE carrito_carrito_id_seq TO normal_user
-
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Blue','0000FF');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Amarillo','FFFF00');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Fuchsia','FF00FF');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Rojo','FF0000');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Verde','008000');
-
-
-
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Blue','0000FF');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Amarillo','FFFF00');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Fuchsia','FF00FF');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Rojo','FF0000');
-INSERT INTO Colores(color_nombre,color_codigo) VALUES('Verde','008000');
-
-INSERT INTO Marcas(marca_nombre) VALUES('Adidas');
-INSERT INTO Marcas(marca_nombre) VALUES('Nike');
-INSERT INTO Marcas(marca_nombre) VALUES('Puma');
-INSERT INTO Marcas(marca_nombre) VALUES('Everlast');
-
-INSERT INTO Usuarios(usuario,nombre,password_usuario,role) VALUES ('diego','Diego Alejandro','1234',0)

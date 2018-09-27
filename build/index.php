@@ -116,7 +116,7 @@ var crearUsuario = function(){
             url: 'assets/php/usuario/nuevo_usuario.php?name=' + nombre + '&username=' + username + '&password=' + password1,
             type: 'POST',
             success: function(r){
-                alert(r);
+                // alert(r);
                 if(r != -1){
                     new PNotify({
                     title: 'Nuevo usuario',

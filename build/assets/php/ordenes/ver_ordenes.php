@@ -53,6 +53,12 @@
                         rows+='<span class="order-courier">';
                         rows+= "Courier: " + obj[i - 1].courier_nombre;
                         rows+='</span>';                       
+                        rows+='<span class="order-name">';
+                        rows+= "Destinatario: " + obj[i - 1].destinatario;
+                        rows+='</span>';
+                        rows+='<span class="order-destinatario">';
+                        rows+= "Dirección: " + obj[i - 1].direccion;
+                        rows+='</span>';                        
                         rows+='<span class="order-place">';
                         rows+= "Destino: " + obj[i - 1].lugar_nombre;
                         rows+='</span>';
@@ -71,7 +77,7 @@
                         rows+='Descuento: Q ' + obj[i - 1].descuento;
                         rows+='</span>';                        
                         rows+='<span class="order-total">';
-                        rows+='Total: Q ' + parseFloat(parseFloat(obj[i - 1].total_compra) + parseFloat(obj[i - 1].costo_envio));
+                        rows+='Total: Q ' + parseFloat(parseFloat(obj[i - 1].total_compra) + parseFloat(obj[i - 1].costo_envio) - parseFloat(obj[i - 1].descuento));
                         rows+='</span>';
                         rows+='</span>';
                         rows+='<span class="state">';
